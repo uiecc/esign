@@ -19,7 +19,7 @@ jobs:
         ssh-private-key: |
           ${{ secrets.SSH_KEY }}
 
-    - name: Add SSH Key Manually (Debug)
+    - name: Debug SSH Key
       run: |
         echo "${{ secrets.SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
