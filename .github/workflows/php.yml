@@ -16,9 +16,15 @@ jobs:
     - name: Setup SSH
       uses: webfactory/ssh-agent@v0.7.0
       with:
-        ssh-private-key: ${{ secrets.SSH_KEY }}
+        ssh-private-key: |
+          ${{ secrets.SSH_KEY }}
+
+    - name: Add SSH Key Manually (Debug)
+      run: |
+        echo "${{ secrets.SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-add ~/.ssh/id_rsa
 
     - name: Deploy to Server
       run: |
         ssh -o StrictHostKeyChecking=no -p 65002 u368183954@92.112.195.192 'bash -s' < deploy.sh
-        
