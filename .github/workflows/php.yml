@@ -1,4 +1,4 @@
-name: Deploy Production 
+name: Deploy Production
 
 on:
   push:
@@ -17,6 +17,16 @@ jobs:
       uses: webfactory/ssh-agent@v0.7.0
       with:
         ssh-private-key: ${{ secrets.SSH_KEY }}
+
+    - name: Debug SSH
+      run: |
+        ls -l ~/.ssh
+        cat ~/.ssh/id_rsa
+
+    - name: Add known hosts 
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -p 65002 92.112.195.192 >> ~/.ssh/known_hosts
 
     - name: Deploy to Server
       run: |
