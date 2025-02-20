@@ -11,20 +11,13 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3    # Mise à jour vers v3 pour plus de sécurité
-      
-    - name: Setup SSH
-      run: |
-        echo "${{ secrets.SSH_KEYS }}" | base64 -d > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        eval "$(ssh-agent -s)"
-        ssh-add ~/.ssh/id_rsa
-        
-    - name: Add known hosts 
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan -p 65002 92.112.195.192 >> ~/.ssh/known_hosts
+      uses: actions/checkout@v2
 
-    - name: Deploy to Server 
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEYS }}
+
+    - name: Deploy to Server
       run: |
-        ssh -p 65002 u368183954@92.112.195.192 'bash -s' < deploy.sh
+        ssh -o StrictHostKeyChecking=no -p 65002 u368183954@92.112.195.192 'bash -s' < deploy.sh
