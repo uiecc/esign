@@ -15,9 +15,7 @@ jobs:
 
     - name: Setup SSH Key
       run: |
-        echo "${{ secrets.SSH_KEY }}" | base64 --decode > id_rsa
-        mkdir -p ~/.ssh
-        mv id_rsa ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_KEY }}" | base64 --decode > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
     - name: Add known hosts
@@ -28,5 +26,3 @@ jobs:
     - name: Deploy to Server
       run: |
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -p 65002 u368183954@92.112.195.192 'bash -s' < deploy.sh
-
-        
