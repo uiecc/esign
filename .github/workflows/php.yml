@@ -18,7 +18,7 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_KEYS }}
         
-    - name: Add known hosts
+    - name: Add known hosts 
       run: |
         mkdir -p ~/.ssh
         ssh-keyscan -p 65002 92.112.195.192 >> ~/.ssh/known_hosts
