@@ -2,7 +2,7 @@
 
 set -e
 
-cd domains/sygenes.esign.cm/public_html || exit 1
+cd domains/esign.cm/public_html || exit 1
 
 echo "📦 Sauvegarde des modifications locales..."
 git stash --include-untracked
