@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ESIGN
+      MYSQL_USER: davy
+      MYSQL_PASSWORD: Felicien@2002
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - db-data:/var/lib/mysql:rw
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+    networks:
+      - esign-network
+
+  app:
+    image: esign:latest
+    ports:
+      - "8080:80"
+    environment:
+      MYSQL_USER: davy
+      MYSQL_PASSWORD: Felicien@2002
+      DATABASE_URL: mysql://davy:Felicien@2002@database:3306/ESIGN
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - esign-network
+
+volumes:
+
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
+  db-data:
+
+networks:
+  esign-network:
+    driver: bridge

@@ -1,0 +1,684 @@
+home_header:
+  header:
+      update: "Mettre à jour"
+      closed: "Fermé"
+  app:
+    name: UIECC
+    logo_alt: Logo UIECC
+
+  nav:
+    open_menu: Ouvrir le menu principal
+    close_menu: Fermer le menu
+    home: Accueil
+    about: À propos
+    faq: FAQ
+    requirements: Préréquis
+    login: Connexion
+    register: S'inscrire
+    toggle_dark_mode: Mode sombre
+    toggle_light_mode: Mode clair
+    logout: Déconnexion
+    save: Sauvegarder
+    download: Télécharger
+
+  language:
+    change: Changer de langue
+    english: English
+    french: Français
+
+  footer:
+    copyright: © %year% UIECC. Tous droits réservés.
+    contact_us: Contactez-nous
+
+home_body:
+  hero_section:
+    requirements: "Préréquis d'inscription"
+    welcome: "Plateforme"
+    welcome_sub-text1: "d'Inscription aux Concours "
+    welcome_sub-text2: "de l'École Supérieure Internationale de Génie Numérique 2024"
+    sub-text1: "L'Université Inter-États Congo-Cameroun (UIECC), un pôle"
+    sub-text2: "d'excellence scientifique et technologique"
+    sub-text3: "au cœur de l'Afrique centrale."
+    sub-text4: ""
+    register: Inscrivez-vous maintenant
+    login: "Connexion "
+    slogan1: "Bienvenue sur la"
+    slogan: "Plateforme d'inscription en ligne"
+    slogan2: "pour le concours d'entrée ESIGN 2024. Cliquez ci-dessous pour commencer"
+    avant: "Avant de vous inscrire..."
+    consult: "Consultez d'abord la plaquette et le document de présentation de l'école"
+    prerequis: "Lisez les préréquis pour commencer. "
+    read_more: "Voir plus"
+    get_started: "Lire le document"
+    get_started_1: "Lire la plaquette "
+    apres: "Vous pouvez maintenant vous inscrire"
+    consult_2: "Assurez-vous de remplir tous les champs du formulaire et de soumettre les documents requis avant la date limite.  "
+    savoir_plus: "En Savoir plus"
+
+
+about_section:
+    title: "Présentation de l'UIECC"
+    description: "Cette école délivre le"
+    description1: "diplôme d'ingénieur" 
+    description2: ", recrute les diplômés de l'enseignement secondaire âgés de 24 ans au plus par" 
+    description3: " le biais d'un " 
+    description4: " concours d'entrée et d'un régime d'entrée directe sélective."
+    show_more: "Voir plus"
+    show_less: "Voir moins"
+    prospectus_title: "Prospectus de l'université"
+    prospectus_description: "L'École Internationale Supérieure de Génie Numérique de Sangmélima est à la pointe de l'éducation technologique. Nous formons les leaders de demain avec un programme innovant combinant théorie et pratique, préparant nos étudiants à exceller dans une industrie numérique en constante évolution. Découvrez notre gamme complète de formations en téléchargeant notre prospectus ci-dessous."
+    prospectus_description2: "L'École Internationale Supérieure de Génie Numérique de Sangmélima est à la pointe de l'éducation technologique. Nous formons les leaders de demain avec un programme innovant combinant théorie et pratique, préparant nos étudiants à exceller dans une industrie numérique en constante évolution. Découvrez notre gamme complète de formations en téléchargeant notre prospectus ci-dessous."
+    download_prospectus: "Télécharger le prospectus"
+    arrete_title: "Arrêté de concours"
+    arrete_description: "Le concours d'entrée à l'École Internationale Supérieure de Génie Numérique de Sangmélima est une opportunité unique pour les futurs talents numériques. Ce document officiel détaille les procédures du concours, les dates importantes, les matières évaluées et les critères de sélection. Assurez-vous d'être bien préparé en téléchargeant le document officiel ci-dessous."
+    arrete_description2: "Le concours d'entrée à l'École Internationale Supérieure de Génie Numérique de Sangmélima est une opportunité unique pour les futurs talents numériques. Ce document officiel détaille les procédures du concours, les dates importantes, les matières évaluées et les critères de sélection. Assurez-vous d'être bien préparé en téléchargeant le document officiel ci-dessous."
+    download_arrete: "Télécharger l'arrêté du concours"
+    about_new_title: "À propos"
+    new_subtext_1: "L'École Supérieure Internationale de Génie Numérique (ESIGN) de l'Université Inter-États Congo-Cameroun forme des" 
+    new_subtext_2: "Ingénieurs de Génie Numérique"
+    new_subtext_3: "dans le domaine de la Création et du Design Numérique, de l'Ingénierie Numérique Sociotechnique et de l'Ingénierie des Systèmes Numériques."
+    about_new_subtext_4: "Un ingénieur de génie numérique de l'ESIGN est un expert en matière de création d'entreprises numériques, de produits et de services numériques. Un ingénieur de génie numérique est un"
+    about_new_subtext_5: "Ingénieur-Entrepreneur"
+    about_new_subtext_6: "de l'économie du numérique."
+    about_new_arrete_sup: "Concours d'Entrée"
+    about_new_arrete: "Arrêté du concours"
+    about_new_arrete_desc: "Ce document officiel détaille les procédures du concours, les dates importantes, les matières évaluées et les critères de sélection. Assurez-vous d'être bien préparé en téléchargeant le document officiel ci-dessous."
+    about_new_arrete_download: "Télécharger l'arrêté du concours en Français"
+    about_new_arrete_download1: "Télécharger l'arrêté du concours en Anglais"
+
+
+    about_new_prospectus_sup: "Guide d'Information"
+    about_new_prospectus: "Plaquette de l'ESIGN"
+    about_new_prospectus_desc_1: "L'École Supérieure Internationale de Génie Numérique de Sangmélima est à la pointe de l'éducation technologique. Avec une"
+    about_new_prospectus_desc_2: "approche pédagogique basée sur les projets"
+    about_new_prospectus_desc_3: "nous formons les leaders de l'industrie du numérique de demain, dotés d'un profil de haut niveau technique et scientifique intégrant les compétences des décideurs et de managers d'équipes, et formés pour prendre en charge la création et l'exploitation d'une entreprise, d'un produit ou d'un service numérique."
+    about_new_prospectus_download_en: "Télécharger la Plaquette en Anglais"
+    about_new_prospectus_download_fr: "Télécharger la Plaquette en Français"
+    about_presentation: "Téléchargez le document de présentation"
+
+
+    requirements:
+      subtitle: "Conditions préalables à l'inscription"
+      title: "Préparez-vous pour l'inscription en ligne"
+      description: "Avant de commencer votre procédure d'inscription en ligne, assurez-vous d'avoir rempli les conditions suivantes :"
+      step1: "Avoir payé les frais de concours à l'express union et démarrer la procédure d'inscription en ligne dès le lendemain."
+      step2: "Disposer d'un compte de courrier électronique."
+      step3: "Avoir scanné son acte de naissance."
+      step4: "Avoir scanné le baccalauréat ou le diplôme GCE A-level."
+      step5: "Avoir scanné votre demi-carte photo couleur 4x4."
+      step6: "Être âgé de 22 ans au plus à la date de l'examen."
+      step7: "Avoir une photocopie lisible certifiée conforme à l'original du relevé de notes attestant que le candidat a obtenu une note au moins égale à 10/20 ou au grade C dans une épreuve de mathématiques ou d' informatique"
+      click_here: "cliquez ici"
+      start_registration: "Commencer l'inscription"
+      
+    general_info:
+      subtitle: "Informations Générales"
+      title: "Communiqués"
+      description: "Vous trouverez les détails concernant le concours d'entrée. Veuillez examiner attentivement ces informations afin d'être bien préparé pour le processus."
+      description_2: "Le candidat devra photocopier sa fiche d'inscription timbrée et apporter cette photocopie lors du dépot de son dossier"
+      more_info: "Plus d'Informations"
+      info1: " "
+      info2: " "
+      info3: " "
+      info4: " "
+      info5: " "
+      next: "Précédent"
+      back: "Suivant"
+      audio_not_supported: "Audio pas supporté"
+      new: Nouveau
+    
+    audio_section:
+      subtitle: "Annonces Audio"
+      title: "Écoutez les Informations Importantes"
+      description: "Ci-dessous, vous trouverez un message audio contenant des détails cruciaux sur le concours d'entrée et d'autres annonces importantes. Veuillez écouter attentivement pour vous assurer de ne manquer aucune information vitale."
+      listen: "Lancer l'Annonce Audio"
+      browser_not_supported: "Votre navigateur ne prend pas en charge l'élément audio. Veuillez mettre à jour votre navigateur ou télécharger le fichier audio pour l'écouter."
+
+
+    payment:
+      title: "Frais de scolarité"
+      subtitle: "Modalités"
+      description: "Les frais de scolarité par année de formation s'élèvent à 100 000 francs CFA pour les étudiants camerounais et à 1 500 000 francs CFA pour les étudiants étrangers qui ne bénéficient pas d'une bourse."
+ 
+      
+
+faq:
+    title: "Foire aux questions (FAQ)"
+    description: "Ci-dessous, vous trouverez les questions fréquemment posées. N'hésitez pas à consulter en cas de doute."
+    question1: "J'ai complété l'inscription sans télécharger la fiche d'inscription?"
+    answer1: 
+      section1: "N'ayez crainte, puisque vous avez déjà un compte,"
+      section2: " Connectez-vous à votre compte "
+      section3: "et cela vous redirigera vers la page de téléchargement de la fiche d'inscription. Vous verrez le bouton "
+      section4: "'Télécharger la fiche d'inscription"
+      section5: " juste sur la barre de navigation. Cliquez dessus et vous pourrez télécharger votre fiche d'inscription."
+    question2: "Je ne sais pas comment naviguer le site d'inscription?"
+    answer2: 
+      section1: "Vous devez tout d'abord: "
+      section2: " 1) Créer un compte sur le site, en renseignant votre email et mot de passe."
+      section3: " 2) Initier votre transaction bancaire pour le concours. "
+      section4: " 3) Remplir les formulaires avec les informations demandées."
+      section5: " 4) Quand vous aurez fini de remplir et êtes sûr de ne pas avoir fait une erreur, finalisez l'inscription et téléchargez la fiche d'inscription."
+      section6: " 5) Au cas où vous n'avez pas téléchargé la fiche d'inscription, voir le FAQ 1."
+    question3: "J'ai oublié le mot de passe de mon compte?"
+    answer3: 
+      section1: "Gardez votre calme et essayez de vous souvenir de votre mot de passe."
+      section2: "Si vous ne vous en souvenez plus du tout, allez sur la page 'connexion' puis cliquez sur mot de passe oublié et suivez la procedure"
+ 
+
+login_page:
+  heading: Connexion
+  username_label: Email
+  email_label: Email
+  password_label: Mot de passe
+  sign_in_button: Se connecter
+  welcome_message: " "
+  slogan: " "
+  title: "Connexion"
+  description: "Entrez vos identifiants ici pour continuer l'inscription"
+  logged_in_as: "Vous êtes connecté en tant que %username%"
+  logout: "se déconnecter ?"
+  forgot_password: "Mot de passe oublié ?"
+  email_placeholder: "Entrez votre email"
+  password_placeholder: "Entrez votre mot de passe"
+  invalid_credentials': "Informations d'identification non valides"
+  email_required: "l'email est obligatoire"
+  password_required': 'Le mot de passe est obligatoire'
+  remember_me: Se souvenir de moi
+  have_account: "Vous n'avez pas de compte?"
+  have_account_redirect: "Créer un compte"
+  login_successful: 'Connexion réussie !'
+
+login_status: 
+  success_message: "Connexion Reussie"
+  failure_message: "Une Erreur S'est Produite"
+  redirect_message: "Redirection dans un instant"
+  
+# translations/messages.fr.yaml
+
+login:
+  error:
+    invalid_email: "Format d'adresse e-mail invalide."
+    email_not_exist: "L'adresse e-mail n'existe pas."
+    invalid_credentials: "Identifiants incorrects."
+
+registration_status:
+  success_message: "Compte crée avec succes"
+  failure_message: "Une erreur s'est produite"
+  redirect_message: "Redirection dans un instant"
+
+registration_page:
+  heading: Créer un compte
+  username_label: Nom complet
+  password_label: Mot de passe
+  sign_up_button: Créer un compte
+  email_label: Email
+  email_placeholder: "Entrez votre addresse email"
+  welcome_message: " "
+  slogan: " "
+  Got it: "Compris"
+  title: "Inscription"
+  description: "Entrez vos informations ici pour créer un compte"
+  confirm_password: "Confirmer le mot de passe"
+  password: "Mot de passe"
+  password_invalid: "Mot de passe invalide"
+  password_length: 'Au moins 8 caractères'
+  password_uppercase: 'Au moins une lettre majuscule'
+  password_lowercase: 'Au moins une lettre minuscule'
+  password_number: 'Au moins un chiffre'
+  password_special: 'Au moins un caractère spécial'
+  passwords_not_matching: "les mots de passe ne correspondent pas"
+  password_requirements: "Le mot de passe doit comporter 8 caractères, avec une lettre majuscule, un chiffre et un caractère spécial"
+  username_placeholder: "Entrez votre nom complet"
+  password_placeholder: "Entrez votre mot de passe"
+  confirm_password_placeholder: "Confirmez votre mot de passe"
+  have_account: "Vous avez déjà un compte ?"
+  have_account_redirect: "Connexion"
+  help_title: "Aide à la création de compte"
+  help1: "L'email doit être une adresse email valide."
+  help2: "Le mot de passe doit contenir au moins 8 caractères."
+  help3: "Le mot de passe doit inclure au moins une majuscule, une minuscule, un chiffre et un caractère spécial."
+  help4: "Le mot de passe de confirmation doit correspondre au mot de passe."
+registration.email.not_blank: 'Veuillez entrer une adresse email.'
+registration.email.invalid: "L'adresse email {{ value }} n'est pas valide."
+registration.password.not_blank: 'Veuillez entrer un mot de passe.'
+registration.password.min_length: "Votre mot de passe doit contenir au moins {{ limit }} caractères."
+registration.password.invalid: 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.'
+
+
+candidate_form:
+  
+  Inscription: "Formulaire d'inscription du candidat"
+  Mettez à jour vos informations: "Formulaire d'inscription du candidat"
+  description: "Remplissez le formulaire ci-dessous pour vous inscrire."
+  step1_title: 
+    Étape 1: "Informations de paiement"
+  
+  transaction_number: "Numéro de transaction"
+  transaction_number_placeholder: "Entrez votre numéro de transaction"
+  transaction_number_help: "Entrez ci-dessous le numéro de transaction fourni par l'opérateur financier choisi."
+
+  payment_receipt: "Opérateur de paiement"
+  paymentOperator_help: "Choisissez un opérateur de paiement"
+  transaction_photo_placeholder: "Scannez la photo du reçu de paiement"
+  
+  step2_title: 
+    Étape 2: "Informations personnelles"
+    Étape Int: "Eligibilité pour le Concours"
+    Educational System: "Système Éducatif"
+    desc: "Ici, nous allons vérifier si vous êtes éligible pour le concours."
+    desc_2_bac: Vous devez avoir une note d'au moins 10/20 dans d'une des matieres si dessous
+    desc_2_gce: Vous devez avoir obtenu un grade de C ou plus dans d'une des matieres si dessous
+    desc_en_gce: "Sélectionnez une matière dans la liste ci-dessous de votre diplôme du GCE Advanced level où vous avez obtenu un grade de C ou plus et entrez le grade"
+    desc_en_gce_olevel: "Sélectionnez une matière dans la liste ci-dessous de votre diplôme du GCE Ordinary level où vous avez obtenu un grade de C ou plus et entrez le grade"
+
+    desc_bac: "Sélectionnez une matière dans la liste ci-dessous de votre diplôme du Baccalauréat où vous avez obtenu 10 ou plus et entrez la note"
+    desc_prob: "Sélectionnez une matière dans la liste ci-dessous de votre diplôme du Probatoire où vous avez obtenu 10 ou plus et entrez la note"
+    yes: Oui
+    no: Non
+    next_step_desc: "NB: Si vous avez un GCE, entrez votre grade et remplissez les champs du BAC avec des tirets '-' et si vous avez un BAC, entrez votre note et remplissez les champs du GCE avec un tiret '-' "
+
+   
+    # question_en: "Is your GCE Alevel in Arts?"
+    question_fr: "Avez-vous un Baccalauréat Littéraire ou GCE Advanced Level Arts?"
+
+  step2_fields:
+    matieres: Matière 
+    baccalaureat: Baccalauréat
+    bacSubjectMark: Note au Baccalauréat
+    probatoire: Probatoire
+    probatoireSubjectMark: Note au Probatoire
+
+
+    gceAlevel: GCE Advanced Level
+    gceAlevelGrade: GCE Advanced Level Grade
+    gceOlevel: GCE Ordinary Level
+    gceOlevelGrade: GCE Ordinary Level Grade
+  conditions:
+    failed: "Désolé, vous ne respectez pas les conditions du concours"
+  admissionType: "Type d'Admission"
+  admissionType1:
+    onTitle: "ADMISSION SUR TITRE"
+    byExam:  "ADMISSION PAR ÉPREUVE"
+
+
+  name: "Nom complet"
+  name_placeholder: "Entrez votre nom complet"
+  name_help: "Votre nom légal tel qu'il apparaît sur vos documents officiels. (En lettres majuscules)"
+
+  sexe: "Sexe"
+  sexe.male: 'Masculin'
+  sexe.female: 'Féminin'
+  sexe_placeholder: "Sélectionnez votre sexe"
+  sexe_help: "Veuillez choisir votre sexe dans la liste."
+
+  dateOfBirth: "Date de naissance"
+  dateOfBirth_placeholder: "Sélectionnez votre date de naissance"
+  dateOfBirth_help: "Votre date de naissance telle qu'elle figure sur les documents officiels. (Format Jour/Mois/Année)"
+
+  placeOfBirth: "Lieu de naissance"
+  placeOfBirth_placeholder: "Entrez votre lieu de naissance"
+  placeOfBirth_help: "La ville où vous êtes né(e) telle qu'indiquée sur votre acte de naissance."
+
+  birthCertificate: "Acte de naissance(JPEG/PNG/PDF)"
+  birthCertificate_placeholder: "Sélectionnez une copie scannée de votre acte de naissance"
+  birthCertificate_help: "Sélectionnez une copie scannée de votre acte de naissance"
+
+  nationality: "Nationalité"
+  nationality.africa: 'Afrique'
+  nationality.cameroon: 'Cameroun'
+  nationality.congo: 'Congo'
+  nationality.gabon: 'Gabon'
+  nationality.ghana: 'Ghana'
+  nationality.mali: 'Mali'
+  nationality.mauritania: 'Mauritanie'
+  nationality.niger: 'Niger'
+  nationality.nigeria: 'Nigéria'
+  nationality.senegal: 'Sénégal'
+  nationality.algeria: 'Algérie'
+  nationality.togo: 'Togo'
+  nationality.tunisia: 'Tunisie'
+  nationality.egypt: 'Égypte'
+  nationality.morocco: 'Maroc'
+  nationality.sudan: 'Soudan'
+  nationality.south_africa: 'Afrique du Sud'
+  nationality.angola: 'Angola'
+  nationality.burkina_faso: 'Burkina Faso'
+  nationality.burundi: 'Burundi'
+  nationality.central_african_republic: 'République Centrafricaine'
+  nationality.chad: 'Tchad'
+  nationality.comoros: 'Comores'
+  nationality.dr_congo: 'République Démocratique du Congo'
+  nationality.djibouti: 'Djibouti'
+  nationality.eritrea: 'Érythrée'
+  nationality.ethiopia: 'Éthiopie'
+  nationality.gambia: 'Gambie'
+  nationality.guinea: 'Guinée'
+  nationality.guinea_bissau: 'Guinée-Bissau'
+  nationality.kenya: 'Kenya'
+  nationality.lesotho: 'Lesotho'
+  nationality.liberia: 'Libéria'
+  nationality.libya: 'Libye'
+  nationality.madagascar: 'Madagascar'
+  nationality.malawi: 'Malawi'
+  nationality.mauritius: 'Maurice'
+  nationality.mozambique: 'Mozambique'
+  nationality.myanmar: 'Myanmar'
+  nationality.rwanda: 'Rwanda'
+  nationality.sao_tome_and_principe: 'Sao Tomé-et-Principe'
+  nationality.seychelles: 'Seychelles'
+  nationality.somalia: 'Somalie'
+  nationality.benin: 'Bénin'
+  nationality.botswana: 'Botswana'
+  nationality.cabo_verde: 'Cap-Vert'
+  nationality.eq_guinea: 'Guinée Équatoriale'
+  nationality.eswatini: 'Eswatini'
+  nationality.ivory_coast: 'Côte d’Ivoire'
+  nationality.namibia: 'Namibie'
+  nationality.sierra_leone: 'Sierra Leone'
+  nationality.tanzania: 'Tanzanie'
+  nationality.uganda: 'Ouganda'
+  nationality.zambia: 'Zambie'
+  nationality.zimbabwe: 'Zimbabwe'
+
+  nationality.other_countries: "Autres Pays"
+  nationality.canada: 'Canada'
+  nationality.us: 'États-Unis'
+  nationality.uk: 'Royaume-Uni'
+  nationality.france: 'France'
+  nationality.india: 'Inde'
+  nationality.germany: 'Allemagne'
+  nationality.china: 'Chine'
+  nationality.russia: 'Russie'
+
+  nationality_placeholder: "Entrez votre nationalité"
+  nationality_help: "Votre pays de citoyenneté."
+
+  region: "Région d'origine"
+  region.adamaoua: 'Adamaoua'
+  region.centre: 'Centre'
+  region.est: 'Est'
+  region.extreme_nord: 'Extrême Nord'
+  region.littoral: 'Littoral'
+  region.nord: 'Nord'
+  region.nord_ouest: 'Nord Ouest'
+  region.sud: 'Sud'
+  region.sud_ouest: 'Sud Ouest'
+  region.ouest: "Ouest" 
+  region_placeholder: "Sélectionnez votre région"
+  region_help: "Sélectionnez votre région d'origine."
+
+  depertement: "Département d'origine"
+  depertement_placeholder: "Sélectionnez votre département"
+  depertement_help: "Sélectionnez votre département d'origine."
+
+  cni: "Numéro de la CNI ou numéro de passeport"
+  cni_placeholder: "Entrez votre numéro de carte nationale d'identité ou numéro de passeport"
+  cni_help: "Votre numéro d'identification nationale officiel ou numéro de passeport"
+
+  cniIssueDate: "Date de délivrance de la CNI/Passeport"
+  cniIssueDate_placeholder: "Sélectionnez la date d'émission de votre CNI"
+  cniIssueDate_help: "La date d'émission de votre carte nationale d'identité. (Format Jour/Mois/Année)"
+
+  phoneNumber: "Numéro de téléphone Whatsapp"
+  phoneNumber_placeholder: "Entrez votre numéro de téléphone ex: +237656123456"
+  phoneNumber_help: "Entrez votre numéro de téléphone avec l'indicatif du pays"
+
+  email: "Adresse e-mail"
+  email_placeholder: "Entrez votre adresse e-mail"
+  email_help: "Entrez votre adresse e-mail"
+
+  photo: "Photo 4x4 scannée(JPEG/PNG)"
+  photo_placeholder: "Sélectionnez une photo scannée de vous en format 4x4"
+  photo_help: "Photo scannée de vous en format 4x4"
+
+  certificateType: "Type de diplôme"
+  step3_title: 
+    Étape 3: "Autres informations"
+    Étape 4: "Etudes Secondaires"
+    Étape 5: "Baccalaureat"
+    Étape 5.1: "General Certificate of Education Advanced Level"
+    Étape 6: "Informations sur le Concours"
+
+  transcript: "Photocopie du relevé de notes(JPEG/PNG/PDF): "
+  medicalCertificate: "Photocopie de votre certificat médical (JPEG/PNG/PDF) :" 
+  criminalRecordExtract: "Photocopie de votre extrait de casier judiciaire (JPEG/PNG/PDF) :"
+
+
+  field: "Domaine d'étude"
+  field.digital_creation: 'Création et Design Numériques'
+  field.digital_systems: 'Ingénierie des Systèmes Numériques'
+  field.sociotechnical: 'Ingénierie Numérique Sociotechnique'
+  field_placeholder: "Entrez votre domaine d'études"
+  field_help: "Sélectionnez votre domaine d'études souhaité"
+
+  secondaryEducationStartYear: "Année de début de l'enseignement secondaire"
+  secondaryEducationStartYear_placeholder: "Entrez l'année de début de votre enseignement secondaire"
+  secondaryEducationStartYear_help: "L'année où vous avez commencé l'enseignement secondaire."
+
+  secondaryEducationEndYear: "Année de fin de l'enseignement secondaire"
+  secondaryEducationEndYear_placeholder: "Entrez l'année de fin de votre enseignement secondaire"
+  secondaryEducationEndYear_help: "L'année où vous avez terminé l'enseignement secondaire."
+
+  educationSubsystem: "Sous-système éducatif"
+  educationSubsystem_placeholder: "Sélectionnez votre sous-système éducatif"
+  educationSubsystem_help: "Le sous-système éducatif dans lequel vous étiez inscrit."
+
+  secondCycleStudyType: "Spécialité du second cycle :"
+  secondCycleStudyType.Littéraire: 'Littéraire'
+  secondCycleStudyType.Scientifique: 'Scientifique'
+  secondCycleStudyType.Technique_industriel: 'Technique industriel'
+  secondCycleStudyType.Technique_tertiaire: 'Technique tertiaire'
+  secondCycleStudyType_placeholder: "Sélectionnez votre spécialité du second cycle"
+  secondCycleStudyType_help: "Le type d'études que vous avez suivi dans votre second cycle."
+
+  certificate: "Photo du diplome scannée :"
+  certificate_placeholder: "Entrez votre diplôme"
+  certificate_help: "Photo du diplome obtenu après avoir terminé vos études."
+
+  baccalaureateCountry: "Pays d'obtention"
+  baccalaureateCountry_placeholder: "Entrez le pays où vous avez obtenu votre baccalauréat"
+  baccalaureateCountry_help: "Le pays dans lequel vous avez obtenu votre baccalauréat."
+
+  baccalaureateSeries: "Série"
+  baccalaureateSeries_placeholder: "Entrez votre série de baccalauréat"
+  baccalaureateSeries_help: "La série de votre baccalauréat."
+
+  baccalaureateMention: "Mention"
+  baccalaureateMention_placeholder: "Entrez la mention de votre baccalauréat"
+  baccalaureateMention_help: "La mention que vous avez reçue pour votre baccalauréat."
+
+  probatoireYear: "Année du Probatoire"
+  probatoireYear_placeholder: "Entrez votre année de Probatoire"
+  probatoireYear_help: "L'année où vous avez terminé votre Probatoire."
+
+  gceALevelCountry: "Pays d'obtention "
+  gceALevelCountry_placeholder: "Entrez le pays où vous avez obtenu votre GCE A-Level"
+  gceALevelCountry_help: "Le pays où vous avez obtenu votre GCE A-Level."
+
+  gceALevelPapersCount: "Nombre de matières"
+  gceALevelPapersCount_placeholder: "Entrez le nombre de matières réussies au GCE A-Level"
+  gceALevelPapersCount_help: "Le nombre total de matières réussies au GCE A-Level."
+
+  gceALevelGradeACount: "Nombre de grades A "
+  gceALevelGradeACount_placeholder: "Entrez le nombre de notes 'A' obtenues au GCE A-Level"
+  gceALevelGradeACount_help: "Le nombre de notes 'A' obtenues au GCE A-Level."
+
+  gceOLevelYear: "Année du GCE O-Level"
+  gceOLevelYear_placeholder: "Entrez votre année du GCE O-Level"
+  gceOLevelYear_help: "L'année où vous avez terminé votre GCE O-Level."
+
+  gceOLevelPapersCount: "Nombre de matières au GCE O-Level"
+  gceOLevelPapersCount_placeholder: "Entrez le nombre de matières réussies au GCE O-Level"
+  gceOLevelPapersCount_help: "Le nombre total de matières réussies au GCE O-Level."
+
+  examinationCenter: "Centre d'examen (Lieu du dépôt du dossier)"
+  examinationCenter_placeholder: "Sélectionnez votre lieu d'examen"
+  examinationCenter_help: "Le lieu où vous déposez vos documents et passez l'examen"
+
+  certificateYearGCE: "Année d'obtention du diplôme"
+  certificateYearGCE_placeholder: "Entrez l'année d'obtention de votre diplôme"
+  certificateYearGCE_help: "L'année à laquelle vous avez reçu votre diplôme."
+
+  certificateYearBAC: "Année d'obtention du diplôme" 
+  certificateYearBAC_placeholder: "Entrez l'année d'obtention de votre diplôme"
+  certificateYearBAC_help: "L'année à laquelle vous avez reçu votre diplôme."
+
+
+  language: "Langue de l'examen :"
+  language.french: "Français"
+  language.english: "Anglais"
+  language_placeholder: "Sélectionnez votre langue préférée pour l'examen"
+  language_help: "Votre langue préférée pour l'examen."
+
+  previous: Précédent
+  next: Suivant
+  save: Sauvegarder
+  update: S'inscrire
+  register: S'inscrire
+  save_progress: Sauvegarder le progrès
+  progress_saved: Progrès sauvegardé avec succès!
+  Need help?: Besoin d'aide?
+  Help 1: "Votre progrès est automatiquement sauvegardé"
+  Help 2: "Assurez-vous de vérifier chaque champ avant de soumettre."
+  Help 3: "Si vous arrivez à la fin et oubliez de télécharger la fiche d'inscription, reconnectez-vous simplement."
+  Help 4: "Les boutons précédent et suivant sont utilisés pour naviguer, pas les boutons du navigateur."
+  Help 5: " Si votre formulaire ne se soumet pas à la fin et revient au depart, vérifiez votre formulaire. Il contient une erreur ou une condition n'est pas respectée"
+  preview_download: Télécharger la fiche 
+
+  step_moved_success: "Avancé à l'étape %step% avec succès"
+  step_returned: "Reculé à l'étape %step% avec succès"
+
+  confirm_submission: "Soumettre le formulaire"
+  confirm_submission_message: "Êtes-vous sûr de vouloir soumettre votre formulaire ? Vous aurez un maximum de 7 jours pour modifier vos informations apres quoi vous ne pourrez plus les modifier"
+  no: "NON"
+  yes: "OUI"
+
+  required_fields_missing: "Veuillez remplir les champs vides"
+
+  #Help guide
+  Help Guide: "Guide d'assistance"
+  Help 1 Title: "Progression de la page "
+  Help 2 Title: "Vérification croisée"
+  Help 3 Title: "Reçu oublié ?"
+  Help 4 Title: "Navigation"
+  Help 5 Title: "Formulaire Boucle"
+  Close: "Fermer l'aide"
+
+error:
+    title: "Une erreur s'est produite - Nous sommes désolés!"
+    alt_text: "Une erreur s'est produite"
+    404: "404"
+    page_not_found: "Page non trouvée"
+    message: "La page que vous recherchez a peut-être été supprimée, renommée ou est temporairement indisponible."
+    go_back: "Retourner"
+    faq_link: "Besoin d'aide? Consultez la FAQ"
+    invalid_transaction_number_format: "Le format du numéro de transaction n'est pas valide pour l'opérateur de paiement sélectionné."
+
+
+preview.title.header: "FICHE D'INSCRIPTION"
+preview.title.subheader: "Concours d'entrée en 1"
+preview.title.subheader0: "ère"
+preview.title.subheader1: "année"
+preview.title.subheader2: "d'études d'ingénieur à "
+preview.title.subheader3: "l'Ecole Supérieure Internationale de Génie Numérique de Sangmélima"
+preview.title.subheader4: "Promotion 2024-2029"
+preview.title.candidateIdentifier: "Identifiant du candidat : xxxxxxxxxxxxxxxxx"
+preview.field: "Spécialité :"
+preview.examinationCenter: "Centre d'examen :"
+preview.examinationLanguage: "Langue d'examen : "
+preview.personalInformations: INFORMATIONS PERSONNELLES
+preview.fullname: "Noms et prénoms"
+preview.dob: "Date de naissance:  "
+preview.pob: "Lieu de naissance :"
+preview.nationality: "Nationalité : "
+preview.regionOrigin: "Région d'origine: "
+preview.Department: "Département : "
+preview.cni: "N° CNI/Passeport : "
+preview.cniIssued: "Délivré le : "
+preview.telephone: "Téléphone : "
+preview.email: "Email : "
+preview.secondaryStudies: ETUDES SECONDAIRES 
+preview.startYear: "Année de début : "
+preview.endYear: "Année de fin : "
+preview.subsystem: "Sous-système : "
+preview.secondCycleType: "Type d'études au second cycle : "
+preview.bac: "Baccalauréat :"
+preview.bacCountry: "Pays d'obtention : "
+preview.certificateYear: "Année d’obtention : "
+preview.series: "Série : "
+preview.bacMention: "Mention : "
+preview.probYear: "Année d’obtention du probatoire :"
+preview.gceal: "General Certificate of Education Advanced Level"
+preview.gcealCountry: "Pays d'obtention : "
+preview.gcealYear: "Année d’obtention : "
+preview.gcealPapers: "Number of papers :"
+preview.gcealAGrade: "Number of papers with grade A :"
+preview.gceolYear: "Année d’obtention du GCE-OL : "
+preview.gceolPapers: "Number of papers :"
+preview.paymentTitle: "PAIEMENT DES FRAIS DE CONCOURS"
+preview.operator: "Opérateur : "
+preview.transactionNumber: "N° transaction : "
+preview.signature : "Signature du candidat"
+preview.final_text: "Le candidat veillera à imprimer et à présenter cette fiche lors de l'examen"
+
+form.validation.required_fields: 'Veuillez remplir tous les champs obligatoires.'
+form.validation.required_fields_1: "Ce champs est obligatoire"
+
+
+password_reset.status_message: ""
+
+password_reset.status_title: "Réinitialiser"
+
+language_popup:
+  title: "Changer de Langue"
+  message: "Souhaitez-vous changer la langue?"
+  close: "Fermer"
+
+
+errorMessages.required: "Ce champ est requis"
+errorMessages.expiration: "La possibilité de modification de 7 jours a expiré. Vous ne pouvez plus modifier vos informations."
+
+language_popup.change_later: "Pour changer la langue plus tard, vous pouvez cliquer sur cette icône de traduction située sur votre barre de navigation"
+language_popup.icon_description: "Cela fera apparaître un menu déroulant où vous pourrez choisir"
+
+
+reset_page:
+  request:
+    title: "Réinitialisez votre mot de passe"
+    heading: "Réinitialisez votre mot de passe"
+    desc: "Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe."
+    email: "E-mail"
+    send_button: "Envoyer l'e-mail de réinitialisation de mot de passe"
+  
+  reset:
+    title: "Réinitialisez votre mot de passe"
+    heading: "Réinitialisez votre mot de passe"
+    desc: "Veuillez entrer votre nouveau mot de passe ci-dessous"
+    new_password: "Nouveau mot de passe"
+    new_password_placeholder: "Entrez votre nouveau mot de passe"
+    new_password_confirm: "Confirmez le nouveau mot de passe"
+    new_password_confirm_placeholder: "Confirmez votre nouveau mot de passe"
+    send_button: "Réinitialiser le mot de passe"
+  error: "L'e-mail de réinitialisation de mot de passe n'a pas été envoyé"
+
+loading.message: "Veuillez patienter un moment, nous aurons bientôt terminé."
+
+final_section_title: "Section Finale"
+final_section_header.button_home: "Retour à l'accueil"
+final_section_header.button_jagora: "Accéder au site de Jagora"
+final_section_header: "Inscription réussie."
+final_section_desc: "Merci d'avoir complété le formulaire. Votre candidature a été reçue avec succès."
+final_section_next_steps: "Informations Supplémentaires"
+final_section_desc_1: "Votre fiche d'inscription a également été envoyé à votre adresse email."
+final_section_desc_2: "Vous pouvez également consulter les programmes de l'université indienne KL University délocalisés à UIECC via le lien suivant"
+final_section_desc_3: "Pour toute question, n'hésitez pas à nous contacter via le lien ci-dessous"
+final_section_desc_4: "Nous Contacter"
+final_section_desc_5: "Vérifiez votre email pour la fiche d'inscription"
+
+results_section:
+  subtitle: "Les Résultats du Concours d'Entrée"
+  title: "Les Résultats"
+  description: "Ci-dessous les résultats officiels du concours d'entrée."
+  more_info: "Résultats par Liste"
+  description_2: "Veuillez faire défiler les images pour consulter toutes les listes de résultats."

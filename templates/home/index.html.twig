@@ -1,0 +1,1399 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+
+
+<style>
+    :root {
+        --navbar-height: 0;
+    }
+
+    .blurred-bg {
+        background-image: url("/images/front-view.JPG");
+        background-size: cover;
+        background-position: center;
+        border-radius: 10%;
+        height: 100%;
+    }
+
+    @media(max-width: 1023px) {
+        #right-side {
+            display: none;
+        }
+    }
+
+    body {
+        /* padding-top: var(--navbar-height); */
+    }
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  z-index: 1;
+}
+
+.hero-section .background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1) translate(0, 0%);
+  transform-origin: 100% 90%; /* Adjust vertical position */
+  transition: transform 0.3s ease-out;
+}
+
+@media (max-width: 640px) {
+  .hero-section .background-image {
+    transform: scale(2.5); /* Adjust zoom level for mobile */
+    transform-origin: 50% 40%; /* Adjust vertical position for mobile */
+  }
+}
+ @media (max-width: 640px) {
+    .hero-section .left-flag,
+    .hero-section .right-flag {
+      top: 10%; /* Adjust for better positioning on mobile */
+    }
+ }
+
+    /* Section transitions */
+    section {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* FAQ dropdown styles */
+    .faq-item {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .faq-answer {
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    .faq-answer:not(.hidden) {
+        max-height: 1000px;
+        /* Adjust this value based on your content */
+        opacity: 1;
+    }
+
+    .faq-item.active .faq-answer {
+        max-height: 500px;
+    }
+
+    .truncate {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    /* Responsive adjustments */
+    @media(max-width: 640px) {
+        .hero-section {
+            padding: 0.5rem 0.5rem;
+        }
+
+        .blurred-bg-container {
+            display: none;
+        }
+    }
+
+    @media(min-width: 641px) and(max-width: 1023px) {
+        .hero-section {
+            padding: 0.5rem 0.5rem;
+        }
+
+        .blurred-bg-container {
+            height: 300px;
+        }
+    }
+
+    @media(min-width: 1024px) {
+        .hero-section {
+            padding: 0.5rem 0.5rem;
+        }
+    }
+</style>
+
+<div class="relative bg-transparent hero-section -mt-4">
+   <!-- Background Image -->
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <div class="w-full h-1/2 relative overflow-hidden">
+      <img src="/images/uiecc1.jpg" alt="Background" class="absolute w-full h-full object-cover object-center scale-105" />
+    </div>
+  </div>
+<!-- Left Flag -->
+<div class="absolute left-4 top-1 z-10 w-24 h-16 md:w-32 md:h-24 mt-3">
+  <div class="relative w-full h-full">
+    {# <div class="absolute inset-0 bg-white rounded-md shadow-md "></div> #}
+  </div>
+</div>
+
+<!-- Right Flag -->
+<div class="absolute right-4 top-1 z-10 w-24 h-16 md:w-32 md:h-24 mt-3">
+  <div class="relative w-full h-full">
+    {# <div class="absolute inset-0 bg-white rounded-md shadow-md "></div> #}
+  </div>
+</div>
+
+  <!-- Hero Section Content -->
+  <section class="relative z-10 py-12 lg:py-28">
+    <div class="relative isolate px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl pt-24 pb-16 sm:pt-48 sm:pb-24 lg:py-10">
+        <!-- Logo Circle -->
+        <div class="block h-full w-full relative mb-4">
+          <div class="relative flex justify-center items-center h-full">
+            <div class="bg-white rounded-full p-4 shadow-lg flex items-center justify-center">
+              <img src="/icons/uiecc_logo.svg" alt="UIECC Logo" class="w-48 h-48 object-contain" />
+            </div>
+          </div>
+        </div>
+        
+        <!-- Prerequis Text -->
+        <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+          <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-white/80">
+            {{ "home_body.hero_section.prerequis" | trans }}<a href="{{ path('app_home') }}#requirements-section" class="font-semibold text-main-green">{{ "home_body.hero_section.read_more" | trans }}<span class="absolute inset-0" aria-hidden="true"></span> <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+        
+        <!-- Main Text Content -->
+        <div class="text-center">
+         <h1 class="text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-bold leading-loose text-center lg:text-center mb-4" style="line-height: 1.05;">
+						{{ "home_body.hero_section.welcome" | trans }}
+						<span class="text-main-green font-bold">
+							{{ "home_body.hero_section.welcome_sub-text1" | trans }}
+						</span>
+						{{ "home_body.hero_section.welcome_sub-text2" | trans }}
+					</h1>
+					<p class="text-sm sm:text-base lg:text-lg mb-8 leading-relaxed text-center lg:text-center text-gray-600">
+						<span>{{ "home_body.hero_section.sub-text4" | trans }}</span>
+						{{ "home_body.hero_section.sub-text1" | trans }}
+						<span class="text-main-green font-normal">{{ "home_body.hero_section.sub-text2" | trans
+                            }}</span>
+						{{ "home_body.hero_section.sub-text3" | trans }}
+					</p>
+          <div class="mt-10 flex items-center justify-center gap-x-6">
+            <a href="{{ path('app_home') }}#about-section" class="rounded-md bg-main-green px-5 py-4 text-md font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{{ "home_body.hero_section.savoir_plus" | trans }}</a>
+            <a href="{{ path('app_login') }}" class="text-md font-semibold leading-6 text-gray-900 hover:text-green-500">{{ "home_header.nav.login" | trans }}<span aria-hidden="true" class="hover:text-green-500">→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{# Results section #}
+<section class="bg-white py-12 lg:py-24" id="results-section">
+  {# <div class="absolute inset-0 -z-10 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]" aria-hidden="true">
+            <defs>
+                <pattern id="results-pattern" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <*svg* x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z" stroke-width="0" />
+            </*svg*>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#results-pattern)" />
+        </svg>
+    </div> #}
+    <div class="container mx-auto px-4">
+        <!-- Text Section with reduced width -->
+        <div class="max-w-2xl mx-auto mb-12 text-center">
+            <h2 class="text-green-600 uppercase tracking-wide font-semibold mb-2">
+                {{ 'results_section.subtitle'|trans }}
+            </h2>
+            <h3 class="text-3xl lg:text-5xl font-bold mb-6 text-gray-900">
+                {{ 'results_section.title'|trans }}
+            </h3>
+            <p class="text-gray-700 mb-4 text-lg">
+                {{ 'results_section.description'|trans }}
+            </p>
+            <h2 class="text-gray-900 uppercase tracking-wide font-bold mb-2 mt-8">
+                {{ 'results_section.more_info'|trans }}
+            </h2>
+            <p class="text-gray-700 mb-4 text-lg">
+                {{ 'results_section.description_2'|trans }}
+            </p>
+        </div>
+        <!-- Image Section -->
+        <div class="mt-12 relative">
+            <div id="resultsCarousel" class="relative overflow-hidden rounded-lg shadow-lg max-w-4xl mx-auto">
+                <!-- Media slides will be dynamically inserted here -->
+            </div>
+            <button id="resultsPrevButton" class="absolute top-1/2 left-2 md:left-4 lg:left-8 transform -translate-y-1/2 bg-[#109646] bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 md:p-3 transition duration-300 z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 md:h-8 md:w-8 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button id="resultsNextButton" class="absolute top-1/2 right-2 md:right-4 lg:right-8 transform -translate-y-1/2 bg-[#109646] bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 md:p-3 transition duration-300 z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 md:h-8 md:w-8 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <!-- Improved Zoom Overlay -->
+    <div id="resultsZoomOverlay" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden">
+        <div class="fixed inset-0 p-4 md:p-8 flex items-center justify-center">
+            <div class="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                <div class="relative w-full h-full flex items-center justify-center">
+                    <img id="resultsZoomedImage" src="" alt="Zoomed image" class="max-w-full max-h-full object-contain">
+                    <button id="resultsCloseZoom" class="absolute top-2 right-2 md:top-4 md:right-4 w-10 h-10 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-full transition-colors duration-200 text-2xl leading-none z-20">&times;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# General Info section #}
+<section class="bg-white py-12 lg:py-24" id="generalinfo-section">
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]" aria-hidden="true">
+      <defs>
+        <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+          <path d="M100 200V.5M.5 .5H200" fill="none" />
+        </pattern>
+      </defs>
+      <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+        <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z" stroke-width="0" />
+      </svg>
+      <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+    </svg>
+  </div>
+
+  <div class="container mx-auto px-4">
+    <!-- Text Section with reduced width -->
+    <div class="max-w-2xl mx-auto mb-12 text-center">
+      <h2 class="text-green-600 uppercase tracking-wide font-semibold mb-2">
+        {{ 'about_section.general_info.subtitle'|trans }}
+      </h2>
+      <h3 class="text-3xl lg:text-5xl font-bold mb-6 text-gray-900">
+        {{ 'about_section.general_info.title'|trans }}
+      </h3>
+      <p class="text-gray-700 mb-4 text-lg">
+        {{ 'about_section.general_info.description'|trans }}
+      </p>
+      <h2 class="text-gray-900 uppercase tracking-wide font-bold mb-2 mt-8">
+        {{ 'about_section.general_info.more_info'|trans }}
+      </h2>
+      <p class="text-gray-700 mb-4 text-lg">
+        {{ 'about_section.general_info.description_2'|trans }}
+      </p>
+    </div>
+
+      <!-- Image Section -->
+    <div class="mt-12 relative">
+      <div id="mediaCarousel" class="relative overflow-hidden rounded-lg shadow-lg max-w-4xl mx-auto">
+        <!-- Media slides will be dynamically inserted here -->
+      </div>
+      <button id="prevButton" class="absolute top-1/2 left-2 md:left-4 lg:left-8 transform -translate-y-1/2 bg-[#109646] bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 md:p-3 transition duration-300 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 md:h-8 md:w-8 text-white">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button id="nextButton" class="absolute top-1/2 right-2 md:right-4 lg:right-8 transform -translate-y-1/2 bg-[#109646] bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 md:p-3 transition duration-300 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 md:h-8 md:w-8 text-white">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Improved Zoom Overlay -->
+  <div id="zoomOverlay" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden">
+    <div class="fixed inset-0 p-4 md:p-8 flex items-center justify-center">
+      <div class="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+        <div class="relative w-full h-full flex items-center justify-center">
+          <img id="zoomedImage" src="" alt="Zoomed image" class="max-w-full max-h-full object-contain">
+          <button id="closeZoom" class="absolute top-2 right-2 md:top-4 md:right-4 w-10 h-10 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-full transition-colors duration-200 text-2xl leading-none z-20">&times;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Before registering section -->
+<section  class="bg-white py-12 lg:py-28">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            aria-hidden="true">
+            <defs>
+                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                    patternunits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path
+                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                    stroke-width="0" />
+            </svg>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+        </svg>
+    </div>
+    <div class="relative isolate px-6 lg:px-8">
+    
+    <div class="mx-auto max-w-4xl py-28 sm:py-28 lg:py-28">
+      {# <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+        <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+          {{ "home_body.hero_section.prerequis" | trans }}<a href="{{ path('app_home') }}#requirements-section" class="font-semibold text-main-green">{{ "home_body.hero_section.read_more" | trans }}<span class="absolute inset-0" aria-hidden="true"></span> <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div> #}
+      <div class="text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ "home_body.hero_section.avant" | trans }}</h1>
+        <p class="mt-6 text-lg leading-8 text-gray-600">{{ "home_body.hero_section.consult" | trans }}</p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+            <a href="{{ path('app_home') }}#about-section" class="rounded-md bg-main-green px-5 py-4 text-md font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{{ "home_body.hero_section.get_started" | trans }}</a>
+            <a href="{{ path('app_home') }}#plaquette-section" class="text-md font-semibold leading-6 text-gray-900 hover:text-green-500">{{ "home_body.hero_section.get_started_1" | trans }}<span aria-hidden="true" class="hover:text-green-500">→</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- Presentation section -->
+<section class="relative py-16 sm:py-24 lg:py-32 overflow-hidden" id="about-section">
+
+    <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-1 lg:order-1 lg:hidden">
+                <img src="{{ asset('icons/presentation.svg') }}" alt="Presentation de l'ecole"
+                    class="h-96 w-96 lg:h-96 lg:w-96 mx-auto">
+    </div>
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            aria-hidden="true">
+            <defs>
+                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                    patternunits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path
+                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                    stroke-width="0" />
+            </svg>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+        </svg>
+    </div> 
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center justify-between">
+
+            <!-- Left side content -->
+            <div class="flex flex-col justify-center items-center lg:items-start w-full lg:w-1/2 lg:max-w-4xl lg:mr-20">
+                <h1 class="text-2xl xs:text-3xl lg:text-5xl xl:text-[40px] font-bold leading-tight lg:text-left xs:text-left mb-6">
+                    {{ 'about_section.title'|trans }}
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 text-justify">
+                    {{ 'about_section.new_subtext_1'|trans }}
+                    <span class="text-main-green font-semibold text-justify">{{ 'about_section.new_subtext_2'|trans }}</span>
+                    {{ 'about_section.new_subtext_3'|trans }}
+                </p>
+                <p class="text-lg text-gray-600 mb-8 text-justify">
+                    {{ 'about_section.about_new_subtext_4'|trans }}
+                    <span class="text-main-green font-semibold text-justify">{{ 'about_section.about_new_subtext_5'|trans }}</span>
+                    {{ 'about_section.about_new_subtext_6'|trans }}
+                </p>
+                <a href="/pdf/ESIGN_Prospectus.pdf" download="ESIGN_Prospectus.pdf"
+                   class="inline-block bg-green-600 text-white font-semibold py-3 px-8 rounded-md hover:bg-green-700 transition duration-300">
+                    {{ 'about_section.about_presentation'|trans }}
+                </a>
+            </div>
+
+            <!-- Right side carousel -->
+            <div class=" lg:block hidden w-full lg:w-1/2 mt-8 lg:mt-0">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide">
+                            <div class="bg-white rounded-2xl p-4 shadow-xl">
+                                <img src="/images/side_view.JPG" alt="Image 1" class="w-full h-full object-cover rounded-xl" />
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide">
+                            <div class="bg-white rounded-2xl p-4 shadow-xl">
+                                <img src="/images/front-view.JPG" alt="Image 2" class="w-full h-full object-cover rounded-xl" />
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide">
+                            <div class="bg-white rounded-2xl p-4 shadow-xl">
+                                <img src="/images/green_view.jpg" alt="Image 3" class="w-full h-full object-cover rounded-xl" />
+                            </div>
+                        </div>
+                        <!-- Slide 4 -->
+                        <div class="swiper-slide">
+                            <div class="bg-white rounded-2xl p-4 shadow-xl">
+                                <img src="/images/water_tank.JPG" alt="Image 3" class="w-full h-full object-cover rounded-xl" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Audio Section -->
+<section class="py-12 lg:py-24" id="audio-section">
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+         aria-hidden="true">
+      <defs>
+        <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                 patternunits="userSpaceOnUse">
+          <path d="M100 200V.5M.5 .5H200" fill="none" />
+        </pattern>
+      </defs>
+      <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+        <path
+          d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+          stroke-width="0" />
+      </svg>
+      <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+    </svg>
+  </div>
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:gap-x-12">
+      <!-- Text Section -->
+      <div class="w-full lg:w-2/3 order-2 lg:order-1 xs:text-justify">
+        <h2 class="text-green-600 uppercase tracking-wide font-semibold mb-2">
+          {{ 'about_section.audio_section.subtitle'|trans }}
+        </h2>
+        <h3 class="text-2xl lg:text-5xl font-bold mb-6 text-gray-900">
+          {{ 'about_section.audio_section.title'|trans }}
+        </h3>
+        <p class="text-gray-700 mb-8">
+          {{ 'about_section.audio_section.description'|trans }}
+        </p>
+        
+        <!-- Audio Player -->
+        <div class="mb-8">
+          <h4 class="text-lg font-semibold mb-2">{{ 'about_section.audio_section.listen'|trans }}</h4>
+          <audio controls class="w-full">
+            <source src="{{ asset('audio/coordo-speech.mpga') }}" type="audio/mpeg">
+            {{ 'about_section.audio_section.browser_not_supported'|trans }}
+          </audio>
+        </div>
+     
+      </div>
+      
+      <!-- Image Section -->
+      <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-1 lg:order-2">
+        <img src="{{ asset('icons/general_info.svg') }}" alt="General Info Section" class="h-96 w-96 lg:h-96 lg:w-96 mx-auto">
+      </div>
+    </div>
+  </div>
+</section> 
+
+
+<!-- Prospectus Section -->
+<section class="bg-white py-12 lg:py-24" id="plaquette-section">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            aria-hidden="true">
+            <defs>
+                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                    patternunits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path
+                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                    stroke-width="0" />
+            </svg>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+        </svg>
+    </div>
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:gap-x-12">
+            <!-- Image Section -->
+            <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-1 lg:order-1">
+                <img src="{{ asset('icons/prospectus.svg') }}" alt="Livre ouvert"
+                    class="h-96 w-96 lg:h-96 lg:w-96 mx-auto">
+            </div>
+            <!-- Text Section -->
+            <div class="w-full lg:w-2/3 order-2 lg:order-2 text-justify">
+                <h2 class="text-green-600 uppercase tracking-wide font-semibold mb-2">{{
+                    'about_section.about_new_prospectus_sup'|trans }}</h2>
+                <h3 class="text-2xl lg:text-5xl xs:text-3xl font-bold mb-6 text-gray-900">{{
+                    'about_section.about_new_prospectus'|trans }}</h3>
+                <p class="text-gray-700 mb-8">
+                    {{ 'about_section.about_new_prospectus_desc_1'|trans }}
+                    <span class="text-main-green font-semibold">{{ 'about_section.about_new_prospectus_desc_2'|trans
+                        }}</span>
+                    {{ 'about_section.about_new_prospectus_desc_3'|trans }}
+                </p>
+                <div class="flex flex-row lg:flex-row xs:flex-col xs:gap-y-2 gap-x-2">
+                <a href="/pdf/plaquetteANGLAIS.pdf" download="ESIGN_Prospectus.pdf"
+                    class="- inline-block bg-green-600 text-white font-semibold py-3 px-5 rounded-md hover:bg-green-700 transition duration-300">
+                    {{ 'about_section.about_new_prospectus_download_en'|trans }}
+                </a>
+                <a href="/pdf/ESIGN_Plaquette.pdf" download="ESIGN_Prospectus.pdf"
+                    class="inline-block bg-green-600 text-white font-semibold py-3 px-5 rounded-md hover:bg-green-700 transition duration-300">
+                    {{ 'about_section.about_new_prospectus_download_fr'|trans }}
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Arettee Section -->
+<section class="py-12 lg:py-24" id="about-section">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            aria-hidden="true">
+            <defs>
+                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                    patternunits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path
+                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                    stroke-width="0" />
+            </svg>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+        </svg>
+    </div>
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:gap-x-12">
+            <!-- Text Section -->
+            <div class="w-full lg:w-2/3 order-2 lg:order-1 text-justify">
+                <h2 class="text-green-600 uppercase tracking-wide font-semibold mb-2">{{
+                    'about_section.about_new_arrete_sup'|trans }}</h2>
+                <h3 class="text-2xl lg:text-5xl font-bold mb-6 text-gray-900">{{ 'about_section.about_new_arrete'|trans
+                    }}</h3>
+                <p class="text-gray-700 mb-8">
+                    {{ 'about_section.about_new_arrete_desc'|trans }}
+                </p>
+                <a href="/pdf/Concours2024.pdf" download="Concours_ESIGN.pdf"
+                    class="inline-block bg-green-600 text-white font-semibold py-3 px-8 rounded-md hover:bg-green-700 transition duration-300 mb-3">
+                    {{ 'about_section.about_new_arrete_download'|trans }}
+                </a>
+                <a href="/pdf/EntanceExamination2024.pdf" download="Concours_ESIGN.pdf"
+                    class="inline-block bg-green-600 text-white font-semibold py-3 px-8 rounded-md hover:bg-green-700 transition duration-300">
+                    {{ 'about_section.about_new_arrete_download1'|trans }}
+                </a>
+
+            </div>
+            <!-- Image Section -->
+            <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-1 lg:order-2">
+                <img src="{{ asset('icons/arrete.svg') }}" alt="Signature" class="h-96 w-96 lg:h-96 lg:w-96 mx-auto">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scolarite Section -->
+<section class="py-12 lg:py-24" id="scolarite-section">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            aria-hidden="true">
+            <defs>
+                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                    patternUnits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path
+                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                    stroke-width="0" />
+            </svg>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+        </svg>
+    </div>
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:gap-x-12">
+            <!-- Text Section -->
+            <div class="w-full lg:w-2/3 order-2 lg:order-2 text-justify">
+                <h2 class="text-green-600 uppercase tracking-wide font-semibold mb-2">
+                    {{ 'about_section.payment.subtitle'|trans }}
+                </h2>
+                <h3 class="text-2xl lg:text-5xl font-bold mb-6 text-gray-900">
+                    {{ 'about_section.payment.title'|trans }}
+                </h3>
+                <p class="text-gray-700 mb-8">
+                    {{ 'about_section.payment.description'|trans }}
+                </p>
+            </div>
+            <!-- Image Section -->
+            <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-1 lg:order-1">
+                <img src="{{ asset('icons/payment.svg') }}" alt="payment" class="h-96 w-96 lg:h-96 lg:w-96 mx-auto">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Requirements Section -->
+<section class="bg-white py-12 lg:py-24" id="requirements-section">
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+         aria-hidden="true">
+      <defs>
+        <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                 patternUnits="userSpaceOnUse">
+          <path d="M100 200V.5M.5 .5H200" fill="none" />
+        </pattern>
+      </defs>
+      <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+        <path
+          d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+          stroke-width="0" />
+      </svg>
+      <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+    </svg>
+  </div>
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:gap-x-12">
+      <!-- Text Section (appears below image on small screens, left on large screens) -->
+      <div class="w-full lg:w-2/3 order-2 lg:order-1">
+        <h2 class="text-green-600 uppercase tracking-wide font-semibold mb-2">
+          {{ 'about_section.requirements.subtitle'|trans }}
+        </h2>
+        <h3 class="text-2xl lg:text-4xl font-bold mb-6 text-gray-900">
+          {{ 'about_section.requirements.title'|trans }}
+        </h3>
+        <p class="text-gray-700 mb-4">
+          {{ 'about_section.requirements.description'|trans }}
+        </p>
+        <form id="requirementsForm">
+          <ol class="list-decimal text-gray-700 mb-6 space-y-4 list-inside text-justify">
+            <li class="text-justify">
+              {{ 'about_section.requirements.step1'|trans }}
+            </li>
+            <li class="text-justify">
+              {{ 'about_section.requirements.step2'|trans }}
+            </li>
+            <li class="text-justify">
+              {{ 'about_section.requirements.step3'|trans }}
+            </li>
+            <li class="text-justify">
+              {{ 'about_section.requirements.step4'|trans }}
+            </li>
+            <li class="text-justify">
+              {{ 'about_section.requirements.step5'|trans }}
+            </li>
+            <li class="text-justify">
+              {{ 'about_section.requirements.step6'|trans }}
+            </li>
+            <li class="text-justify">
+              {{ 'about_section.requirements.step7'|trans }}
+            </li>
+          </ol>
+        </form>
+        <div id="startRegistrationButtonContainer" class="hidden">
+          <a href="{{ path('app_register') }}"
+             class="inline-block bg-green-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-green-700 transition duration-300">
+            {{ 'about_section.requirements.start_registration'|trans }}
+          </a>
+        </div>
+      </div>
+      <!-- Image Section (appears above text on small screens, right on large screens) -->
+      <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-1 lg:order-2">
+        <img src="{{ asset('icons/requirements.svg') }}" alt="requirements icon"
+             class="h-96 w-96 lg:h-96 lg:w-96 mx-auto">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- You can now register section -->
+<section  class="bg-white py-12 lg:py-28">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            aria-hidden="true">
+            <defs>
+                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                    patternunits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path
+                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                    stroke-width="0" />
+            </svg>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+        </svg>
+    </div>
+    <div class="relative isolate px-6 lg:px-8">
+    
+    <div class="mx-auto max-w-4xl py-32 sm:py-48 lg:py-28">
+      {# <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+        <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+          {{ "home_body.hero_section.prerequis" | trans }}<a href="{{ path('app_home') }}#requirements-section" class="font-semibold text-main-green">{{ "home_body.hero_section.read_more" | trans }}<span class="absolute inset-0" aria-hidden="true"></span> <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div> #}
+      <div class="text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ "home_body.hero_section.apres" | trans }}</h1>
+        <p class="mt-6 text-lg leading-8 text-gray-600">{{ "home_body.hero_section.consult_2" | trans }}</p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a href="{{ path('app_register') }}" class="rounded-md bg-main-green px-5 py-4 text-md font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{{ "home_body.hero_section.register" | trans }}</a>
+          <a href="{{ path('app_login') }}" class="text-md font-semibold leading-6 text-gray-900 hover:text-green-500">{{ "home_body.hero_section.login" | trans }}<span aria-hidden="true" class="hover:text-green-500">→</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- FAQ Section -->
+<section class="bg-white py-10 lg:py-20" id="faq-section">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            aria-hidden="true">
+            <defs>
+                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                    patternunits="userSpaceOnUse">
+                    <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+                <path
+                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                    stroke-width="0" />
+            </svg>
+            <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+        </svg>
+    </div>
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col items-center mb-8 justify-center">
+            <h2 class="text-4xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 sm:mb-0 sm:mr-4 text-center ">{{ 'faq.title'
+                | trans }}</h2>
+            {# <img src="{{ asset('/icons/help.svg') }}" alt="help Icon" class="w-10 h-10 sm:w-12 sm:h-12" /> #}
+             <p class="text-gray-600 font-medium mb-8 w-full lg:w-2/3 text-center mt-3">
+            {{ 'faq.description' | trans }}
+        </p>
+        </div>
+       
+        <div class="flex flex-col space-y-4">
+            <div class="faq-item bg-main-green rounded-lg shadow-md overflow-hidden">
+                <button
+                    class="faq-header w-full text-left text-white p-4 flex justify-between items-center focus:outline-none">
+                    <h3 class="text-base sm:text-lg font-semibold">{{ 'faq.question1' | trans }}</h3>
+                    <span class="faq-toggle text-xl sm:text-2xl">+</span>
+                </button>
+                <div class="faq-answer bg-white text-gray-800 p-4 hidden text-justify">
+                    <p class="text-sm sm:text-base">
+                        <span class="font-semibold"> {{ 'faq.answer1.section1' | trans }}
+                            <span class="font-semibold text-main-green">{{ 'faq.answer1.section2' | trans }}</span>
+                            {{ 'faq.answer1.section3' | trans }}
+                            <span class="font-semibold text-main-green">{{ 'faq.answer1.section4' | trans }}</span>
+                            {{ 'faq.answer1.section5' | trans }}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="faq-item bg-main-green rounded-lg shadow-md overflow-hidden text-justify">
+                <button
+                    class="faq-header w-full text-left text-white p-4 flex justify-between items-center focus:outline-none">
+                    <h3 class="text-base sm:text-lg font-semibold">{{ 'faq.question2' | trans }}</h3>
+                    <span class="faq-toggle text-xl sm:text-2xl">+</span>
+                </button>
+                <div class="faq-answer bg-white text-gray-800 p-4 hidden text-justify ">
+                    <p class="text-sm sm:text-base">
+                        <span class="font-semibold">{{ 'faq.answer2.section1' | trans }}</span>
+                        <br> &nbsp;
+                        <span class="font-semibold">{{ 'faq.answer2.section2' | trans }}</span>
+                        <br> &nbsp;
+                        <span class="font-semibold">{{ 'faq.answer2.section3' | trans }}</span>
+                        <br> &nbsp;
+                        <span class="font-semibold">{{ 'faq.answer2.section4' | trans }}</span>
+                        <br> &nbsp;
+                        <span class="font-semibold">{{ 'faq.answer2.section5' | trans }}</span>
+                        <br> &nbsp;
+                        <span class="font-semibold">{{ 'faq.answer2.section6' | trans }}</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item bg-main-green rounded-lg shadow-md overflow-hidden">
+
+                <button
+                    class="faq-header w-full text-left text-white p-4 flex justify-between items-center focus:outline-none">
+                    <h3 class="text-base sm:text-lg font-semibold">{{ 'faq.question3' | trans }}</h3>
+                    <span class="faq-toggle text-xl sm:text-2xl">+</span>
+                </button>
+                <div class="faq-answer bg-white text-gray-800 p-4 hidden text-justify">
+                    <p class="text-sm sm:text-base">
+                        <span class="font-semibold">{{ 'faq.answer3.section1' | trans }}</span>
+                        <br>
+                        <span class="font-semibold">{{ 'faq.answer3.section2' | trans }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</div>
+
+<script>
+    // Navbar height adjustment
+    function setNavbarHeight() {
+        const navbar = document.querySelector("header");
+        const navbarHeight = navbar.offsetHeight;
+        document.documentElement.style.setProperty("--navbar-height", `${navbarHeight}px`);
+        document.body.style.paddingTop = `${navbarHeight}px`;
+    }
+
+    window.addEventListener("load", setNavbarHeight);
+    window.addEventListener("resize", setNavbarHeight);
+
+
+    // Section transitions
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const header = item.querySelector('.faq-header');
+            const answer = item.querySelector('.faq-answer');
+            const toggle = item.querySelector('.faq-toggle');
+
+            header.addEventListener('click', () => {
+                const isOpen = !answer.classList.contains('hidden');
+
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.querySelector('.faq-answer').classList.add('hidden');
+                        otherItem.querySelector('.faq-toggle').textContent = '+';
+                    }
+                });
+
+                // Toggle current FAQ item
+                answer.classList.toggle('hidden');
+                toggle.textContent = isOpen ? '+' : '-';
+
+                // Smooth animation for opening/closing
+                if (!isOpen) {
+                    answer.style.maxHeight = '0';
+                    answer.style.opacity = '0';
+                    setTimeout(() => {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        answer.style.opacity = '1';
+                    }, 10);
+                } else {
+                    answer.style.maxHeight = '0';
+                    answer.style.opacity = '0';
+                }
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const shortDescription = document.getElementById('short-description');
+        const fullDescription = document.getElementById('full-description');
+        const toggleButton = document.getElementById('toggle-description');
+        const shortDescription1 = document.getElementById('short-description1');
+        const fullDescription1 = document.getElementById('full-description1');
+        const toggleButton1 = document.getElementById('toggle-description1');
+
+        toggleButton.addEventListener('click', function () {
+            if (shortDescription.classList.contains('hidden')) {
+                shortDescription.classList.remove('hidden');
+                fullDescription.classList.add('hidden');
+                toggleButton.textContent = "{{ 'about_section.show_more'|trans }}";
+            } else {
+                shortDescription.classList.add('hidden');
+                fullDescription.classList.remove('hidden');
+                toggleButton.textContent = "{{ 'about_section.show_less'|trans }}";
+            }
+        });
+
+        toggleButton1.addEventListener('click', function () {
+            if (shortDescription1.classList.contains('hidden')) {
+                shortDescription1.classList.remove('hidden');
+                fullDescription1.classList.add('hidden');
+                toggleButton1.textContent = "{{ 'about_section.show_more'|trans }}";
+            } else {
+                shortDescription1.classList.add('hidden');
+                fullDescription1.classList.remove('hidden');
+                toggleButton1.textContent = "{{ 'about_section.show_less'|trans }}";
+            }
+        });
+
+    });
+</script>
+
+
+<!-- Add Swiper CSS and JS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            slidesPerView: 1,
+            spaceBetween: 30,
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 1,
+                },
+                1024: {
+                    slidesPerView: 1,
+                },
+            }
+        });
+    });
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('mediaCarousel');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const zoomOverlay = document.getElementById('zoomOverlay');
+    const zoomedImage = document.getElementById('zoomedImage');
+    const closeZoom = document.getElementById('closeZoom');
+    
+    const media = [
+        { type: 'image', src: '/images/Communique5.jpeg', alt: 'Communique 5', id: 'comm5', isNew: true },
+        { type: 'image', src: '/images/Communique4.jpeg', alt: 'Communique 4', id: 'comm4', isNew: true },
+        { type: 'image', src: '/images/Communique3.jpeg', alt: 'Communique 3', id: 'comm3', isNew: true },
+        { type: 'image', src: '/images/Communique2.jpeg', alt: 'Communique 2', id: 'comm2', isNew: true },
+        { type: 'image', src: '/images/Communique1.jpeg', alt: 'Communique 1', id: 'comm1', isNew: true }
+    ];
+    
+    let currentIndex = 0;
+    let autoAdvanceTimeout;
+    
+    function loadMedia(index) {
+        const firstImage = media[0];
+        const secondImage = media[1];
+        const thirdImage = media[2];
+        const fourthImage = media[3];
+
+        carousel.innerHTML = `
+            <div class="image-grid">
+                <div class="image-container">
+                    ${firstImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${firstImage.src}" alt="${firstImage.alt}" class="w-full h-full object-cover cursor-pointer" data-id="${firstImage.id}">
+                </div>
+                <div class="image-container">
+                    ${secondImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${secondImage.src}" alt="${secondImage.alt}" class="w-full h-full object-cover cursor-pointer" data-id="${secondImage.id}">
+                </div>
+                 <div class="image-container">
+                    ${thirdImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${thirdImage.src}" alt="${thirdImage.alt}" class="w-full h-full object-cover cursor-pointer" data-id="${thirdImage.id}">
+                </div>
+                 <div class="image-container">
+                    ${fourthImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${fourthImage.src}" alt="${fourthImage.alt}" class="w-full h-full object-cover cursor-pointer" data-id="${fourthImage.id}">
+                </div>
+            </div>
+        `;
+        
+        // Add click listeners to all images
+        carousel.querySelectorAll('img').forEach(img => {
+            img.addEventListener('click', zoomImage);
+        });
+
+        if (index === 3) {
+            clearTimeout(autoAdvanceTimeout);
+            autoAdvanceTimeout = setTimeout(() => {
+                loadMedia(0);
+            }, 500);
+        }
+    }
+    
+    function zoomImage(e) {
+        const imgElement = e.target;
+        zoomedImage.src = imgElement.src;
+        zoomOverlay.classList.remove('hidden');
+        
+        // Center the image and set up container for proper close button positioning
+        zoomedImage.style.maxWidth = '90vw';
+        zoomedImage.style.maxHeight = '90vh';
+        zoomedImage.style.margin = 'auto';
+        
+        // Calculate image dimensions after loading
+        zoomedImage.onload = function() {
+            const imgWidth = zoomedImage.offsetWidth;
+            const imgHeight = zoomedImage.offsetHeight;
+            
+            // Position close button relative to the actual image size
+            closeZoom.style.position = 'absolute';
+            closeZoom.style.top = '-20px';  // Slightly above the image
+            closeZoom.style.right = '-20px'; // Slightly to the right of the image
+            
+            // Update container positioning
+            const container = closeZoom.parentElement;
+            container.style.width = `${imgWidth}px`;
+            container.style.height = `${imgHeight}px`;
+            container.style.position = 'relative';
+        };
+    }
+    
+    function closeZoomOverlay() {
+        zoomOverlay.classList.add('hidden');
+    }
+    
+    // Event Listeners
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + media.length) % media.length;
+        loadMedia(currentIndex);
+    });
+    
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % media.length;
+        loadMedia(currentIndex);
+    });
+    
+    // Close overlay when clicking anywhere outside the image
+    zoomOverlay.addEventListener('click', function(e) {
+        if (e.target === zoomOverlay || e.target === closeZoom) {
+            closeZoomOverlay();
+        }
+    });
+    
+    // Close overlay with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !zoomOverlay.classList.contains('hidden')) {
+            closeZoomOverlay();
+        }
+    });
+    
+    // Initial load
+    loadMedia(0);
+    
+    // Auto-advance setup
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % media.length;
+        loadMedia(currentIndex);
+    }, 10000);
+});
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('resultsCarousel');
+    const prevButton = document.getElementById('resultsPrevButton');
+    const nextButton = document.getElementById('resultsNextButton');
+    const zoomOverlay = document.getElementById('resultsZoomOverlay');
+    const zoomedImage = document.getElementById('resultsZoomedImage');
+    const closeZoom = document.getElementById('resultsCloseZoom');
+    
+    const media = [
+        { type: 'image', src: '/images/Results8.jpeg', alt: 'Results 8', id: 'res8', isNew: true },
+        { type: 'image', src: '/images/Results7.jpeg', alt: 'Results 7', id: 'res7', isNew: true },
+        { type: 'image', src: '/images/Results6.jpeg', alt: 'Results 6', id: 'res6', isNew: true },
+        { type: 'image', src: '/images/Results5.jpeg', alt: 'Results 5', id: 'res5', isNew: true },
+        { type: 'image', src: '/images/Results4.jpeg', alt: 'Results 4', id: 'res4', isNew: true },
+        { type: 'image', src: '/images/Results3.jpeg', alt: 'Results 3', id: 'res3', isNew: true },
+        { type: 'image', src: '/images/Results2.jpeg', alt: 'Results 2', id: 'res2', isNew: true },
+        { type: 'image', src: '/images/Results1.jpeg', alt: 'Results 1', id: 'res1', isNew: true }
+    ];
+    
+    let currentIndex = 0;
+    let autoAdvanceTimeout;
+    
+    function loadMedia(index) {
+        const firstImage = media[0];
+        const secondImage = media[1];
+        const thirdImage = media[2];
+        const fourthImage = media[3];
+        const fifthImage = media[4];
+        const sixthImage = media[5];
+        const seventhImage = media[6];
+        const eighthImage = media[7];
+
+        carousel.innerHTML = `
+            <div class="image-grid grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="image-container">
+                    ${firstImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${firstImage.src}" alt="${firstImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${firstImage.id}">
+                </div>
+                <div class="image-container">
+                    ${secondImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${secondImage.src}" alt="${secondImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${secondImage.id}">
+                </div>
+                <div class="image-container">
+                    ${thirdImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${thirdImage.src}" alt="${thirdImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${thirdImage.id}">
+                </div>
+                <div class="image-container">
+                    ${fourthImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${fourthImage.src}" alt="${fourthImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${fourthImage.id}">
+                </div>
+                <div class="image-container">
+                    ${fifthImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${fifthImage.src}" alt="${fifthImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${fifthImage.id}">
+                </div>
+                <div class="image-container">
+                    ${sixthImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${sixthImage.src}" alt="${sixthImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${sixthImage.id}">
+                </div>
+                <div class="image-container">
+                    ${seventhImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${seventhImage.src}" alt="${seventhImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${seventhImage.id}">
+                </div>
+                <div class="image-container">
+                    ${eighthImage.isNew ? '<div class="new-badge">New</div>' : ''}
+                    <img src="${eighthImage.src}" alt="${eighthImage.alt}" class="w-full h-40 object-cover cursor-pointer" data-id="${eighthImage.id}">
+                </div>
+            </div>
+        `;
+        
+        // Add click listeners to all images
+        carousel.querySelectorAll('img').forEach(img => {
+            img.addEventListener('click', zoomImage);
+        });
+
+        if (index === 7) {
+            clearTimeout(autoAdvanceTimeout);
+            autoAdvanceTimeout = setTimeout(() => {
+                loadMedia(0);
+            }, 500);
+        }
+    }
+    
+    function zoomImage(e) {
+        const imgElement = e.target;
+        zoomedImage.src = imgElement.src;
+        zoomOverlay.classList.remove('hidden');
+        
+        // Center the image and set up container for proper close button positioning
+        zoomedImage.style.maxWidth = '90vw';
+        zoomedImage.style.maxHeight = '90vh';
+        zoomedImage.style.margin = 'auto';
+        
+        // Calculate image dimensions after loading
+        zoomedImage.onload = function() {
+            const imgWidth = zoomedImage.offsetWidth;
+            const imgHeight = zoomedImage.offsetHeight;
+            
+            // Position close button relative to the actual image size
+            closeZoom.style.position = 'absolute';
+            closeZoom.style.top = '-20px';
+            closeZoom.style.right = '-20px';
+            
+            // Update container positioning
+            const container = closeZoom.parentElement;
+            container.style.width = `${imgWidth}px`;
+            container.style.height = `${imgHeight}px`;
+            container.style.position = 'relative';
+        };
+    }
+    
+    function closeZoomOverlay() {
+        zoomOverlay.classList.add('hidden');
+    }
+    
+    // Event Listeners
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + media.length) % media.length;
+        loadMedia(currentIndex);
+    });
+    
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % media.length;
+        loadMedia(currentIndex);
+    });
+    
+    // Close overlay when clicking anywhere outside the image
+    zoomOverlay.addEventListener('click', function(e) {
+        if (e.target === zoomOverlay || e.target === closeZoom) {
+            closeZoomOverlay();
+        }
+    });
+    
+    // Close overlay with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !zoomOverlay.classList.contains('hidden')) {
+            closeZoomOverlay();
+        }
+    });
+    
+    // Initial load
+    loadMedia(0);
+    
+    // Auto-advance setup
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % media.length;
+        loadMedia(currentIndex);
+    }, 10000);
+});
+</script>
+
+<style>
+    .swiper-container {
+        width: 100%;
+        height: 0;
+        padding-bottom: 75%; /* Maintain aspect ratio */
+        position: relative;
+    }
+    .swiper-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .swiper-button-next, .swiper-button-prev {
+        color: #10B981;
+    }
+    .swiper-pagination-bullet-active {
+        background: #10B981;
+    }
+    @media (max-width: 640px) {
+        .swiper-container {
+            padding-bottom: 100%; /* Adjust aspect ratio for smaller screens */
+        }
+    }
+
+   .new-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #109646;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  /* Adjust to 4 columns for larger screens */
+  .image-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+.image-grid img {
+  width: 100%;
+  height: auto;
+  /* aspect-ratio: 16 / 9; */
+  object-fit: cover;
+  display: block;
+}
+
+
+.image-container {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  /* aspect-ratio: 16/9; */
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-container:hover {
+  transform: translateY(-2px);
+}
+
+</style>
+
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+:root {
+    --primary-color: #3490dc;
+    --primary-color-hover: #2779bd;
+    --text-color: #333333;
+    --background-color: #ffffff;
+    --border-color: #e2e8f0;
+}
+
+.custom-form-container {
+    max-width: 28rem;
+    margin: 2.5rem auto 0;
+    background-color: var(--background-color);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-form-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.custom-form-field {
+    margin-bottom: 1rem;
+}
+
+.custom-form-label {
+    display: block;
+    color: var(--text-color);
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.custom-form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.custom-form-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.custom-form-button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-form-button:hover {
+    background-color: var(--primary-color-hover);
+    color: #0377c4;
+}
+

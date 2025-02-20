@@ -1,0 +1,467 @@
+{# Registration Page #}
+{% extends 'base.html.twig' %}
+
+{% block head %}
+{% block title %}
+{{ 'registration_page.title'|trans }}
+{% endblock %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @keyframes fadeInOut {
+
+    0,
+    100% {
+      opacity: 0;
+    }
+
+    10%,
+    90% {
+      opacity: 1;
+    }
+  }
+
+  .popup {
+    animation: fadeInOut 3s ease-in-out;
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+
+  .password-requirements {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 0.25rem;
+  }
+
+  .password-requirement {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .requirement-icon {
+    margin-right: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .requirement-met {
+    @apply text-[#10B981];
+    /* This is a Tailwind class */
+  }
+
+  .requirement-unmet {
+    @apply text-[#EF4444];
+    /* This is a Tailwind class */
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<!-- Popup for flash messages -->
+<div id="popup"
+  class="fixed z-50 top-0 bg-red-100 left-0 right-0 p-4 transform -translate-y-full transition-transform duration-300 ease-in-out">
+  <div
+    class="max-w-md mx-auto bg-white border-red-500 border-l-4 rounded-lg shadow-lg overflow-hidden flex items-center">
+    <div id="popup-icon" class="flex-shrink-0 p-4"><!-- Icons will be inserted dynamically via JavaScript -->
+    </div>
+    <div class="flex-grow p-4">
+      <p id="popup-message" class="text-md font-medium"></p>
+    </div>
+    <button id="close-popup" class="p-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+      <svg class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br bg-white p-4">
+  <div class="max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row mt-16">
+    <!-- Left section with logo and text -->
+    <div
+      class="w-full md:w-1/2 bg-gradient-to-br from-green-100 to-green-200  flex flex-col justify-center items-center text-white p-8">
+      <div
+        class="w-full md:w-1/2 bg-gradient-to-br from-green-100 to-green-200  flex flex-col justify-center items-center text-white p-8">
+        <div class="flex justify-center items-center h-48 w-full m-auto relative">
+          <!-- White circle background with shadow -->
+          <div class="absolute z-10 w-56 h-56 bg-white rounded-full shadow-lg"></div>
+
+          <!-- Logo images -->
+          <img class="relative z-20 h-3/4 w-auto light-mode-logo object-contain"
+            src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'login_page.logo_alt'|trans }}">
+          <img class="relative z-20 h-full w-auto dark-mode-logo hidden object-contain"
+            src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'login_page.logo_alt'|trans }}">
+        </div>
+        <h1 class="mt-8 text-3xl font-bold text-center text-gray-800">{{ 'login_page.welcome_message'|trans }}</h1>
+        <p class="mt-4 text-center text-lg text-gray-600">{{ 'login_page.slogan'|trans }}</p>
+      </div>
+      <h1 class="mt-8 text-3xl font-bold text-center text-gray-800">{{ 'registration_page.welcome_message'|trans
+        }}</h1>
+      <p class="mt-4 text-center text-lg text-green-600">{{ 'registration_page.slogan'|trans }}</p>
+    </div>
+
+    <!-- Right section with registration form -->
+    <div class="w-full md:w-1/2 lg:p-24 xs:px-6 xs:py-16 relative">
+      <button id="helpButton" class="absolute top-4 right-4 bg-blue-500 text-white rounded-full p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </button>
+      <h2 class="text-5xl font-bold text-center mb-2 text-gray-800">{{ 'registration_page.heading'|trans }}</h2>
+      <p class="text-center text-sm text-green-600 mb-8">{{ 'registration_page.description'|trans }}</p>
+
+      <!-- Flash messages -->
+      {% for label, messages in app.flashes %}
+      {% for message in messages %}
+      <div class="flash-message mb-4 hidden" data-type="{{ label }}">
+        {{ message|raw }}
+      </div>
+      {% endfor %}
+      {% endfor %}
+
+
+      {{ form_start(registrationForm, {'attr': {'class': 'space-y-6'}}) }}
+      <div>
+        <label for="{{ registrationForm.email.vars.id }}" class="block text-sm font-medium text-gray-700 tooltip">
+          {{ 'registration_page.email_label'|trans }}<span class="text-red-500">*</span>
+
+        </label>
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'mt-1 block w-full px-3 py-2 bg-gray-50 border
+        border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none
+        focus:border-main-green focus:ring-1 focus:ring-main-green', 'placeholder':
+        'registration_page.email_placeholder'|trans}}) }}
+      </div>
+
+      <div>
+        <label for="{{ registrationForm.plainPassword.first.vars.id }}"
+          class="block text-sm font-medium text-gray-700 tooltip">
+          {{ 'registration_page.password'|trans }}<span class="text-red-500">*</span>
+        </label>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'block w-full px-3 py-2
+          bg-gray-50 border border-gray-300 rounded-md text-sm placeholder-gray-400 focus:outline-none
+          focus:border-main-green focus:ring-1 focus:ring-main-green', 'placeholder':
+          'registration_page.password_placeholder'|trans}}) }}
+          <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3 flex items-center">
+            <svg class="h-5 w-5 text-gray-400 eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <svg class="h-5 w-5 text-gray-400 eye-off-icon hidden" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+            </svg>
+          </button>
+        </div>
+        <div class="password-requirements mt-2">
+          <div class="password-requirement text-sm requirement-unmet" id="length-requirement">
+            <span class="requirement-icon">&#10007;</span>
+            <span>{{ 'registration_page.password_length'|trans }}</span>
+          </div>
+          <div class="password-requirement text-sm" id="uppercase-requirement">
+            <span class="requirement-icon">&#10007;</span>
+            <span>{{ 'registration_page.password_uppercase'|trans }}</span>
+          </div>
+          <div class="password-requirement text-sm" id="lowercase-requirement">
+            <span class="requirement-icon">&#10007;</span>
+            <span>{{ 'registration_page.password_lowercase'|trans }}</span>
+          </div>
+          <div class="password-requirement text-sm" id="number-requirement">
+            <span class="requirement-icon">&#10007;</span>
+            <span>{{ 'registration_page.password_number'|trans }}</span>
+          </div>
+          <div class="password-requirement text-sm" id="special-requirement">
+            <span class="requirement-icon">&#10007;</span>
+            <span>{{ 'registration_page.password_special'|trans }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="{{ registrationForm.plainPassword.second.vars.id }}"
+          class="block text-sm font-medium text-gray-700 tooltip">
+          {{ 'registration_page.confirm_password'|trans }}<span class="text-red-500">*</span>
+        </label>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'block w-full px-3 py-2
+          bg-gray-50 border border-gray-300 rounded-md text-sm placeholder-gray-400 focus:outline-none
+          focus:border-main-green focus:ring-1 focus:ring-main-green', 'placeholder':
+          'registration_page.confirm_password_placeholder'|trans}}) }}
+          <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3 flex items-center">
+            <svg class="h-5 w-5 text-gray-400 eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <svg class="h-5 w-5 text-gray-400 eye-off-icon hidden" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+            </svg>
+          </button>
+        </div>
+        <p class="password-error text-red-500 text-xs mt-1 hidden" id="confirm-password-error"></p>
+      </div>
+
+      <div>
+        <button type="submit"
+          class="mt-12 group relative w-full flex justify-center py-4 px-6 border border-transparent text-md font-semibold rounded-md text-white bg-main-green hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition duration-150 ease-in-out">
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-green-500 group-hover:text-white" xmlns="http://www.w3.org/2000/svg"
+              viewbox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z"
+                clip-rule="evenodd" />
+            </svg>
+          </span>
+          {{ 'registration_page.sign_up_button'|trans }}
+        </button>
+      </div>
+      <div class="text-sm text-center mt-5">
+        <a href="{{path("app_login")}}" class="font-semibold text-main-green hover:text-secondary-green">
+          <span class="text-black">{{ 'registration_page.have_account'|trans }}</span>
+          {{
+          'registration_page.have_account_redirect'|trans }}
+        </a>
+      </div>
+      {{ form_end(registrationForm) }}
+    </div>
+  </div>
+</div>
+
+<!-- Redesigned Modal -->
+<div id="helpModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="p-6 border w-full max-w-md shadow-xl rounded-lg bg-white">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-gray-900"> {{'registration_page.help_title'|trans}}</h3>
+      <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="mt-4">
+      <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+        <li>{{'registration_page.help1'|trans}}</li>
+        <li>{{'registration_page.help2'|trans}}</li>
+        <li>{{'registration_page.help3'|trans}}</li>
+        <li>{{'registration_page.help4'|trans}}</li>
+      </ul>
+    </div>
+    <div class="mt-6">
+      <button id="closeModal"
+        class="w-full px-4 py-2 bg-main-green text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out">
+        {{'registration_page.Got it'|trans}}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Password toggle functionality
+  document.querySelectorAll('.toggle-password').forEach(button => {
+    button.addEventListener('click', function () {
+      const input = this.previousElementSibling;
+      const eyeIcon = this.querySelector('.eye-icon');
+      const eyeOffIcon = this.querySelector('.eye-off-icon');
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.classList.add('hidden');
+        eyeOffIcon.classList.remove('hidden');
+      } else {
+        input.type = 'password';
+        eyeIcon.classList.remove('hidden');
+        eyeOffIcon.classList.add('hidden');
+      }
+    });
+  });
+
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+
+  // Registration status popup functionality can be added here if needed
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const helpButton = document.getElementById('helpButton');
+    const helpModal = document.getElementById('helpModal');
+    const closeModal = document.getElementById('closeModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function openModal() {
+      helpModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+
+    function closeModalFunction() {
+      helpModal.classList.add('hidden');
+      document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    helpButton.addEventListener('click', openModal);
+
+    closeModal.addEventListener('click', closeModalFunction);
+    closeModalBtn.addEventListener('click', closeModalFunction);
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+      if (event.target === helpModal) {
+        closeModalFunction();
+      }
+    });
+
+    // Close modal on escape key press
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !helpModal.classList.contains('hidden')) {
+        closeModalFunction();
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popup-message');
+    const popupIcon = document.getElementById('popup-icon');
+    const closePopup = document.getElementById('close-popup');
+    const flashMessages = document.querySelectorAll('.flash-message');
+
+    function showPopup(message, type) {
+      popupMessage.textContent = message;
+      popup.classList.remove('-translate-y-full');
+
+      if (type === 'error') {
+        popupIcon.innerHTML = '<svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+        popup.querySelector('.max-w-md').classList.add('border-red-600');
+      } else {
+        popupIcon.innerHTML = '<svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+        popup.querySelector('.max-w-md').classList.add('border-green-600');
+      }
+
+      setTimeout(() => {
+        hidePopup();
+      }, 5000);
+    }
+
+    function hidePopup() {
+      popup.classList.add('-translate-y-full');
+    }
+
+    closePopup.addEventListener('click', hidePopup);
+
+    flashMessages.forEach(flashMessage => {
+      const message = flashMessage.textContent.trim();
+      const type = flashMessage.dataset.type;
+      showPopup(message, type);
+    });
+  });
+</script>
+<script>
+  // Password validation
+  document.addEventListener('DOMContentLoaded', function () {
+    const passwordInput = document.getElementById('{{ registrationForm.plainPassword.first.vars.id }}');
+    const confirmPasswordInput = document.getElementById('{{ registrationForm.plainPassword.second.vars.id }}');
+    const confirmPasswordError = document.getElementById('confirm-password-error');
+
+    const requirements = {
+      length: document.getElementById('length-requirement'),
+      uppercase: document.getElementById('uppercase-requirement'),
+      lowercase: document.getElementById('lowercase-requirement'),
+      number: document.getElementById('number-requirement'),
+      special: document.getElementById('special-requirement')
+    };
+
+    function updateRequirement(element, isValid) {
+      const icon = element.querySelector('.requirement-icon');
+      const text = element.querySelector('span:last-child');
+
+      if (isValid) {
+        icon.textContent = '✓';
+        icon.style.color = '#10B981'; // Green color
+        text.style.color = '#10B981'; // Green color
+      } else {
+        icon.textContent = '✗';
+        icon.style.color = '#EF4444'; // Red color
+        text.style.color = '#EF4444'; // Red color
+      }
+    }
+
+    function validatePassword(password) {
+      const checks = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /\d/.test(password),
+        special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+      };
+
+      Object.keys(checks).forEach(check => {
+        updateRequirement(requirements[check], checks[check]);
+      });
+
+      return Object.values(checks).every(Boolean);
+    }
+
+    passwordInput.addEventListener('input', function () {
+      validatePassword(this.value);
+    });
+
+    confirmPasswordInput.addEventListener('input', function () {
+      if (this.value !== passwordInput.value) {
+        confirmPasswordError.textContent = "{{ 'registration_page.passwords_not_matching'|trans }}";
+        confirmPasswordError.classList.remove('hidden');
+      } else {
+        confirmPasswordError.classList.add('hidden');
+      }
+    });
+  });
+</script>
+{% endblock %}

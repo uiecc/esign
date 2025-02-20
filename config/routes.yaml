@@ -1,0 +1,8 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+change_locale:
+    path: /change-locale
+    controller: App\Controller\LanguageController::changeLocale

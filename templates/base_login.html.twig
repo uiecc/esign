@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" class="h-full">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}Welcome!{% endblock %}
+        </title>
+        <link rel="icon" href="{{ asset('/images/uiecc_logo.png') }}" type="image/x-icon">
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        {% block script %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="bg-background dark:bg-background text-text dark:text-text flex flex-col min-h-screen">
+        <header class="bg-bg-white dark:bg-background text-text dark:text-text sticky top-0 z-50 shadow-md">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between flex-wrap">
+                <!-- Logo -->
+                <a href="#" class="flex items-center text-main-green flex-shrink-0 mr-6">
+                    <img id="logo-light" class="h-12 w-auto" src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                </a>
+
+                <!-- Mobile menu button -->
+                <button type="button" class="lg:hidden text-main-green p-2" id="mobile-menu-button">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <!-- Navigation Links and Buttons -->
+                <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+                    <div class="text-sm lg:flex-grow">
+                        <!-- Add your navigation links here -->
+                    </div>
+                    <div class="flex items-center mt-4 lg:mt-0">
+                        <a href="{{path('app_logout')}}" class="text-main-green bg-white border border-main-green rounded-md px-3 py-1 lg:px-4 lg:py-2 font-semibold hover:scale-105 transition-transform duration-75 mr-2">{{ 'home_header.nav.logout'|trans }}</a>
+                        <a href="#" id="save-button" class="text-white bg-main-green rounded-md px-3 py-1 lg:px-4 lg:py-2 font-semibold hover:scale-105 transition-transform duration-75 mr-2">{{ 'home_header.nav.save'|trans }}</a>
+                        <div class="relative">
+                            <button id="options-menu" class="text-main-green hover:text-hover-green focus:outline-none">
+                                <img src="/icons/translation.svg" alt="Translation image" class="w-8 h-8">
+                            </button>
+                            <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                                <div class="py-1">
+                                    <ul>
+                                        <li class="ml-2 py-1 px-1">
+                                            <a href="{{ path('switch_language', {'locale': 'en'}) }}">{{ 'home_header.language.english'|trans }}</a>
+                                        </li>
+                                        <li class="ml-2 py-1 px-1">
+                                            <a href="{{ path('switch_language', {'locale': 'fr'}) }}">{{ 'home_header.language.french'|trans }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+     <main class=" w-screen	"> {% block body %}{% endblock %}
+			</main>
+
+     <footer class="bg-background dark:bg-background text-text dark:text-text py-8 border-t border-gray-200 ">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8">
+            <!-- Logo Section -->
+            <div class="flex justify-center md:justify-start">
+                <a href="#" class="logo transition-transform hover:scale-105 duration-300">
+                    <img id="footer-logo-light" class="h-12" src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                    <img id="footer-logo-dark" class="hidden h-12" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                </a>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="text-center md:text-right">
+                <h3 class="text-main-green font-bold mb-3 uppercase text-sm tracking-wider">{{ 'home_header.footer.contact_us'|trans }}</h3>
+                <div class="flex items-center justify-center md:justify-end space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-main-green" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <a href="mailto:contact@esign.cm" 
+                       class="text-main-green hover:text-green-700 transition-colors duration-200 font-semibold group">
+                        contact@esign.cm
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-green-700"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="pt-8 border-t border-gray-200 mb-4">
+            <p class="text-sm font-semibold text-main-green text-center">
+                {{ 'home_header.footer.copyright'|trans({'%year%': 'now'|date('Y')}) }}
+            </p>
+        </div>
+    </div>
+</footer>
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const menu = document.getElementById('menu');
+                const optionsMenu = document.getElementById('options-menu');
+                const dropdownMenu = document.getElementById('dropdown-menu');
+
+                // Mobile menu toggle
+                mobileMenuButton.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                });
+
+                // Dropdown menu toggle
+                optionsMenu.addEventListener('click', () => {
+                    dropdownMenu.classList.toggle('hidden');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (event) => {
+                    if (!dropdownMenu.contains(event.target) && !optionsMenu.contains(event.target)) {
+                        dropdownMenu.classList.add('hidden');
+                    }
+                });
+
+
+            });
+        </script>
+    </body>
+</html>

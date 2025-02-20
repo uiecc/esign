@@ -1,0 +1,818 @@
+{% extends 'base_preview.html.twig' %}
+
+{% block title %}Aperçu des Informations du Candidat
+{% endblock %}
+
+{% block body %}
+<div class="font-sans leading-tight m-0 relative mt-8 md:mt-16 lg:mt-24 px-2 md:px-8">
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div id="popup" class="fixed z-50 top-0 left-0 right-0 p-4 transform -translate-y-full transition-transform duration-300 ease-in-out">
+            <div class="max-w-md mx-auto bg-white border-l-4 {{ label == 'success' ? 'border-green-500' : 'border-red-500' }} rounded-lg shadow-lg overflow-hidden flex items-center">
+                <div class="flex-shrink-0 p-4">
+                    {% if label == 'success' %}
+                        <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    {% else %}
+                        <svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    {% endif %}
+                </div>
+                <div class="flex-grow p-4">
+                    <p id="popup-message" class="text-sm font-medium">{{ message }}</p>
+                </div>
+                <button id="close-popup" class="p-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+	{# Help box
+	<div class="fixed top-4 right-4 z-50">
+		<button class="help-toggle bg-blue-600 text-white px-4 py-2 rounded-md text-sm md:text-base">
+			{{ 'candidate_form.Need help?' | trans }}
+		</button>
+		<div class="help-dropdown hidden absolute right-0 mt-2 bg-white shadow-lg rounded-md p-4 w-64 md:w-80">
+			<img src="/icons/info.svg" alt="Info Icon" class="inline-block w-5 h-5 mr-2" />
+			<p class="font-bold text-sm md:text-base">{{ 'candidate_form.Need help?' | trans }}</p>
+			<ul class="mt-2 text-sm">
+				<li>{{ 'candidate_form.Help 1' | trans }}</li>
+				<li>{{ 'candidate_form.Help 2' | trans }}</li>
+				<li>{{ 'candidate_form.Help 3' | trans }}</li>
+				<li>{{ 'candidate_form.Help 4' | trans }}</li>
+			</ul>
+		</div>
+	</div> #}
+	{% if examinationLanguage == 'Français' or examinationLanguage == 'French' %}
+	<div class="max-w-4xl mx-auto border-4 border-black rounded-2xl p-1 md:p-8">
+		{# Header #}
+		<div class="flex flex-col md:flex-row items-center justify-between mb-4">
+			<div class="text-center md:text-center mb-4 md:mb-0">
+				<p class="text-sm md:text-base">UNIVERSITE INTER-ETATS<br>CONGO-CAMEROUN À SANGMELIMA<br>****<br>Ecole
+					Supérieure Internationale de Génie Numérique</p>
+			</div>
+			<img src="{{ absolute_url(asset('/images/uiecc_logo_old1.png')) }}" alt="Logo"
+				class="w-24 h-24 md:w-32 md:h-32">
+			<div class="text-center md:text-center mt-4 md:mt-0">
+				<p class="text-sm md:text-base">CONGO-CAMEROON INTER-STATES<br>UNIVERSITY AT
+					SANGMELIMA<br>****<br>International Advanced School of Digital Engineering</p>
+			</div>
+		</div>
+
+		{# Title and Identification #}
+		<div class="text-center mb-4 sm:px-0 lg:px-16">
+			<h4 class="underline text-lg md:text-xl font-bold">FICHE D'INSCRIPTION</h4>
+			<p class="text-sm md:text-base mt-2">
+				Concours d'entrée en 1<sup>ère</sup>
+				année d'études d'ingénieur à l'Ecole Supérieure Internationale de Génie Numérique de Sangmélima
+			</p>
+			<p class="text-sm md:text-base">Promotion 2024-2029</p>
+			<p class="text-sm md:text-base mt-2">Identifiant du candidat : xxxxxxxxxxxxxxxxx</p>
+			<p class="text-sm md:text-base mt-1 font-semibold uppercase">Mode d'Admission: {{ candidate.admissionType }}</p>
+		</div>
+
+
+		{# Candidate Information Table #}
+		<div class="overflow-x-auto">
+			<table class="w-full border-collapse border border-black text-xs md:text-xs">
+				<div class="overflow-x-auto">
+					<table class="w-full border-collapse border border-black text-xs md:text-sm">
+						<thead>
+							<tr>
+								<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Informations Générales
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Spécialité :</td>
+								<td colspan="2" class="p-2 border border-black">{{ candidate.field }}</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Centre d'examen :</td>
+								<td class="p-2 border border-black">{{ candidate.examinationCenter }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Langue d'examen :
+									</span>
+
+									{{ candidate.language }}
+								</td>
+							</tr>
+
+							<tr>
+								<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Informations Personnelles
+								</th>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Noms et prénoms :</td>
+								<td colspan="2" class="p-2 border border-black">{{ candidate.name }}</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Date de naissance :</td>
+								<td class="p-2 border border-black">{{ candidate.dateOfBirth|date('d/m/Y') }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Lieu de naissance :
+									</span>
+									{{ candidate.placeOfBirth }}
+								</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Nationalité :</td>
+								<td colspan="2" class="p-2 border border-black">{{ candidate.nationality }}</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Région d'origine :</td>
+								<td class="p-2 border border-black">{{ candidate.region }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Département :
+									</span>
+									{{ candidate.depertement }}
+								</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">N° CNI/Passeport :</td>
+								<td class="p-2 border border-black">{{ candidate.cni }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Délivré le :
+									</span>
+									{{ candidate.cniIssueDate|date('d/m/Y') }}
+								</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Téléphone :</td>
+								<td class="p-2 border border-black">{{ candidate.phoneNumber }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Email :
+									</span>
+									{{ candidate.email }}
+								</td>
+							</tr>
+
+							<tr>
+								<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Etudes Secondaires</th>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Année de début :</td>
+								<td class="p-2 border border-black">{{ candidate.secondaryEducationStartYear }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Année de fin :
+									</span>
+									{{ candidate.secondaryEducationEndYear }}
+								</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Sous-système :</td>
+								<td colspan="2" class="p-2 border border-black">{{ candidate.educationSubsystem }}</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Type d'études au second cycle :</td>
+								<td colspan="2" class="p-2 border border-black">{{ candidate.secondCycleStudyType }}
+								</td>
+							</tr>
+
+							<tr>
+								<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Baccalauréat</th>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Pays d'obtention :</td>
+								<td class="p-2 border border-black">{{ candidate.baccalaureateCountry }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Année d'obtention :
+									</span>
+									{{ candidate.certificateYearBAC }}
+								</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Série :</td>
+								<td class="p-2 border border-black">{{ candidate.baccalaureateSeries }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Mention :
+									</span>
+									{{ candidate.baccalaureateMention }}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="p-2 border border-black">
+									<span class="font-semibold">Année d'obtention du probatoire :
+									</span>
+									{{ candidate.probatoireYear }}
+								</td>
+							</tr>
+
+							<tr>
+								<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">General Certificate of
+									Education Advanced Level</th>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Pays d'obtention :</td>
+								<td class="p-2 border border-black">{{ candidate.gceALevelCountry }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Année d'obtention :
+									</span>
+									{{ candidate.certificateYearGCE }}
+								</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Number of papers :</td>
+								<td class="p-2 border border-black">{{ candidate.gceALevelPapersCount }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Number of papers with grade A :
+									</span>
+									{{ candidate.gceALevelGradeACount }}
+								</td>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Année d'obtention du GCE-OL :</td>
+								<td class="p-2 border border-black">{{ candidate.gceOLevelYear }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">Number of papers :
+									</span>
+									{{ candidate.gceOLevelPapersCount }}
+								</td>
+							</tr>
+
+							<tr>
+								<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Paiement des Frais de
+									Concours</th>
+							</tr>
+							<tr>
+								<td class="p-2 border border-black font-semibold">Opérateur :</td>
+								<td class="p-2 border border-black">{{ candidate.paymentOperator }}</td>
+								<td class="p-2 border border-black">
+									<span class="font-semibold">N° transaction :
+									</span>
+									{{ candidate.transactionNumber }}
+								</td>
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+
+				{# Signature and Photo Section #}
+				<div class="flex flex-col md:flex-row justify-between items-center mt-4">
+					<div class="w-full md:w-1/3 mb-4 md:mb-0">
+						<div class="border border-black w-40 h-40 mx-auto">
+							{% if candidate.photo %}
+							<img src="{{ absolute_url(asset('/uploads/photos/' ~ candidate.photo)) }}"
+								alt="Photo du candidat" class="w-full h-full object-cover">
+							{% else %}
+							<div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
+								<span class="text-2xl">?</span>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="w-full md:w-1/3 text-center lg:-top-16 sm:top-0 relative mb-4 md:mb-0">
+						<p class="underline font-bold">Signature du candidat</p>
+					</div>
+					<div class="w-full md:w-1/3">
+						<div class="border border-black w-40 h-40 mx-auto">
+							<img src="data:image/png;base64,{{ qrCodeBase64 }}" alt="QR Code"
+								class="w-full h-full object-cover">
+						</div>
+					</div>
+				</div>
+
+				<p class="text-center italic mt-4 text-xs md:text-sm">Le candidat doit imprimer et présenter ce
+					formulaire pendant l'examen.</p>
+
+				{# <div class="mt-8">
+					<a href="{{ path('app_candidate_generate_pdf', {'id': candidate.id , 'examinationLanguage': examinationLanguage}) }}"
+						class="block w-full text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm md:text-base font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+						{{ "candidate_form.preview_download"|trans }}
+					</a>
+				</div> #}
+		</div>
+	</div>
+	</table>
+</div>
+{% endif %}
+
+{% if examinationLanguage == 'Anglais' or examinationLanguage == 'English' %}
+<div class="max-w-4xl mx-auto border-4 border-black rounded-2xl p-1 md:p-8">
+	{# Header #}
+	<div class="flex flex-col md:flex-row items-center justify-between mb-4">
+		<div class="text-center md:text-center mb-4 md:mb-0">
+			<p class="text-sm md:text-base">CONGO-CAMEROON INTER-STATES<br>UNIVERSITY AT
+				SANGMELIMA<br>****<br>International Advanced School of Digital Engineering</p>
+		</div>
+		<img src="{{ absolute_url(asset('/images/uiecc_logo_old1.png')) }}" alt="Logo"
+			class="w-24 h-24 md:w-32 md:h-32">
+		<div class="text-center md:text-center mt-4 md:mt-0">
+			<p class="text-sm md:text-base">CONGO-CAMEROON INTER-STATES<br>UNIVERSITY AT
+				SANGMELIMA<br>****<br>International Advanced School of Digital Engineering</p>
+		</div>
+	</div>
+
+	{# Title and Identification #}
+	<div class="text-center mb-4 sm:px-0 lg:px-16">
+		<h4 class="underline text-lg md:text-xl font-bold">ENROLLMENT FORM</h4>
+		<p class="text-sm md:text-base mt-2">Entrance Examination for the 1<sup>st</sup>
+			year of Engineering Studies in the International Advanced School of Digital Engineering in Sangmélima</p>
+		<p class="text-sm md:text-base">2024-2029 Promotion</p>
+		<p class="text-sm md:text-base mt-2">Candidate's identification number: xxxxxxxxxxxxxxxxx</p>
+		<p class="text-sm md:text-base mt-1 font-semibold uppercase">Mode d'Admission: {{ candidate.admissionType }}</p>
+	</div>
+
+	{# Candidate Information Table #}
+	<div class="overflow-x-auto">
+		<table class="w-full border-collapse border border-black text-xs md:text-sm">
+			<thead>
+				<tr>
+					<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">General Information</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Specialty:</td>
+					<td colspan="2" class="p-2 border border-black">
+						{# {{ candidate.field }} #}
+						{% if candidate.field == 'Ingénierie des Systèmes Numériques' or candidate.field == 'Digital
+						Systems Engineering' %}
+						Digital Systems Engineering
+						{% elseif candidate.field == 'Ingénierie Numérique Sociotechnique' or candidate.field ==
+						'Sociotechnical Digital Engineering' %}
+						Sociotechnical Digital Engineering
+						{% elseif candidate.field == 'Création et Design Numériques' or candidate.field == 'Digital
+						Creation and Design' %}
+						Digital Creation and Design
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Examination Center:</td>
+					<td class="p-2 border border-black">{{ candidate.examinationCenter }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Examination Language:
+						</span>
+						{# {{ candidate.field }} #}
+						{% if candidate.language == 'Français' or candidate.language == 'French' %}
+						French
+						{% elseif candidate.language == 'Anglais' or candidate.language == 'English' %}
+						English
+						{% endif %}
+					</td>
+				</tr>
+
+				<tr>
+					<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Personal Information</th>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Full Name:</td>
+					<td colspan="2" class="p-2 border border-black">{{ candidate.name }}</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Date of Birth:</td>
+					<td class="p-2 border border-black">{{ candidate.dateOfBirth|date('d/m/Y') }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Place of Birth:
+						</span>
+						{{ candidate.placeOfBirth }}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Nationality:</td>
+					<td colspan="2" class="p-2 border border-black">{{ candidate.nationality }}</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Region of Origin:</td>
+					<td class="p-2 border border-black">{{ candidate.region }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Division:
+						</span>
+						{{ candidate.depertement }}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">ID/Passport No.:</td>
+					<td class="p-2 border border-black">{{ candidate.cni }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Issue Date:
+						</span>
+						{{ candidate.cniIssueDate|date('d/m/Y') }}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Phone Number:</td>
+					<td class="p-2 border border-black">{{ candidate.phoneNumber }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Email:
+						</span>
+						{{ candidate.email }}
+					</td>
+				</tr>
+
+				<tr>
+					<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Secondary Education</th>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Start Year:</td>
+					<td class="p-2 border border-black">{{ candidate.secondaryEducationStartYear }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">End Year:
+						</span>
+						{{ candidate.secondaryEducationEndYear }}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Education System:</td>
+					<td colspan="2" class="p-2 border border-black">{{ candidate.educationSubsystem }}</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Field of Study in High School:</td>
+					<td colspan="2" class="p-2 border border-black">{{ candidate.secondCycleStudyType }}</td>
+				</tr>
+
+				<tr>
+					<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Baccalaureate</th>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Country of Issue:</td>
+					<td class="p-2 border border-black">{{ candidate.baccalaureateCountry }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Year Obtained:
+						</span>
+						{{ candidate.certificateYearBAC }}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Specialization:</td>
+					<td class="p-2 border border-black">{{ candidate.baccalaureateSeries }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Grade:
+						</span>
+						{{ candidate.baccalaureateMention }}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="p-2 border border-black">
+						<span class="font-semibold">Year of Obtaining Pre-Baccalaureate Certificate:
+						</span>
+						{{ candidate.probatoireYear }}
+					</td>
+				</tr>
+
+				<tr>
+					<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">General Certificate of Education
+						Advanced Level</th>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Country of Issue:</td>
+					<td class="p-2 border border-black">{{ candidate.gceALevelCountry }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Year Obtained:
+						</span>
+						{{ candidate.certificateYearGCE }}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Number of Subjects:</td>
+					<td class="p-2 border border-black">{{ candidate.gceALevelPapersCount }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Number of A Grades:
+						</span>
+						{{ candidate.gceALevelGradeACount }}
+					</td>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Year of GCE O-Level:</td>
+					<td class="p-2 border border-black">{{ candidate.gceOLevelYear }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Number of Subjects:
+						</span>
+						{{ candidate.gceOLevelPapersCount }}
+					</td>
+				</tr>
+
+				<tr>
+					<th colspan="3" class="p-2 bg-gray-200 text-center font-bold">Payment of Examination Fees</th>
+				</tr>
+				<tr>
+					<td class="p-2 border border-black font-semibold">Payment Operator:</td>
+					<td class="p-2 border border-black">{{ candidate.paymentOperator }}</td>
+					<td class="p-2 border border-black">
+						<span class="font-semibold">Transaction No.:
+						</span>
+						{{ candidate.transactionNumber }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	{# Signature and Photo Section #}
+	<div class="flex flex-col md:flex-row justify-between items-center mt-4">
+		<div class="w-full md:w-1/3 mb-4 md:mb-0">
+			<div class="border border-black w-40 h-40 mx-auto">
+				{% if candidate.photo %}
+				<img src="{{ absolute_url(asset('/uploads/photos/' ~ candidate.photo)) }}" alt="Candidate's Photo"
+					class="w-full h-full object-cover">
+				{% else %}
+				<div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
+					<span class="text-2xl">?</span>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="w-full md:w-1/3 text-center lg:-top-16 sm:top-0 relative mb-4 md:mb-0">
+			<p class="underline font-bold">Signature of the candidate</p>
+		</div>
+		<div class="w-full md:w-1/3">
+			<div class="border border-black w-40 h-40 mx-auto">
+				<img src="data:image/png;base64,{{ qrCodeBase64 }}" alt="QR Code" class="w-full h-full object-cover">
+			</div>
+		</div>
+	</div>
+
+	<p class="text-center italic mt-4 text-xs md:text-sm">The candidate must print and present this form during the
+		examination.</p>
+
+</div>
+
+{% endif %}
+
+<div id="loading-overlay" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
+	<div class="bg-white p-6 rounded-lg shadow-xl">
+		<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+		<p class="text-center">{{ "loading.message"|trans }}</p>
+	</div>
+</div>
+
+<div id="popup" class="fixed z-50 top-4 right-4 max-w-sm w-full transform scale-95 opacity-0 transition-all duration-300 ease-in-out hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+    <div class="p-4 flex items-start space-x-4">
+      <div id="popup-icon" class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center">
+        <!-- Icons will be inserted dynamically via JavaScript -->
+      </div>
+      <div class="flex-grow">
+        <h3 id="popup-title" class="font-semibold text-gray-900 dark:text-white mb-1"></h3>
+        <p id="popup-message" class="text-sm text-gray-600 dark:text-gray-300"></p>
+      </div>
+      <button id="close-popup" class="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400 focus:outline-none transition-colors duration-200">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 flex justify-end space-x-2">
+      <button id="popup-action" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+        Action
+      </button>
+      <button id="popup-dismiss" class="px-4 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200">
+        Dismiss
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="mt-8 flex justify-center">
+    <a id="download_btn"
+        href="{{ path('app_candidate_generate_pdf', {'id': candidate.id , 'examinationLanguage': examinationLanguage}) }}"
+        class="block w-[210mm] text-center px-4 py-2 font-semibold border border-transparent rounded-md shadow-sm text-sm md:text-base text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        {{ "candidate_form.preview_download"|trans }}
+    </a>
+</div>
+
+<div id="loading-overlay" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-8 rounded-lg shadow-2xl w-80 max-w-sm">
+        <div class="mb-4">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500 mx-auto"></div>
+        </div>
+        <p class="text-center text-gray-700 mb-4">{{ "loading.message"|trans }}</p>
+        <div class="relative pt-1">
+            <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-200">
+                <div id="progress-bar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500 transition-all duration-300 ease-in-out" style="width: 0%"></div>
+            </div>
+        </div>
+        <p id="progress-text" class="text-center text-sm font-semibold text-green-600">0%</p>
+    </div>
+</div>
+
+
+<script>
+	document.querySelector('.help-toggle').addEventListener('click', function () {
+		document.querySelector('.help-dropdown').classList.toggle('hidden');
+	});
+
+	// Close the dropdown if the user clicks outside of it
+	window.addEventListener('click', function (event) {
+		if (!event.target.matches('.help-toggle')) {
+			var dropdown = document.querySelector('.help-dropdown');
+			if (!dropdown.classList.contains('hidden')) {
+				dropdown.classList.add('hidden');
+			}
+		}
+	});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM chargé');
+    
+    const downloadBtn = document.getElementById('download_btn');
+    const downloadPBtn = document.getElementById('download-pdf-btn');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popup-message');
+    const popupIcon = document.getElementById('popup-icon');
+    const closePopup = document.getElementById('close-popup');
+
+    if (!downloadBtn || !loadingOverlay || !progressBar || !progressText) {
+        console.error('Un ou plusieurs éléments nécessaires sont manquants.');
+        return;
+    }
+	 downloadPBtn.addEventListener('click', function (e) {
+        console.log('Bouton de téléchargement cliqué');
+        e.preventDefault();
+        
+        loadingOverlay.classList.remove('hidden');
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 5;
+            if (progress > 95) {
+                clearInterval(interval);
+            }
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${progress}%`;
+        }, 3000);
+
+        fetch(this.href, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            clearInterval(interval);
+            progressBar.style.width = '100%';
+            progressText.textContent = '100%';
+
+            if (response.ok) {
+                if (response.headers.get("Content-Type") === "application/pdf") {
+                    return response.blob().then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = 'fiche_inscription.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        showPopup('success', 'Votre fiche d\'inscription a été envoyée à votre adresse e-mail. Le PDF est également en cours de téléchargement sur votre appareil.');
+                        setTimeout(() => {
+                            window.location.href = "/end"; // Assurez-vous que c'est le bon chemin pour la page d'accueil
+                        }, 5000); // Augmenté à 5 secondes pour laisser le temps de lire le message
+                    });
+                } else {
+                    return response.json().then(data => {
+                        if (!data.success) {
+                            showPopup('error', data.message);
+                        }
+                    });
+                }
+            } else {
+                throw new Error('La réponse du réseau n\'était pas correcte.');
+            }
+        }).catch(error => {
+            clearInterval(interval);
+            loadingOverlay.classList.add('hidden');
+            showPopup('error', 'Une erreur s\'est produite lors du traitement de votre demande. Veuillez réessayer.');
+            console.error('Erreur:', error);
+        }).finally(() => {
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+            }, 500);
+        });
+    });
+
+    downloadBtn.addEventListener('click', function (e) {
+        console.log('Bouton de téléchargement cliqué');
+        e.preventDefault();
+        
+        loadingOverlay.classList.remove('hidden');
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 5;
+            if (progress > 95) {
+                clearInterval(interval);
+            }
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${progress}%`;
+        }, 300);
+
+        fetch(this.href, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            clearInterval(interval);
+            progressBar.style.width = '100%';
+            progressText.textContent = '100%';
+
+            if (response.ok) {
+                if (response.headers.get("Content-Type") === "application/pdf") {
+                    return response.blob().then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = 'fiche_inscription.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        showPopup('success', 'Votre fiche d\'inscription a été envoyée à votre adresse e-mail. Le PDF est également en cours de téléchargement sur votre appareil.');
+                        setTimeout(() => {
+                            window.location.href = "/end"; // Assurez-vous que c'est le bon chemin pour la page d'accueil
+                        }, 3000); // Augmenté à 5 secondes pour laisser le temps de lire le message
+                    });
+                } else {
+                    return response.json().then(data => {
+                        if (!data.success) {
+                            showPopup('error', data.message);
+                        }
+                    });
+                }
+            } else {
+                throw new Error('La réponse du réseau n\'était pas correcte.');
+            }
+        }).catch(error => {
+            clearInterval(interval);
+            loadingOverlay.classList.add('hidden');
+            showPopup('error', 'Une erreur s\'est produite lors du traitement de votre demande. Veuillez réessayer.');
+            console.error('Erreur:', error);
+        }).finally(() => {
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+            }, 500);
+        });
+    });
+
+    function showPopup(type, message) {
+        popupMessage.textContent = message;
+        popupIcon.innerHTML = type === 'success' 
+            ? '<svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
+            : '<svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+        popup.classList.remove('hidden', '-translate-y-full');
+        popup.classList.add('translate-y-0');
+        setTimeout(() => {
+            popup.classList.remove('translate-y-0');
+            popup.classList.add('-translate-y-full');
+        }, 10000); // Augmenté à 10 secondes pour le message plus long
+    }
+
+    closePopup.addEventListener('click', function() {
+        popup.classList.remove('translate-y-0');
+        popup.classList.add('-translate-y-full');
+    });
+});</script>
+
+<style>
+  @keyframes slideInDown {
+    from {
+      transform: translateY(-1rem) scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutUp {
+    from {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-1rem) scale(0.95);
+      opacity: 0;
+    }
+  }
+
+  .popup-enter {
+    animation: slideInDown 0.3s ease-out forwards;
+  }
+
+  .popup-exit {
+    animation: slideOutUp 0.3s ease-in forwards;
+  }
+</style>
+
+
+{% endblock %}

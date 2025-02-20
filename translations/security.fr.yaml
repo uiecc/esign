@@ -1,0 +1,14 @@
+# translations/security.fr.yaml
+login:
+  error:
+    invalid_email: "Veuillez entrer une adresse e-mail valide."
+    email_not_found: "Cette adresse e-mail n'est pas enregistrée."
+    invalid_credentials: "Adresse e-mail ou mot de passe incorrect."
+    unknown: "Une erreur inconnue s'est produite. Veuillez réessayer."
+    server: "Une erreur du serveur s'est produite. Veuillez réessayer plus tard."
+
+registration:
+  success: 'Your account has been created successfully.'
+  error:
+    unknown: 'An unknown error occurred. Please try again.'
+    server: 'A server error occurred. Please try again later.'

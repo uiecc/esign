@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			Informations du Candidat</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				line-height: 1.2;
+				margin: 0;
+				font-size: 12px;
+			}
+
+			.container {
+				width: 100%;
+				max-width: 680px;
+				margin: 0 auto;
+
+			}
+
+			table {
+				width: 100%;
+				max-width: 600px;
+				border-collapse: collapse;
+
+			}
+
+			td {
+				padding: 3px; /* Reduced padding */
+				vertical-align: top;
+				font-size: 13px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 150px; /* Adjust as needed */
+			}
+
+			.header {
+				text-align: center;
+			}
+
+			.logo {
+				width: 100px;
+				height: 100px;
+				margin: 0 auto;
+			}
+
+			.photo-placeholder {
+				width: 100px;
+				height: 80px;
+				border: 1px solid #000;
+				margin: 0 auto;
+			}
+
+			.section-title {
+				font-weight: bold;
+				border-bottom: 1px solid #000;
+				margin-top: 5px;
+			}
+
+			.footer {
+				text-align: center;
+				font-style: italic;
+				margin-top: 5px;
+				font-size: 8px;
+			}
+
+			h4 {
+				margin: 5px 0;
+			}
+
+			p {
+				margin: 2px 0;
+			}
+			.truncate {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+	{% if examinationLanguage == 'Anglais' or examinationLanguage == 'English' %}
+		{# Display receipt in English #}
+		<div class="container">
+			<div class="container">
+			<table style="margin-bottom: 5px;">
+				<tr>
+					<td width="40%" style="text-align: center; font-size: 13px;">
+						<p>UNIVERSITE INTER-ETATS<br>CONGO-CAMEROUN À SANGMELIMA<br>****<br>Ecole Supérieure Internationale
+													de Génie Numérique<br>****</p>
+					</td>
+					<td width="20%" style="text-align: center;">
+						<img src="{{ absolute_url(asset('/images/uiecc_logo_old1.png')) }}" alt="Logo" class="logo" style="display: block; margin: 0 auto;">
+					</td>
+					<td width="40%" style="text-align: center; font-size: 13px;">
+						<p>CONGO-CAMEROON INTER-STATES<br>UNIVERSITY AT SANGMELIMA<br>****<br>International Advanced School
+													of Digital Engineering<br>****</p>
+					</td>
+				</tr>
+			</table>
+
+			<div style="text-align: center; margin-bottom:2%; ">
+				<h4 style="text-decoration: underline; margin: 0; font-size: 13px;">ENROLLMENT FORM</h4>
+				<p style="font-size: 13px; padding-left:13%; padding-right:13%; margin-top:2%; ">Entrance Examination for the 
+									1<sup>st</sup>
+					year
+					of Engineering Studies in
+					the International Advanced School of Digital Engineering in Sangmélima
+				</p>
+				<p style="font-size: 13px; ">2024-2029 Promotion</p>
+				<p style="font-size: 13px; margin-top: 1%; font-weight: bold;">Candidate’s identification number :
+					{{ candidate.candidateID }}</p>
+				<p style="font-size: 13px; margin-top: 0.25%; font-weight: bold; text-transform: uppercase;">Mode d'Admission: {{ candidate.admissionType }}</p>
+
+			</div>
+			<table width="100%" border="1">
+				<tr>
+					<td colspan="1">
+						<strong>Specialty :</strong>
+					</td>
+					<td colspan="2">
+						 {% if candidate.field == 'Ingénierie des Systèmes Numériques' or  candidate.field == 'Digital Systems Engineering' %}
+                                Digital Systems Engineering
+                         {% elseif candidate.field == 'Ingénierie Numérique Sociotechnique' or candidate.field == 'Sociotechnical Digital Engineering' %}
+                                Sociotechnical Digital Engineering
+                         {% elseif candidate.field == 'Création et Design Numériques' or candidate.field == 'Digital Creation and Design' %}
+                                Digital Creation and Design
+                         {% endif %}
+						{# {{ candidate.field }} #}
+					</td>
+
+				 </tr>
+				<tr>
+					<td colspan="1">
+						<strong>Examination Center :</strong>
+					</td>
+					<td colspan="1">
+						{{ candidate.examinationCenter }}
+					</td>
+					<td colspan="1">
+						<strong>Prefered examination language : </strong>
+						{% if candidate.language == 'Français' or  candidate.language == 'French' %}
+							French
+						{% elseif candidate.language == 'Anglais' or candidate.language == 'English' %}
+							English
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>PERSONAL INFORMATION</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Name :</strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p class="truncate">{{ candidate.name }}</p>
+					</td>
+				 </tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Date of birth:</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.dateOfBirth|date('d/m/Y') }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Place of birth:</strong>
+							{{ candidate.placeOfBirth }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Nationality :</strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p>{{ candidate.nationality }}</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Region of origin: 
+							</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.region }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Division :</strong>
+							{{ candidate.depertement }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>N° CNI/Passport :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.cni }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Date issued : </strong>
+							{{ candidate.cniIssueDate|date('d/m/Y') }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Telephone :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.phoneNumber }}</p>
+					</td>
+					<td colspan="1">
+						<p class="truncate">
+							<strong>Email :</strong>
+							{{ candidate.email }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>SECONDARY EDUCATION</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>FIRST YEAR: </strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.secondaryEducationStartYear }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>FINAL YEAR : </strong>
+							{{ candidate.secondaryEducationEndYear }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>SUB-SYSTEM: </strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p>{{ candidate.educationSubsystem }}</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Domain of studies:</strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p>{{ candidate.secondCycleStudyType }}</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>Baccalauréat</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Country where it was obtained : </strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.baccalaureateCountry }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Year :</strong>
+							{{ candidate.certificateYearBAC }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Series :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.baccalaureateSeries }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Average :</strong>
+							{{ candidate.baccalaureateMention }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p>
+							<strong>The Year canditate obtained probatoire :</strong>
+							{{ candidate.probatoireYear }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>General Certificate of Education
+															Advanced Level</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Country where it was obtained :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.gceALevelCountry }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Year :</strong>
+							{{ candidate.certificateYearGCE }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Number of papers :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.gceALevelPapersCount }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Number of papers with grade A :</strong>
+							{{ candidate.gceALevelGradeACount }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>The Year canditate obtained GCE-OL : </strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.gceOLevelYear }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Number of papers :</strong>
+							{{ candidate.gceOLevelPapersCount }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>PAYMENT OF EXAMINATION FEES</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Operator : </strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.paymentOperator }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Transaction N°:</strong>
+							{{ candidate.transactionNumber }}
+						</p>
+					</td>
+				</tr> 
+			</table>
+			<table style="margin-top: 5px;">
+				<tr>
+					<td width="40%" style="text-align: left;">
+						<div class="photo-placeholder" style="width: 40%; height: 10%; display: inline-block;">
+							{% if candidate.photo %}
+								<img src="{{ absolute_url(asset('/uploads/photos/' ~ candidate.photo)) }}" alt="Photo du candidat" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+							{% else %}
+								<div class="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center text-gray-500">
+									<span style="font-size: 24px;">?</span>
+								</div>
+							{% endif %}
+						</div>
+					</td>
+
+					<td width="20%" style="text-align: center;">
+						<p style="text-decoration: underline;">
+							<strong>Signature of the candidate</strong>
+						</p>
+					</td>
+
+					<td width="40%" style="text-align: right;">
+						<div class="photo-placeholder" style="width: 40%; height: 10%; display: inline-block;">
+							<img src="data:image/png;base64,{{ qrCodeBase64 }}" alt="QR Code" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">				
+						</div>
+					</td>
+				</tr>
+			</table>
+
+			<p class="footer">The candidate must print, place a fiscal stamp, photocopy and present this form during the examination.</p>
+</div>
+	{% elseif examinationLanguage == 'Français' or examinationLanguage == 'French' %}
+	{# Display receipt in default language #}
+
+	<div class="container">
+			<table style="margin-bottom: 5px;">
+				<tr>
+					<td width="40%" style="text-align: center; font-size: 13px;">
+						<p>UNIVERSITE INTER-ETATS<br>CONGO-CAMEROUN À SANGMELIMA<br>****<br>Ecole Supérieure Internationale
+													de Génie Numérique<br>****</p>
+					</td>
+					<td width="20%" style="text-align: center;">
+						<img src="{{ absolute_url(asset('/images/uiecc_logo_old1.png')) }}" alt="Logo" class="logo" style="display: block; margin: 0 auto;">
+					</td>
+					<td width="40%" style="text-align: center; font-size: 13px;">
+						<p>CONGO-CAMEROON INTER-STATES<br>UNIVERSITY AT SANGMELIMA<br>****<br>International Advanced School
+													of Digital Engineering<br>****</p>
+					</td>
+				</tr>
+			</table>
+
+			<div style="text-align: center; margin-bottom:2%; ">
+				<h4 style="text-decoration: underline; margin: 0; font-size: 13px;">FICHE D'INSCRIPTION</h4>
+				<p style="font-size: 13px; padding-left:13%; padding-right:13%; margin-top:2%; ">Concours d'entrée en
+									1<sup>ère</sup>
+					année
+					d'études d'ingénieur à
+					l'Ecole Supérieure Internationale de Génie Numérique de Sangmélima
+				</p>
+				<p style="font-size: 13px; ">Promotion 2024-2029</p>
+				<p style="font-size: 13px; margin-top: 1%; font-weight: bold;">Identifiant du candidat :
+					{{ candidate.candidateID }}</p>
+				<p style="font-size: 13px; margin-top: 0.25%; font-weight: bold; text-transform: uppercase;">Mode d'Admission: {{ candidate.admissionType }}</p>
+
+			</div>
+			<table width="100%" border="1">
+				<tr>
+					<td colspan="1">
+						<strong>Spécialité :</strong>
+					</td>
+					<td colspan="2">
+						{{ candidate.field }}
+					</td>
+
+				 </tr>
+				<tr>
+					<td colspan="1">
+						<strong>Centre d'examen :</strong>
+					</td>
+					<td colspan="1">
+						{{ candidate.examinationCenter }}
+					</td>
+					<td colspan="1">
+						<strong>Langue d'examen :</strong>
+						{{ candidate.language }}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>INFORMATIONS PERSONNELLES</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Noms et prénoms</strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p class="truncate">{{ candidate.name }}</p>
+					</td>
+				 </tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Date de naissance:</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.dateOfBirth|date('d/m/Y') }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Lieu de naissance :</strong>
+							{{ candidate.placeOfBirth }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Nationalité :</strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p>{{ candidate.nationality }}</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Région d'origine:
+							</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.region }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Département :</strong>
+							{{ candidate.depertement }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>N° CNI/Passeport :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.cni }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Délivré le :</strong>
+							{{ candidate.cniIssueDate|date('d/m/Y') }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Téléphone :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.phoneNumber }}</p>
+					</td>
+					<td colspan="1">
+						<p class="truncate">
+							<strong>Email :</strong>
+							{{ candidate.email }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>ETUDES SECONDAIRES</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Année de début :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.secondaryEducationStartYear }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Année de fin :</strong>
+							{{ candidate.secondaryEducationEndYear }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Sous-système :</strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p>{{ candidate.educationSubsystem }}</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Type d'études au second cycle :</strong>
+						</p>
+					</td>
+					<td colspan="2">
+						<p>{{ candidate.secondCycleStudyType }}</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>Baccalauréat</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Pays d'obtention :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.baccalaureateCountry }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Année d’obtention :</strong>
+							{{ candidate.certificateYearBAC }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Série :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.baccalaureateSeries }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Mention :</strong>
+							{{ candidate.baccalaureateMention }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p>
+							<strong>Année d’obtention du probatoire :</strong>
+							{{ candidate.probatoireYear }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>General Certificate of Education
+															Advanced Level</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Pays d'obtention :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.gceALevelCountry }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Année d’obtention :</strong>
+							{{ candidate.certificateYearGCE }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Number of papers :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.gceALevelPapersCount }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Number of papers with grade A :</strong>
+							{{ candidate.gceALevelGradeACount }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Année d’obtention du GCE-OL :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.gceOLevelYear }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>Number of papers :</strong>
+							{{ candidate.gceOLevelPapersCount }}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<p style="text-align: center; font-weight: 500;">
+							<strong>PAIEMENT DES FRAIS DE CONCOURS</strong>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">
+						<p>
+							<strong>Opérateur :</strong>
+						</p>
+					</td>
+					<td colspan="1">
+						<p>{{ candidate.paymentOperator }}</p>
+					</td>
+					<td colspan="1">
+						<p>
+							<strong>N° transaction :</strong>
+							{{ candidate.transactionNumber }}
+						</p>
+					</td>
+				</tr> 
+			</table>
+			<table style="margin-top: 5px;">
+				<tr>
+					<td width="40%" style="text-align: left;">
+						<div class="photo-placeholder" style="width: 40%; height: 10%; display: inline-block;">
+							{% if candidate.photo %}
+								<img src="{{ absolute_url(asset('/uploads/photos/' ~ candidate.photo)) }}" alt="Photo du candidat" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+							{% else %}
+								<div class="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center text-gray-500">
+									<span style="font-size: 24px;">?</span>
+								</div>
+							{% endif %}
+						</div>
+					</td>
+
+					<td width="20%" style="text-align: center;">
+						<p style="text-decoration: underline;">
+							<strong>Signature du candidat</strong>
+						</p>
+					</td>
+
+					<td width="40%" style="text-align: right;">
+						<div class="photo-placeholder" style="width: 40%; height: 10%; display: inline-block;">
+							<img src="data:image/png;base64,{{ qrCodeBase64 }}" alt="QR Code" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">				
+						</div>
+					</td>
+				</tr>
+			</table>
+
+			<p class="footer">Le candidat veillera à imprimer, à timbrer, à photocopier et à présenter cette fiche lors de l'examen</p>
+</div>
+	{% endif %}
+
+		
+		</body>
+</html>

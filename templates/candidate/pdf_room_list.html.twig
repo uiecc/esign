@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @page {
+            size: landscape;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.2;
+            margin: 0;
+            font-size: 12px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        /* Styles for the first table (header) */
+        .header-table {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .header-table td {
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        /* Styles for the second table (candidate list) */
+        .candidate-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+
+        .candidate-table th,
+        .candidate-table td {
+            padding: 3px;
+            vertical-align: middle;
+            font-size: 11px;
+            border: 1px solid black;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .candidate-table th {
+            background-color: #f2f2f2;
+        }
+
+        h4 {
+            margin: 5px 0;
+        }
+
+        p {
+            margin: 2px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- First table without borders (header) -->
+        <table class="header-table">
+            <tr>
+                <td width="40%">
+                    <p>UNIVERSITE INTER-ETATS<br>CONGO-CAMEROUN À SANGMELIMA<br>****<br>Ecole Supérieure Internationale
+                        de Génie Numérique<br>****</p>
+                </td>
+                <td width="20%">
+                    <img src="{{ absolute_url(asset('/images/uiecc_logo_old1.png')) }}" alt="Logo" class="logo">
+                </td>
+                <td width="40%">
+                    <p>CONGO-CAMEROON INTER-STATES<br>UNIVERSITY AT SANGMELIMA<br>****<br>International Advanced School
+                        of Digital Engineering<br>****</p>
+                </td>
+            </tr>
+        </table>
+
+
+
+        <div class="title" style="text-align: center; margin-bottom:4%;">
+            <h4 style="text-decoration: underline; margin: 0; font-size: 13px;">LISTE DES CANDIDATS - SALLE {{ roomNumber }}</h4>
+            <h4 style="text-decoration: underline; margin: 0; font-size: 12px;">{{ field }}</h4>
+            <h4 style="text-decoration: underline; margin: 0; font-size: 12px; text-align: left;">Date: </h4>
+        </div>
+
+        <table class="candidate-table">
+            <thead>
+                <tr>
+                    <th>N<sup>o</sup> Ordre</th>
+                    <th>ID Candidat</th>
+                    <th>Nom</th>
+                    <th>Sexe</th>
+                    <th>Date de naissance</th>
+                    <th>Langue de Composition</th>
+                    <th class="presence-column">Présence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidate in candidates %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ candidate.candidateID }}</td>
+                    <td>{{ candidate.name }}</td>
+                    <td>{{ candidate.sexe }}</td>
+                    <td>{{ candidate.dateOfBirth|date('d/m/Y') }}</td>
+                    <td>{{ candidate.language }}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends 'base_empty.html.twig' %}
+
+{% block head %}
+    {% block title %}
+        {{ 'error.title'|trans }}
+    {% endblock %}
+    <style>
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+            75% {
+                transform: translateX(-5px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+        .shake-animation:hover {
+            animation: shake 0.5s;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <main class="min-h-screen bg-gradient-to-b from-green-100 to-white flex items-center justify-center px-6 py-24 sm:py-32 lg:px-8">
+        <div class="max-w-2xl w-full space-y-8 bg-white p-10 rounded-xl shadow-2xl">
+            <div class="text-center">
+                <img class="mx-auto h-32 w-auto shake-animation" src="/icons/error_green.gif" alt="{{ 'error.alt_text'|trans }}">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4">{{ 'error.404'|trans }}</h1>
+                <h2 class="text-3xl font-semibold text-gray-600 mb-4">{{ 'error.page_not_found'|trans }}</h2>
+                <p class="text-gray-500 mb-8">{{ 'error.message'|trans }}</p>
+            </div>
+
+            <div class="mt-8 space-y-6">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <a href="#" onclick="history.back(); return false;" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-main-green hover:bg-secondary-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                                <svg class="h-5 w-5 text-main-green group-hover:scale-105 transition-transform duration-75" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            {{ 'error.go_back'|trans }}
+                        </a>
+                    </div>
+                </div>
+
+                {# <div class="text-sm text-center">
+                    <a href="{{ path('app_home') }}#faq-section" class="font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
+                        {{ 'error.faq_link'|trans }}
+                    </a>
+                </div> #}
+            </div>
+        </div>
+    </main>
+{% endblock %}

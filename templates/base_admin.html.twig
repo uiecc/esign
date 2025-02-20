@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}Welcome!{% endblock %}
+    </title>
+    <link rel="icon" href="{{ asset('/images/uiecc_logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block script %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="bg-background dark:bg-background text-text dark:text-text flex flex-col min-h-screen">
+    <header class="bg-bg-white dark:bg-background text-text dark:text-text fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between flex-wrap">
+            <!-- Logo -->
+            <a href="#" class="flex items-center text-main-green flex-shrink-0 mr-6">
+                <img id="logo-light" class="h-12 w-auto" src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                <img id="logo-dark" class="h-12 w-auto hidden" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+            </a>
+
+            <!-- Right side elements -->
+            <div class="flex items-center">
+                <!-- Logout button - Hidden on mobile, visible on larger screens -->
+                <a href="{{path('app_admin_logout')}}" class="hidden sm:inline-block text-main-green bg-white border border-main-green rounded-md px-3 py-1 lg:px-5 lg:py-2 font-semibold hover:scale-105 transition-transform duration-75 mr-4">{{ 'home_header.nav.logout'|trans }}</a>
+
+                <!-- Dropdown menu -->
+                <div class="relative">
+                    <button id="options-menu" class="text-main-green hover:text-hover-green focus:outline-none">
+                        <img src="/icons/translation.svg" alt="Translation image" class="w-8 h-8">
+                    </button>
+                    <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                        <div class="py-1">
+                            <ul>
+                                <li class="ml-2 py-1 px-1">
+                                    <a href="{{ path('switch_language', {'locale': 'en'}) }}">{{ 'home_header.language.english'|trans }}</a>
+                                </li>
+                                <li class="ml-2 py-1 px-1">
+                                    <a href="{{ path('switch_language', {'locale': 'fr'}) }}">{{ 'home_header.language.french'|trans }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button type="button" class="sm:hidden text-main-green ml-4" id="mobile-menu-button">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile menu -->
+        <div class="hidden sm:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="{{path('app_admin_logout')}}" class="block text-main-green bg-white border border-main-green rounded-md px-3 py-2 text-base font-medium">{{ 'home_header.nav.logout'|trans }}</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full mt-20 px-4 sm:px-6 lg:px-8">
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer class="bg-background dark:bg-background text-text dark:text-text py-8 mt-auto">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between">
+            <a href="#" class="mb-4 sm:mb-0">
+                <img id="footer-logo-light" class="h-12 w-auto" src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                <img id="footer-logo-dark" class="h-12 w-auto hidden" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+            </a>
+            <p class="text-center sm:text-right">{{ 'home_header.footer.copyright'|trans({'%year%': 'now'|date('Y')}) }}</p>
+        </div>
+    </footer>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const optionsMenu = document.getElementById('options-menu');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Dropdown menu toggle
+            optionsMenu.addEventListener('click', () => {
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!dropdownMenu.contains(event.target) && !optionsMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+
+            // Theme setting function
+            function setTheme(isDark) {
+                const logoLight = document.getElementById('logo-light');
+                const logoDark = document.getElementById('logo-dark');
+                const footerLogoLight = document.getElementById('footer-logo-light');
+                const footerLogoDark = document.getElementById('footer-logo-dark');
+
+                if (isDark) {
+                    logoLight.classList.add('hidden');
+                    logoDark.classList.remove('hidden');
+                    footerLogoLight.classList.add('hidden');
+                    footerLogoDark.classList.remove('hidden');
+                    document.documentElement.classList.add('dark');
+                } else {
+                    logoLight.classList.remove('hidden');
+                    logoDark.classList.add('hidden');
+                    footerLogoLight.classList.remove('hidden');
+                    footerLogoDark.classList.add('hidden');
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+
+            // Initialize theme based on system preference or previous setting
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const storedTheme = localStorage.getItem('color-theme');
+            if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+                setTheme(true);
+            } else {
+                setTheme(false);
+            }
+
+            // Theme toggle (if you want to add a theme toggle button later)
+            // const themeToggle = document.getElementById('theme-toggle');
+            // themeToggle.addEventListener('click', () => {
+            //     const isDark = document.documentElement.classList.contains('dark');
+            //     setTheme(!isDark);
+            //     localStorage.setItem('color-theme', isDark ? 'light' : 'dark');
+            // });
+        });
+    </script>
+</body>
+</html>

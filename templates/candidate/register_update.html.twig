@@ -1,0 +1,1701 @@
+{% extends 'base_login.html.twig' %}
+{% block title %}
+{{ candidate.id ? "Mettre à jour" : "Inscription" }}
+du candidat
+{% endblock %}
+{% block body %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token('authenticate') }}" />
+<style>
+	.form-input {
+		@apply w-full px-4 py-3 border border-gray-300 rounded-lg focus: ring-2 focus: ring-main-green focus: border-main-green transition duration-150 ease-in-out placeholder: text-sm;
+	}
+
+	.form-label {
+		@apply block text-sm font-medium text-gray-700 mb-2;
+	}
+
+	.btn-primary {
+		@apply w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-main-green hover: bg-green-700 focus: outline-none focus: ring-2 focus: ring-offset-2 focus: ring-main-green transition duration-150 ease-in-out;
+	}
+
+	.form-step {
+		@apply bg-white rounded-lg shadow-md p-8 mb-8;
+	}
+
+	.step-indicator {
+		@apply w-10 h-10 flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 ease-in-out;
+	}
+
+	.step-indicator.active {
+		@apply bg-main-green text-white;
+	}
+
+	.step-indicator.completed {
+		@apply bg-green-200 text-main-green;
+	}
+
+	.help-tooltip {
+		@apply absolute top-0 right-0 mt-1 mr-1 text-gray-400 hover: text-gray-600 cursor-pointer transition duration-150 ease-in-out;
+	}
+
+	.btn-primary,
+	.btn-secondary,
+	.btn-success {
+		@apply px-6 py-3 border border-transparent text-lg font-semibold rounded-md focus: outline-none focus: ring-2 focus: ring-offset-2 transition duration-150 ease-in-out;
+	}
+
+	.btn-primary {
+		@apply text-white bg-main-green hover: bg-green-700 focus: ring-main-green;
+	}
+
+	.btn-secondary {
+		@apply text-main-green bg-white border-main-green hover: bg-green-50 focus: ring-main-green;
+	}
+
+	.btn-success {
+		@apply text-white bg-green-600 hover: bg-green-700 focus: ring-green-500;
+	}
+
+	#popup {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 50;
+		transform: translateY(-100%);
+		transition: transform 0.3s ease-in-out;
+	}
+
+	#popup.show {
+		transform: translateY(0);
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* New styles for button layout */
+	.form-buttons {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		margin-top: 2rem;
+	}
+
+	.form-buttons button {
+		flex-basis: 30%;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.375rem;
+		font-weight: 600;
+		transition: all 0.15s ease-in-out;
+	}
+
+	.form-buttons button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.form-buttons button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.required-asterisk {
+		color: red;
+	}
+
+	@media(max-width: 640px) {
+		.form-step {
+			padding: 1rem;
+		}
+
+		.form-input,
+		.form-select {
+			font-size: 14px;
+			padding: 0.5rem;
+		}
+
+		.btn-primary,
+		.btn-secondary,
+		.btn-success {
+			width: 100%;
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	@media(min-width: 641px) and(max-width: 1024px) {
+		.form-step {
+			padding: 1.5rem;
+		}
+	}
+
+	@media(min-width: 1025px) {
+		.form-step {
+			padding: 2rem;
+		}
+	}
+
+	.form-input,
+	.form-select {
+		width: 100%;
+	}
+
+	.step-indicator {
+		width: 30px;
+		height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background-color: #e0e0e0;
+		color: #333;
+		font-weight: bold;
+	}
+
+	.step-indicator.active {
+		background-color: #4caf50;
+		color: white;
+	}
+</style>
+
+<!-- Modal Container -->
+<div id="modal1"
+	class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center hidden">
+	<div class="bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg overflow-hidden">
+		<div class="flex items-center justify-between p-4 border-b">
+			<h3 id="modal1-title" class="text-lg font-semibold"></h3>
+			<button id="close-modal1" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+				<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+				</svg>
+			</button>
+		</div>
+		<div class="p-4">
+			<div class="flex items-center mb-4">
+				<div id="modal1-icon" class="flex-shrink-0 mr-4">
+					<!-- Icons will be inserted dynamically via JavaScript -->
+				</div>
+				<p id="modal1-message" class="text-md"></p>
+			</div>
+			<div id="modal1-actions" class="flex justify-end mt-4">
+				<!-- Buttons will be inserted dynamically via JavaScript -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.modal-open {
+		overflow: hidden;
+	}
+</style>
+
+<!-- Popup for flash messages -->
+<div id="popup"
+	class="fixed z-50 top-0 bg-red-100 left-0 right-0 p-4 transform -translate-y-full transition-transform duration-300 ease-in-out">
+	<div class="max-w-md mx-auto bg-white border-l-4 rounded-lg shadow-lg overflow-hidden flex items-center">
+		<div id="popup-icon" class="flex-shrink-0 p-4"><!-- Icons will be inserted dynamically via JavaScript -->
+		</div>
+		<div class="flex-grow p-4">
+			<p id="popup-message" class="text-md font-medium"></p>
+		</div>
+		<button id="close-popup" class="p-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+			<svg class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+			</svg>
+		</button>
+	</div>
+</div>
+
+
+
+<div class="min-h-screen bg-gradient-to-tr from-green-50 to-green-100 py-6 sm:py-12 px-4 sm:px-6 lg:px-8 ">
+
+	<div class="max-w-5xl mx-auto z-30">
+		<div class="text-center mb-8 sm:mb-12 mt-10 sm:mt-20">
+			<h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 animate-fade-in ">
+				{{ candidate.id ? 'candidate_form.Maj'| trans : 'candidate_form.Inscription'| trans }}
+			</h1>
+			<p class="text-md sm:text-lg text-gray-600 ">
+				{{ "candidate_form.description" | trans }}
+			</p>
+			<hr class="border-t border-green-600 my-8 w-1/2 mx-auto">
+
+		</div>
+
+
+		{% for label, messages in app.flashes %}
+		{% for message in messages %}
+		<div class="flash-message mb-4 hidden" data-type="{{ label }}">
+			{{ message | raw }}
+		</div>
+		{% endfor %}
+		{% endfor %}
+
+		<div class="bg-white shadow-xl rounded-lg overflow-hidden">
+			<div class="p-4 sm:p-8">
+				<div class="flex flex-col sm:flex-row justify-between items-center mb-8">
+					<div class="flex-1 flex justify-start mb-4 sm:mb-0">
+						<div class="flex space-x-2 sm:space-x-4">
+							<div id="step-indicator-1" class="step-indicator active">1</div>
+							<div id="step-indicator-2" class="step-indicator">2</div>
+							<div id="step-indicator-3" class="step-indicator">3</div>
+							<div id="step-indicator-4" class="step-indicator">4</div>
+							<div id="step-indicator-5" class="step-indicator">5</div>
+							<div id="step-indicator-6" class="step-indicator">6</div>
+							<div id="step-indicator-7" class="step-indicator">7</div>
+						</div>
+					</div>
+					<button id="help-button" class="text-main-green hover:text-green-700 font-medium flex items-center">
+						<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+							</path>
+						</svg>
+						{{ "candidate_form.Need help?" | trans }}
+					</button>
+				</div>
+
+				{{ form_start(form, {'attr': {'class': 'space-y-8', 'id': 'multi-step-form'
+				}}) }}
+				{{ form_widget(form._token) }}
+				{# Étape 1: Informations de paiement #}
+				<div id="step1" class="form-step p-4 sm:p-6 md:p-8">
+					<h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-4 sm:mb-6 text-main-green">
+						{{ "candidate_form.step1_title.Étape 1" | trans }}
+					</h3>
+					<div class="space-y-4 sm:space-y-6">
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+							<div class="form-group relative">
+								{{ form_label(form.transactionNumber,
+								'candidate_form.transaction_number'|trans ~ '
+								<span class="required-asterisk">*</span>', {'label_attr':
+								{'class': 'form-label block mb-1 text-sm sm:text-base'},
+								'label_html': true}) }}
+								<div class="relative">
+									{{ form_widget(form.transactionNumber, {'attr': {
+									'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+									'placeholder': 'candidate_form.transaction_number_placeholder' | trans,
+									'required': 'required'
+
+									}}) }}
+									<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+										title="{{ 'candidate_form.transaction_number_help' | trans }}"></i>
+								</div>
+								{% if form.transactionNumber.vars.errors|length > 0 %}
+								<div class="text-red-500 text-xs sm:text-sm mt-1">
+									{{ form_errors(form.transactionNumber) }}
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group relative">
+								{{ form_label(form.paymentOperator,
+								'candidate_form.payment_receipt'|trans ~ '
+								<span class="required-asterisk">*</span>', {'label_attr':
+								{'class': 'form-label block mb-1 text-sm sm:text-base'},
+								'label_html': true}) }}
+								<div class="relative">
+									{{ form_widget(form.paymentOperator, {'attr': {
+									'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+									'placeholder': 'candidate_form.transaction_photo_placeholder' | trans,
+									'required': 'required'
+
+									}}) }}
+									<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+										title="{{ 'candidate_form.paymentOperator_help' | trans }}"></i>
+								</div>
+								{{ form_errors(form.paymentOperator, {'attr': {'class': 'text-red-500 text-xs sm:text-sm
+								mt-1'
+								}}) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+				<div id="step2" class="form-step p-4 sm:p-6 md:p-8 hidden">
+					<h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-1 sm:mb-1 text-main-green">
+						{{ "candidate_form.step2_title.Étape Int" | trans }}
+					</h3>
+
+					{# Educational System Selection #}
+					<div class="form-group relative mb-6">
+						<p class="text-sm sm:text-md md:text-md font-normal mb-2 text-main-green">{{
+							"candidate_form.step2_title.desc" | trans }}</p>
+
+						{{ form_label(form.educationalSystemCheck, 'candidate_form.step2_title.question_fr'|trans,
+						{'label_attr': {'class':
+						'form-label block mb-1 text-sm sm:text-base'}, 'label_html': true}) }}
+						{{ form_widget(form.educationalSystemCheck, {
+						'attr': {
+						'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+						'required': 'required',
+
+						},
+						}) }}
+
+						
+					</div>
+
+					{# Francophone subsection #}
+					<div id="francophone-intermediate-fields" class="subsection mb-6 sm:mb-8" style="display: none;">
+					<p class="text-justify text-md sm:text-lg md:text-lg font-bold mt-4 mb-4 text-main-green">{{
+							"candidate_form.step2_title.next_step_desc" | trans }}</p>
+
+						<h4 class="text-lg font-semibold mb-1 text-main-green">{{
+							'candidate_form.step2_fields.baccalaureat'|trans }}</h4>
+						<p class="text-sm sm:text-md md:text-md font-semibold text-main-green">{{
+							"candidate_form.step2_title.desc_2_bac" | trans }}</p>
+
+						<p class="text-sm sm:text-md md:text-md font-normal text-main-green">{{
+							"candidate_form.step2_title.desc_bac" | trans }}</p>
+
+
+						{# Baccalauréat Subjects #}
+						<div id="bac-subjects" class="mt-4">
+							<h5 class="text-md font-normal mb-2 ">{{ 'candidate_form.step2_fields.matieres'|trans }}
+							</h5>
+							<div class="grid grid-cols-1 sm:grid-cols-1 gap-4">
+								<div class="form-group">
+									{{ form_widget(form['bacSubject'], {'attr': {'class': 'form-input w-full
+									placeholder-gray-500 text-sm sm:text-base py-2 px-3 mb-3', 'placeholder': 'Select
+									Subject'}}) }}
+									{{ form_widget(form['bacSubjectMark'], {
+									'attr': {
+									'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+									'placeholder': 'Note sur 20 (0-20)',
+									'type': 'string',
+
+									}
+									}) }}
+								</div>
+							</div>
+						</div>
+
+						{# Probatoire Section #}
+						<div id="probatoire-section" class="mt-6" style="display: none;">
+							<h4 class="text-lg font-semibold mb-4 text-main-green">Probatoire</h4>
+							<p class="text-sm sm:text-md md:text-md font-semibold text-main-green">{{
+								"candidate_form.step2_title.desc_2_bac" | trans }}</p>
+
+							<p class="text-sm sm:text-md md:text-md font-normal text-main-green">{{
+								"candidate_form.step2_title.desc_prob" | trans }}</p>
+
+
+							<div id="probatoire-subjects" class="mt-4">
+								<h5 class="text-md font-normal mb-2">{{ 'candidate_form.step2_fields.matieres'|trans }}
+								</h5>
+								<div class="grid grid-cols-1 sm:grid-cols-1 gap-4">
+
+									<div class="form-group">
+										{{ form_widget(form['probatoireSubject'], {'attr': {'class': 'form-input w-full
+										placeholder-gray-500 text-sm sm:text-base py-2 px-3 mb-3', 'placeholder':
+										'Select Subject'}}) }}
+										{{ form_widget(form['probatoireSubjectMark'], {
+										'attr': {
+										'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2
+										px-3',
+										'placeholder': 'Note sur 20 (0-20)',
+										'type': 'string',
+
+										}
+										}) }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{# Anglophone subsection #}
+					<div id="anglophone-intermediate-fields" class="subsection" style="display: none;">
+						<h4 class="text-lg font-semibold mb-2 text-main-green">GCE Advanced Level</h4>
+						<p class="text-sm sm:text-md md:text-md font-semibold text-main-green">{{
+							"candidate_form.step2_title.desc_2_gce" | trans }}</p>
+
+						<p class="text-sm sm:text-md md:text-md font-normal text-main-green">{{
+							"candidate_form.step2_title.desc_en_gce" | trans }}</p>
+
+
+						{# GCE A Level Subjects #}
+						<div id="gce-a-level-subjects" class="mt-4">
+							<h5 class="text-md font-normal mb-2">{{ 'candidate_form.step2_fields.matieres'|trans }}</h5>
+							{# <p class="text-sm sm:text-md md:text-lg font-normal mb-4 sm:mb-6 text-main-green">{{
+								"candidate_form.step2_title.desc_en_gce" | trans }}</p> #}
+
+							<div class="grid grid-cols-1 sm:grid-cols-1 gap-4">
+								<div class="form-group">
+									{{ form_widget(form['gceAlevelSubject'], {'attr': {'class': 'form-input w-full
+									placeholder-gray-500 text-sm sm:text-base py-2 px-3 mb-3', 'placeholder': 'Select
+									Subject'}}) }}
+									{{ form_widget(form['gceAlevelSubjectGrade'], {
+									'attr': {
+									'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3
+									uppercase placeholder:capitalize',
+									'placeholder': 'Enter your Grade(A-C)',
+
+									},
+									}) }}
+								</div>
+							</div>
+						</div>
+
+						{# GCE O Level Section #}
+						<div id="gce-o-level-section" class="mt-6" style="display: none;">
+							<h4 class="text-lg font-semibold mb-4 text-main-green">GCE Ordinary Level</h4>
+							<p class="text-sm sm:text-md md:text-md font-semibold text-main-green">{{
+								"candidate_form.step2_title.desc_2_gce" | trans }}</p>
+
+							<p class="text-sm sm:text-md md:text-md font-normal text-main-green">{{
+								"candidate_form.step2_title.desc_en_gce_olevel" | trans }}</p>
+
+
+							<div id="gce-o-level-subjects" class="mt-4">
+								<h5 class="text-md font-normal mb-2">{{ 'candidate_form.step2_fields.matieres'|trans }}
+								</h5>
+								<div class="grid grid-cols-1 sm:grid-cols-1 gap-4">
+
+									<div class="form-group">
+										{{ form_widget(form['gceOlevelSubject'], {'attr': {'class': 'form-input w-full
+										placeholder-gray-500 text-sm sm:text-base py-2 px-3 mb-3', 'placeholder':
+										'Select Subject'}}) }}
+										{{ form_widget(form['gceOlevelSubjectGrade'], {
+										'attr': {
+										'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3
+										uppercase placeholder:capitalize',
+										'placeholder': 'Enter your Grade (A-C)',
+										},
+
+										}) }}
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+				{# Étape 2.1: Informations personnelles #}
+				<div id="step3" class="form-step hidden p-4 sm:p-6 md:p-8">
+					<h3 class="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6 text-main-green">
+						{{ "candidate_form.step2_title.Étape 2" | trans }}
+					</h3>
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+						{% for field in ['name', 'sexe', 'dateOfBirth', 'placeOfBirth', 'birthCertificate', 'photo'] %}
+						<div
+							class="form-group relative {% if field == 'dateOfBirth' %}col-span-full sm:col-span-2{% endif %}">
+							{% if field == 'dateOfBirth' %}
+							<p class="text-xs sm:text-sm text-red-500 font-bold mb-2">
+								Le candidat doit être né entre le 26 Octobre 2002 et le 26 Octobre 2024
+							</p>
+							{% endif %}
+
+							{{ form_label(form[field], ('candidate_form.'~field) | trans ~ ' <span
+								class="required-asterisk">*</span>', {
+							'label_attr': {'class': 'form-label block mb-1 text-sm sm:text-base'},
+							'label_html': true
+							}) }}
+
+							{% if field in ['photo', 'birthCertificate'] %}
+							<div class="image-upload-container">
+								{{ form_widget(form[field], {
+								'attr': {
+								'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3
+								image-upload',
+								'required': 'required',
+								'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+								}
+								}) }}
+								<img id="{{ field }}-preview" src="#" alt="{{ field }} preview"
+									class="hidden mt-2 max-w-full h-auto" style="max-height: 100px" />
+							</div>
+							{% elseif field == 'dateOfBirth' %}
+							<div class="date-input-wrapper relative">
+								<div class="relative">
+									{{ form_widget(form[field], {
+									'attr': {
+									'class': 'form-input w-full text-sm sm:text-base py-2 px-3 pr-10 border
+									border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500
+									js-datepicker js-dob-datepicker',
+									'required': 'required',
+									'placeholder': ('candidate_form.'~field~'_placeholder') | trans,
+									'aria-label': ('candidate_form.'~field~'_label') | trans
+									}
+									}) }}
+									<span
+										class="calendar-icon absolute right-3 top-1/2 mt-1 transform -translate-y-1/2 pointer-events-none">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20"
+											height="20" aria-hidden="true">
+											<path fill="none" stroke="#4CAF50" stroke-width="2"
+												d="M3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6m-18 0a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2m-18 0h18M8 2v4m8-4v4M7 11h10M7 15h10M7 19h10" />
+										</svg>
+									</span>
+								</div>
+							</div>
+							{% else %}
+							{{ form_widget(form[field], {
+							'attr': {
+							'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+							'required': 'required',
+							'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+							}
+							}) }}
+							{% endif %}
+
+							<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+								title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+							{{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs sm:text-sm mt-1'}}) }}
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				{#<!-- 'photo' -->#}
+				{# Étape 2.2: Informations personnelles #}
+				<div id="step4" class="form-step hidden p-4 sm:p-6 md:p-8">
+					<h3 class="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6 text-main-green">
+						{{ "candidate_form.step2_title.Étape 2" | trans }}
+					</h3>
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+						{% for field in ['nationality', 'region', 'depertement', 'cni',
+						'cniIssueDate', 'phoneNumber'] %}
+						<div class="form-group relative">
+							{{ form_label(form[field], ('candidate_form.'~field) | trans ~ '
+							<span class="required-asterisk">*</span>', {'label_attr':
+							{'class': 'form-label block mb-1 text-sm sm:text-base'},
+							'label_html': true}) }}
+
+							{% if field in ['photo',
+							'birthCertificate'] %}
+							<div class="image-upload-container">
+								{{ form_widget(form[field], {'attr': {
+								'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3
+								image-upload',
+								'required': 'required',
+								'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+								}}) }}
+								<img id="{{ field }}-preview" src="#" alt="{{ field }} preview"
+									class="hidden mt-2 max-w-full h-auto" style="max-height: 100px" />
+							</div>
+							{% elseif field == 'cniIssueDate' %}
+							<div class="date-input-wrapper relative">
+								{{ form_widget(form[field], {'attr': {
+								'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 pl-3 pr-10
+								js-datepicker',
+								'required': 'required',
+								'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+								}}) }}
+								<span
+									class="calendar-icon absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="20" height="20">
+										<path fill="none" stroke="#4CAF50" stroke-width="2"
+											d="M3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6m-18 0a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2m-18 0h18M8 2v4m8-4v4M7 11h10M7 15h10M7 19h10" />
+									</svg>
+								</span>
+							</div>
+							{% else %}
+							{{ form_widget(form[field], {'attr': {
+							'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+							'required': 'required',
+							'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+							}}) }}
+							{% endif %}
+							<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+								title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+							{{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs sm:text-sm mt-1'
+							}}) }}
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				{# Étape 3.1: Autres informations #}
+				<div id="step5" class="form-step hidden p-4 sm:p-6 md:p-8">
+					<h3 class="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6 text-main-green">
+						{{ "candidate_form.step3_title.Étape 4" | trans }}
+					</h3>
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+						{% for field in ['secondaryEducationStartYear',
+						'secondaryEducationEndYear', 'secondCycleStudyType',
+						'educationSubsystem'] %}
+						<div class="form-group relative">
+							{{ form_label(form[field], ('candidate_form.'~field) | trans ~ '
+							<span class="required-asterisk">*</span>', {'label_attr':
+							{'class': 'form-label block mb-1 text-sm sm:text-base'},
+							'label_html': true}) }}
+							{% if field in
+							['secondaryEducationStartYear', 'secondaryEducationEndYear'] %}
+							{{ form_widget(form[field], {'attr': {
+							'class': 'form-select form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3
+							education-year-select',
+							'required': 'required',
+							'placeholder': ('candidate_form.'~field~'_placeholder') | trans,
+							'data-year-field': field
+
+							}}) }}
+							<div id="year-gap-error" class="text-red-500 text-xs sm:text-sm mt-2 hidden">
+								{{ "candidate_form.year_gap_error" | trans }}
+							</div>
+							{% else %}
+							{{ form_widget(form[field], {'attr': {
+							'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+							'required': 'required',
+							'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+							}}) }}
+							{% endif %}
+							<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+								title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+							{{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs sm:text-sm mt-1'
+							}}) }}
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				{# Étape 3.2: Autres informations #}
+				<div id="step6" class="form-step hidden p-4 sm:p-6 md:p-8">
+					<h3 id="step5-heading"
+						class="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6 text-main-green">
+						{{ "candidate_form.step3_title.Étape 4" | trans }}
+					</h3>
+
+					{# Common fields #}
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+						{% for field in ['certificate','transcript'] %}
+						<div class="form-group relative">
+							{{ form_label(form[field], ('candidate_form.'~field) | trans ~ '
+							<span class="required-asterisk">*</span>', {'label_attr':
+							{'class': 'form-label block mb-1 text-sm sm:text-base'},
+							'label_html': true}) }}
+							{% if field == 'certificate' or field == 'transcript' %}
+							<div class="image-upload-container">
+								{{ form_widget(form[field], {'attr': {
+								'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3
+								image-upload',
+								'required': 'required',
+								'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+								}}) }}
+								<img id="{{ field }}-preview" src="#" alt="{{ field }} preview" style="
+											                    display: none;
+											                    max-width: 100px;
+											                    max-height: 100px;
+											                    margin-top: 10px;
+											                  " />
+							</div>
+							{% else %}
+							{{ form_widget(form[field], {'attr': {
+							'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+							'required': 'required',
+							'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+							}}) }}
+							{% endif %}
+							<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+								title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+							{{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs sm:text-sm mt-1'
+							}}) }}
+						</div>
+						{% endfor %}
+					</div>
+
+					{# Francophone subsection #}
+					<div id="francophone-fields" class="subsection mb-6 sm:mb-8">
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+							{% for field in ['certificateYearBAC','baccalaureateCountry',
+							'baccalaureateSeries', 'baccalaureateMention', 'probatoireYear']
+							%}
+							<div class="form-group relative">
+								{{ form_label(form[field], ('candidate_form.'~field) | trans ~ '
+								<span class="required-asterisk">*</span>', {'label_attr':
+								{'class': 'form-label block mb-1 text-sm sm:text-base'},
+								'label_html': true}) }}
+								{{ form_widget(form[field], {'attr': {
+								'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+								'required': 'required',
+								'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+								}}) }}
+								<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+									title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+								{{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs sm:text-sm mt-1'
+								}}) }}
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+
+					{# Anglophone subsection #}
+					<div id="anglophone-fields" class="subsection">
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+							{% for field in ['certificateYearGCE','gceALevelCountry',
+							'gceALevelPapersCount', 'gceALevelGradeACount', 'gceOLevelYear',
+							'gceOLevelPapersCount'] %}
+							<div class="form-group relative">
+								{{ form_label(form[field], ('candidate_form.'~field) | trans ~ '
+								<span class="required-asterisk">*</span>', {'label_attr':
+								{'class': 'form-label block mb-1 text-sm sm:text-base'},
+								'label_html': true}) }}
+								{{ form_widget(form[field], {'attr': {
+								'class': 'form-input w-full placeholder-gray-500 text-sm sm:text-base py-2 px-3',
+								'required': 'required',
+								'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+
+								}}) }}
+								<i class="fas fa-info-circle help-tooltip absolute right-3 top-1/2 transform -translate-y-1/2"
+									title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+								{{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs sm:text-sm mt-1'
+								}}) }}
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				{# Étape 3.3: Autres informations #}
+				<div id="step7" class="form-step hidden p-4 sm:p-6 md:p-8">
+					<h3 class="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6 text-main-green">
+						{{ "candidate_form.step3_title.Étape 6" | trans }}
+					</h3>
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						{% for field in ['field', 'examinationCenter', 'medicalCertificate', 'language',
+						'criminalRecordExtract', 'admissionType'] %}
+						<div class="form-group relative">
+							{{ form_label(form[field], ('candidate_form.'~field) | trans ~ '<span
+								class="required-asterisk text-red-500">*</span>', {
+							'label_attr': {'class': 'form-label block mb-1 text-sm font-medium text-gray-700'},
+							'label_html': true
+							}) }}
+							<div class="mt-1 relative rounded-md shadow-sm">
+								{{ form_widget(form[field], {
+								'attr': {
+								'class': 'form-input block w-full sm:text-sm border-gray-300 rounded-md
+								focus:ring-indigo-500 focus:border-indigo-500',
+								'required': 'required',
+								'placeholder': ('candidate_form.'~field~'_placeholder') | trans
+								}
+								}) }}
+								<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+									<i class="fas fa-info-circle text-gray-400"
+										title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+								</div>
+							</div>
+							{% if field == 'medicalCertificate' or field == 'criminalRecordExtract' %}
+							<div class="image-upload-container mt-2">
+								<img id="{{ field }}-preview" src="#" alt="{{ field }} preview" style="
+											                    display: none;
+											                    max-width: 100px;
+											                    max-height: 100px;
+											                    margin-top: 10px;
+											                  " />
+							</div>
+							{% endif %}
+							{{ form_errors(form[field], {'attr': {'class': 'mt-2 text-sm text-red-600'}}) }}
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="form-buttons mt-6 sm:mt-8 flex flex-col sm:flex-row justify-between items-center">
+					<button type="button" id="prev-button"
+						class="btn-secondary font-semibold hidden w-full sm:w-auto mb-2 sm:mb-0">
+						<svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+							</path>
+						</svg>
+						{{ "candidate_form.previous" | trans }}
+					</button>
+					<button type="button" id="next-button" class="btn-primary hidden w-full sm:w-auto mb-2 sm:mb-0">
+						{{ "candidate_form.next" | trans }}
+						<svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+							</path>
+						</svg>
+					</button>
+					<button type="submit" id="submit-button" class="btn-success hidden w-full sm:w-auto">
+						{{ "candidate_form.register" | trans }}
+					</button>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="help-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden p-4">
+	<div class="bg-white rounded-lg p-6 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+		<h3 class="text-xl sm:text-2xl font-bold mb-4">
+			{{ "candidate_form.Help Guide" | trans }}
+		</h3>
+		<div class="space-y-4">
+			<div>
+				<h4 class="font-semibold">
+					{{ "candidate_form.Help 1 Title" | trans }}
+				</h4>
+				<p>{{ "candidate_form.Help 1" | trans }}</p>
+			</div>
+			<div>
+				<h4 class="font-semibold">
+					{{ "candidate_form.Help 2 Title" | trans }}
+				</h4>
+				<p>{{ "candidate_form.Help 2" | trans }}</p>
+			</div>
+			<div>
+				<h4 class="font-semibold">
+					{{ "candidate_form.Help 3 Title" | trans }}
+				</h4>
+				<p>{{ "candidate_form.Help 3" | trans }}</p>
+			</div>
+			<div>
+				<h4 class="font-semibold">
+					{{ "candidate_form.Help 4 Title" | trans }}
+				</h4>
+				<p>{{ "candidate_form.Help 4" | trans }}</p>
+			</div>
+			<div>
+				<h4 class="font-semibold">
+					{{ "candidate_form.Help 5 Title" | trans }}
+				</h4>
+				<p>{{ "candidate_form.Help 5" | trans }}</p>
+			</div>
+		</div>
+		<button id="close-help" class="mt-6 btn-primary w-full sm:w-auto">
+			{{ "candidate_form.Close" | trans }}
+		</button>
+	</div>
+</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.getElementById('multi-step-form');
+		const steps = ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7'];
+		const nextButton = document.getElementById('next-button');
+		const prevButton = document.getElementById('prev-button');
+		const submitButton = document.getElementById('submit-button');
+		const saveButton = document.getElementById('save-button');
+		const step5Heading = document.getElementById('step5-heading');
+		const stepIndicators = steps.map(step => document.getElementById(`step-indicator-${step.slice(-1)}`));
+		const educationSubsystemSelect = document.querySelector('select[name$="[educationSubsystem]"]');
+		const educationalSystemSelect = document.querySelector('[name="candidate_form[educationalSystemCheck]"]');
+
+		const francophonesFields = document.getElementById('francophone-fields');
+		const anglophoneFields = document.getElementById('anglophone-fields');
+
+		const francophonesSystemFields = document.getElementById('francophone-intermediate-fields');
+		const anglophoneSystemFields = document.getElementById('anglophone-intermediate-fields');
+
+
+		let currentStep = 0;
+
+		const transactionNumberInput = document.querySelector('input[name$="[transactionNumber]"]');
+		const paymentOperatorSelect = document.querySelector('select[name$="[paymentOperator]"]');
+
+		const translations = {
+			stepMovedSuccess: "{{ 'candidate_form.step_moved_success'|trans({'%step%': '__STEP__'})|e('js') }}",
+			stepReturned: "{{ 'candidate_form.step_returned'|trans({'%step%': '__STEP__'})|e('js') }}"
+		};
+
+		const errorMessages = {
+			required: "Ce champ est requis."
+		};
+
+		function updateButtonVisibility(stepIndex) {
+			prevButton.style.display = stepIndex === 0 ? 'none' : 'inline-block';
+			nextButton.style.display = stepIndex === steps.length - 1 ? 'none' : 'inline-block';
+			submitButton.style.display = stepIndex === steps.length - 1 ? 'inline-block' : 'none';
+		}
+
+		function validateTransactionNumber(transactionNumber, operator) {
+			if (operator === 'EXPRESS UNION') {
+				return /^EU[a-zA-Z]{3}\d{9}$/.test(transactionNumber);
+			} else if (operator === 'DGASOU') {
+				return true;
+			}
+			return false;
+		}
+
+		function updateEducationSubsystemFields(value) {
+			let headingText = '{{ 'candidate_form.step3_title.Étape 4' | trans }}';
+			if (value === 'FRANCOPHONE') {
+				headingText += ' -     {{ 'candidate_form.step3_title.Étape 5' | trans }}';
+				francophonesFields.classList.remove('hidden');
+				anglophoneFields.classList.add('hidden');
+				fillFieldsWithPlaceholder(anglophoneFields, '-');
+			} else if (value === 'ANGLOPHONE') {
+				headingText += ' -     {{ 'candidate_form.step3_title.Étape 5.1' | trans }}';
+				francophonesFields.classList.add('hidden');
+				anglophoneFields.classList.remove('hidden');
+				fillFieldsWithPlaceholder(francophonesFields, '-');
+			} else {
+				francophonesFields.classList.add('hidden');
+				anglophoneFields.classList.add('hidden');
+			} step5Heading.textContent = headingText;
+		}
+
+
+		function updateEducationalSystemFields(value) {
+
+			if (value === 'Oui' || value === "Yes") {
+				francophonesSystemFields.classList.remove('hidden');
+				anglophoneSystemFields.classList.remove('hidden');
+				francophonesSystemFields.style.display = 'block';
+				anglophoneSystemFields.style.display = 'block';
+				//
+			} else if (value === 'Non' || value === "No") {
+				francophonesSystemFields.style.display = 'none';
+				anglophoneSystemFields.style.display = 'none';
+				francophonesSystemFields.classList.add('hidden');
+				anglophoneSystemFields.classList.add('hidden');
+				fillFieldsWithPlaceholder(anglophoneSystemFields, '-');
+				fillFieldsWithPlaceholder(francophonesSystemFields, '-');
+			} else {
+				francophonesSystemFields.classList.add('hidden');
+				anglophoneSystemFields.classList.add('hidden');
+			}
+		}
+
+
+		function toggleEducationFields(selectedSystem) {
+			const francophonesFields = document.getElementById('francophone-intermediate-fields');
+			const anglophonesFields = document.getElementById('anglophone-intermediate-fields');
+
+			if (selectedSystem === 'Oui' || selectedSystem === "Yes") {
+				francophonesFields.style.display = 'block';
+				anglophonesFields.style.display = 'block';
+
+
+			} else if (selectedSystem === 'Non' || selectedSystem === "No") {
+				francophonesFields.style.display = 'none';
+				anglophonesFields.style.display = 'none';
+				fillFieldsWithPlaceholder(anglophonesFields, '-');
+				fillFieldsWithPlaceholder(francophonesFields, '-');
+			} else {
+				francophonesFields.style.display = 'none';
+				anglophonesFields.style.display = 'none';
+
+			}
+		}
+
+		function evaluateBaccalaureat() {
+			const subject = document.querySelector('[name="candidate_form[bacSubject]"]').value;
+			const mark = document.querySelector('[name="candidate_form[bacSubjectMark]"]').value;
+			const subject_gce = document.querySelector('[name="candidate_form[gceAlevelSubject]"]').value;
+			const grade_gce = document.querySelector('[name="candidate_form[gceAlevelSubjectGrade]"]').value;
+
+			let isValid;
+
+			if (subject === '-' || mark === '-') {
+				//alert('Both Baccalauréat subject and mark must be filled. The registration process will be stopped.');
+				isValid = false;
+			}
+
+			const numericMark = parseFloat(mark);
+			if (isNaN(numericMark)) {
+				//alert('Invalid Baccalauréat mark. The registration process will be stopped.');
+
+				isValid = false;
+			}
+			//console.log(numericMark);
+
+
+			if (numericMark < 10) {
+				document.getElementById('probatoire-section').style.display = 'block';
+				isValid = false;
+			} else if (subject === '-' && numericMark >= 10 && numericMark <= 20 ) {
+				isValid = false;
+			} else if (subject !== '-' && numericMark >= 10 && numericMark <= 20 ) {
+				document.getElementById('probatoire-section').style.display = 'none';
+				document.querySelectorAll('#gce-o-level-subjects select, #gce-o-level-subjects input').forEach(el => el.value = '-');
+				document.querySelectorAll('#probatoire-subjects select, #probatoire-subjects input').forEach(el => el.value = '-');
+				isValid = true;
+			}
+			return isValid;
+		}
+
+		function evaluateProbatoire() {
+			const subject = document.querySelector('[name="candidate_form[probatoireSubject]"]').value;
+			const mark = document.querySelector('[name="candidate_form[probatoireSubjectMark]"]').value;
+			let isValid;
+
+			if (document.getElementById('probatoire-section').style.display === 'block') {
+				if (subject === '-' || mark === '-') {
+					//alert('Both Probatoire subject and mark must be filled. The registration process will be stopped.');
+					isValid = false;
+				}
+
+				const numericMark = parseFloat(mark);
+				if (isNaN(numericMark)) {
+					//alert('Invalid Probatoire mark. The registration process will be stopped.');
+					isValid = false;
+				}
+
+				if (subject === '-' && numericMark >= 10 && numericMark <= 20) {
+					//alert('Your Probatoire mark is below 10. The registration process will be stopped.');
+					isValid = false;
+				} else if (subject != '-' && numericMark >= 10 && numericMark <= 20) {
+					isValid = true;
+				}
+			}
+
+			return isValid;
+
+		}
+
+		function evaluateGCEALevel() {
+			const subject = document.querySelector('[name="candidate_form[gceAlevelSubject]"]').value;
+			const grade = document.querySelector('[name="candidate_form[gceAlevelSubjectGrade]"]').value;
+			const subject_bac = document.querySelector('[name="candidate_form[bacSubject]"]').value;
+			const mark_bac = document.querySelector('[name="candidate_form[bacSubjectMark]"]').value;
+			let isValid;
+
+			if (subject === '-' || grade === '-') {
+				isValid = false;
+			}
+
+			if ((subject === '-' && (grade !== 'A' && grade !== 'B' && grade !== 'C' && grade !== 'D' && grade !== 'E'))) {
+				isValid = false;
+			}
+
+			if ((grade === 'A' || grade === 'B' || grade === 'C') && subject !== '-') {
+				document.getElementById('gce-o-level-section').style.display = 'none';
+				document.querySelectorAll('#probatoire-subjects select, #probatoire-subjects input').forEach(el => el.value = '-');
+				document.querySelectorAll('#gce-o-level-subjects select, #gce-o-level-subjects input').forEach(el => el.value = '-');
+				isValid = true;
+			} else if (subject !== '-' && (grade !== 'A' && grade !== 'B' && grade !== 'C')) {
+				document.getElementById('gce-o-level-section').style.display = 'block';
+				isValid = false;
+			} else {
+				isValid = false;
+			}
+			return isValid;
+		}
+
+		// Function to evaluate GCE O Level
+		function evaluateGCEOLevel() {
+			const subject = document.querySelector('[name="candidate_form[gceOlevelSubject]"]').value;
+			const grade = document.querySelector('[name="candidate_form[gceOlevelSubjectGrade]"]').value;
+			let isValid;
+
+			if (document.getElementById('gce-o-level-section').style.display === 'block') {
+				if (subject === '-' || grade === '-') {
+					isValid = false;
+				}
+
+				if ((grade === 'A' || grade === 'B' || grade === 'C') && subject != '-') {
+					isValid = true;
+				} else {
+					isValid = false;
+				}
+			}
+			return isValid;
+		}
+
+		function getFormData() {
+			return {
+				educationalSystem: document.querySelector('[name="candidate_form[educationalSystemCheck]"]').value,
+				subjectOlevel: document.querySelector('[name="candidate_form[gceOlevelSubject]"]').value,
+				subjectAlevel: document.querySelector('[name="candidate_form[gceAlevelSubject]"]').value,
+				subjectProbatoire: document.querySelector('[name="candidate_form[probatoireSubject]"]').value,
+				subjectBaccalaureat: document.querySelector('[name="candidate_form[bacSubject]"]').value,
+				olevelGrade: document.querySelector('[name="candidate_form[gceOlevelSubjectGrade]"]').value,
+				alevelGrade: document.querySelector('[name="candidate_form[gceAlevelSubjectGrade]"]').value,
+				probatoireMark: document.querySelector('[name="candidate_form[probatoireSubjectMark]"]').value,
+				baccalaureatMark: document.querySelector('[name="candidate_form[bacSubjectMark]"]').value
+			};
+		}
+
+		function validateEducationForm() {
+			const educationalSystem = document.querySelector('[name="candidate_form[educationalSystemCheck]"]').value;
+			const subjectOlevel = document.querySelector('[name="candidate_form[gceOlevelSubject]"]').value;
+			const subjectAlevel = document.querySelector('[name="candidate_form[gceAlevelSubject]"]').value;
+			const subjectProbatoire = document.querySelector('[name="candidate_form[probatoireSubject]"]').value;
+			const subjectBaccalaureat = document.querySelector('[name="candidate_form[bacSubject]"]').value;
+			const olevelGrade = document.querySelector('[name="candidate_form[gceOlevelSubjectGrade]"]').value;
+			const alevelGrade = document.querySelector('[name="candidate_form[gceAlevelSubjectGrade]"]').value;
+			const probatoireMark = document.querySelector('[name="candidate_form[probatoireSubjectMark]"]').value;
+			const baccalaureatMark = document.querySelector('[name="candidate_form[bacSubjectMark]"]').value;
+
+			let isValid = false;
+			// let gceCrosses;
+			// let bacCrosses;
+
+
+			if (educationalSystem === 'Oui' || educationalSystem === 'Yes' ) {
+				
+				
+				if(!evaluateGCEALevel()){
+					if (evaluateGCEOLevel() && subjectAlevel != "-") {
+						isValid = true;
+					} 
+				}else{
+					isValid = true;
+				}
+
+				if (!evaluateBaccalaureat()) {
+					if (evaluateProbatoire() && subjectBaccalaureat != "-") {
+						isValid = true;
+					} 
+				
+				}else{
+					isValid = true;
+				} 
+
+
+			} else if (educationalSystem === 'Non' || educationalSystem === 'No') {
+				isValid = true;
+			} else if (educationalSystem === '-') {
+				isValid = false;
+
+			}
+
+
+			function validateEducationalSystem(data) {
+				const {
+					educationalSystem,
+					subjectAlevel,
+					subjectOlevel,
+					olevelGrade,
+					alevelGrade,
+					subjectBaccalaureat,
+					subjectProbatoire,
+					probatoireMark,
+					baccalaureatMark
+				} = data;
+
+				if (educationalSystem === '-') {
+					return true; // No validation needed if educational system is not selected
+				}
+
+				const validOlevelGrades = ['A', 'B', 'C'];
+				const validAlevelGrades = ['A', 'B', 'C', 'D', 'E'];
+
+				const isOlevelInvalid = subjectOlevel !== '-' && !validOlevelGrades.includes(olevelGrade);
+				const isAlevelInvalid = subjectAlevel !== '-' && !validAlevelGrades.includes(alevelGrade);
+				const isOALevelInvalid = (subjectOlevel !== '-' || subjectAlevel !== '-') && (isOlevelInvalid && isAlevelInvalid);
+
+				const isBaccalaureateInvalid =
+					subjectBaccalaureat !== '-' &&
+					subjectProbatoire !== '-' &&
+					(parseFloat(probatoireMark) < 10 && parseFloat(baccalaureatMark) < 10);
+
+				if (isOALevelInvalid || isBaccalaureateInvalid) {
+					showModal1(
+						'Error',
+						'{{ 'candidate_form.conditions.failed' | trans }}',
+						'error',
+						[
+							{
+								text: 'OK',
+								class: 'bg-red-500 text-white hover:bg-red-600',
+								onClick: () => console.log('OK clicked')
+							}
+						]
+					);
+					return false;
+				}
+
+				return true;
+			}
+
+			if (!validateEducationalSystem(getFormData())) {
+				// Validation failed, modal is shown
+				showModal1('Error', '{{ 'candidate_form.conditions.failed' | trans }}', 'error', [
+					{ text: 'OK', class: 'bg-red-500 text-white hover:bg-red-600', onClick: () => console.log('OK clicked') },
+					//    { text: 'Cancel', class: 'bg-gray-200 text-gray-800 hover:bg-gray-300', onClick: () => console.log('Cancel clicked') }
+				]);
+				return;
+			}
+
+
+			// if(educationalSystem != '-' && ((subjectAlevel != "-" && subjectOlevel != "-" && 
+			// (olevelGrade != 'A' || olevelGrade != 'B' || olevelGrade != 'C') && 
+			// alevelGrade != 'A' || alevelGrade != 'B' || alevelGrade != 'C' || alevelGrade != 'D' || alevelGrade != 'E')
+
+			// || 
+
+			// (subjectBaccalaureat != "-" && subjectProbatoire != "-") && ((parseFloat(probatoireMark) < 10) && (parseFloat(baccalaureatMark) < 10)))){
+			//  showModal1('Error', '{{ 'candidate_form.conditions.failed' | trans }}', 'error', [
+			//    { text: 'OK', class: 'bg-red-500 text-white hover:bg-red-600', onClick: () => console.log('OK clicked') },
+			// //    { text: 'Cancel', class: 'bg-gray-200 text-gray-800 hover:bg-gray-300', onClick: () => console.log('Cancel clicked') }
+			//  ]);
+			// }
+
+			console.log(isValid);
+
+			return isValid;
+		}
+
+
+
+		function checkEducationSubsystem() {
+			const value = educationSubsystemSelect.value;
+			if (value === 'FRANCOPHONE' || value === 'ANGLOPHONE') {
+				updateEducationSubsystemFields(value);
+			} else { // showPopup('error', 'Veuillez choisir un sous-système éducatif');
+			}
+		}
+
+		document.querySelector('[name="candidate_form[bacSubjectMark]"]').addEventListener('change', evaluateBaccalaureat);
+		document.querySelector('[name="candidate_form[probatoireSubjectMark]"]').addEventListener('change', evaluateProbatoire);
+		document.querySelector('[name="candidate_form[gceAlevelSubjectGrade]"]').addEventListener('change', evaluateGCEALevel);
+		document.querySelector('[name="candidate_form[gceOlevelSubjectGrade]"]').addEventListener('change', evaluateGCEOLevel);
+
+
+		educationalSystemSelect.addEventListener('change', function () {
+			toggleEducationFields(this.value);
+		});
+
+		educationalSystemSelect.addEventListener('change', function () {
+			updateEducationalSystemFields(this.value);
+			localStorage.setItem('educationalSystem', this.value);
+		});
+
+		const savedEducationalSystem = localStorage.getItem('educationalSystem');
+		if (savedEducationalSystem) {
+			educationalSystemSelect.value = savedEducationalSystem;
+			updateEducationalSystemFields(savedEducationalSystem);
+		}
+
+		educationSubsystemSelect.addEventListener('change', function () {
+			updateEducationSubsystemFields(this.value);
+			localStorage.setItem('educationSubsystem', this.value);
+		});
+
+		const savedEducationSubsystem = localStorage.getItem('educationSubsystem');
+		if (savedEducationSubsystem) {
+			educationSubsystemSelect.value = savedEducationSubsystem;
+			updateEducationSubsystemFields(savedEducationSubsystem);
+		}
+
+		function showError(input, message) {
+			input.classList.add('border-red-500');
+			let errorMessage = input.parentNode.querySelector('.text-red-500');
+			if (!errorMessage) {
+				errorMessage = document.createElement('p');
+				errorMessage.classList.add('text-red-500', 'text-xs', 'mt-1');
+				input.parentNode.appendChild(errorMessage);
+			}
+			errorMessage.textContent = message;
+		}
+
+		function clearError(input) {
+			input.classList.remove('border-red-500');
+			const errorMessage = input.parentNode.querySelector('.text-red-500');
+			if (errorMessage) {
+				errorMessage.remove();
+			}
+		}
+
+		function validateStep(stepIndex) {
+			const stepElement = document.getElementById(steps[stepIndex]);
+			const inputs = stepElement.querySelectorAll('input, select');
+			let isValid = true;
+
+			inputs.forEach(input => {
+				if (input.hasAttribute('required') && !input.value.trim()) {
+					isValid = false;
+					showPopup('error', 'Veuillez remplir tous les champs requis correctement.');
+					showError(input, errorMessages.required);
+				} else {
+					clearError(input);
+				}
+			});
+
+			if (stepIndex === 0) {
+				const isValidTransaction = validateTransactionNumber(transactionNumberInput.value, paymentOperatorSelect.value);
+				if (!isValidTransaction) {
+					isValid = false;
+					showError(transactionNumberInput, 'Le format du numéro de transaction est invalide');
+					showPopup('error', 'Le format du numéro de transaction est invalide.');
+				} else {
+					clearError(transactionNumberInput);
+				}
+			}
+
+			if (stepIndex === 4 && educationSubsystemSelect.value === '-') {
+				isValid = false;
+				showPopup('error', 'Veuillez choisir un sous-système éducatif');
+			}
+
+			//console.log(validateEducationForm());
+			if (!validateEducationForm() && stepIndex === 1) {
+				isValid = false;
+				showPopup('error', 'Veuillez remplir tous les champs requis correctement');
+
+			}
+
+			return isValid;
+		}
+
+		function showStep(stepIndex) {
+			steps.forEach((step, index) => {
+				document.getElementById(step).style.display = index === stepIndex ? 'block' : 'none';
+				stepIndicators[index].classList.toggle('active', index === stepIndex);
+				stepIndicators[index].classList.toggle('completed', index < stepIndex);
+			});
+			updateButtonVisibility(stepIndex);
+		}
+
+		function showPopup(type, message) {
+			const popup = document.getElementById('popup');
+			const popupMessage = document.getElementById('popup-message');
+			const popupIcon = document.getElementById('popup-icon');
+
+			popupMessage.textContent = message;
+			popup.classList.remove('bg-red-100', 'border-red-400', 'text-red-700', 'bg-green-100', 'border-green-400', 'text-green-700');
+
+			if (type === 'error') {
+				popup.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
+				popupIcon.innerHTML = '<svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>';
+			} else {
+				popup.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
+				popupIcon.innerHTML = '<svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+			} popup.classList.add('show');
+
+			setTimeout(() => {
+				popup.classList.remove('show');
+			}, 3000);
+		}
+
+		function showModal1(title, message, type = 'info', actions = []) {
+			const modal = document.getElementById('modal1');
+			const modalTitle = document.getElementById('modal1-title');
+			const modalMessage = document.getElementById('modal1-message');
+			const modalIcon = document.getElementById('modal1-icon');
+			const modalActions = document.getElementById('modal1-actions');
+
+			modalTitle.textContent = title;
+			modalMessage.textContent = message;
+
+			// Set icon based on type
+			let iconSvg = '';
+			switch (type) {
+				case 'error':
+					iconSvg = '<svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>';
+					break;
+				case 'success':
+					iconSvg = '<svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+					break;
+				default:
+					iconSvg = '<svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+			}
+			modalIcon.innerHTML = iconSvg;
+
+			// Clear existing actions and add new ones
+			modalActions.innerHTML = '';
+			actions.forEach(action => {
+				const button = document.createElement('button');
+				button.textContent = action.text;
+				button.className = `px-4 py-2 text-sm font-medium rounded-md ${action.class}`;
+				button.onclick = () => {
+					action.onClick();
+					closeModal1();
+				};
+				modalActions.appendChild(button);
+			});
+
+			// Show modal
+			modal.classList.remove('hidden');
+			document.body.classList.add('modal-open');
+		}
+
+		function closeModal1() {
+			const modal = document.getElementById('modal1');
+			modal.classList.add('hidden');
+			document.body.classList.remove('modal-open');
+		}
+
+		// Close modal when clicking outside or on close button
+		document.getElementById('modal1').addEventListener('click', (e) => {
+			if (e.target.id === 'modal1') {
+				closeModal1();
+			}
+		});
+
+		document.getElementById('close-modal1').addEventListener('click', closeModal1);
+
+		// Example usage:
+		// showModal('Error', 'An error occurred while processing your request.', 'error', [
+		//   { text: 'OK', class: 'bg-red-500 text-white hover:bg-red-600', onClick: () => console.log('OK clicked') },
+		//   { text: 'Cancel', class: 'bg-gray-200 text-gray-800 hover:bg-gray-300', onClick: () => console.log('Cancel clicked') }
+		// ]);
+
+		function fillFieldsWithPlaceholder(container, placeholder) {
+			const inputs = container.querySelectorAll('input, select');
+			inputs.forEach(input => {
+				if (input.tagName === 'SELECT') {
+					const placeholderOption = document.createElement('option');
+					placeholderOption.value = placeholder;
+					placeholderOption.text = placeholder;
+					placeholderOption.selected = true;
+					input.appendChild(placeholderOption);
+				} else {
+					input.value = placeholder;
+				}
+			});
+		}
+
+		async function saveFormData() {
+			const formData = new FormData(form);
+
+			// Convert FormData to a plain object
+			const formDataObj = {};
+			formData.forEach((value, key) => {
+				formDataObj[key] = value;
+			});
+
+			try {
+				const response = await fetch('{{ path('app_candidate_save_progress') }}', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(formDataObj)
+				});
+
+				if (response.ok) {
+					const result = await response.json();
+					if (result.success) {
+						showPopup('success', 'Progrès sauvegardé avec succès !');
+					} else {
+						showPopup('error', 'Erreur lors de la sauvegarde : ' + (
+							result.message || 'Veuillez réessayer.'
+						));
+					}
+				} else {
+					showPopup('error', 'Erreur lors de la sauvegarde. Statut : ' + response.status);
+				}
+			} catch (error) {
+				console.error('Erreur:', error);
+				showPopup('error', 'Une erreur inattendue s\'est produite. Veuillez réessayer.');
+			}
+		}
+
+
+
+		function submitForm() {
+			if (validateStep(currentStep)) {
+				const formData = new FormData(form);
+				const formObject = {};
+				formData.forEach((value, key) => {
+					formObject[key] = value;
+				});
+				sessionStorage.setItem('candidateFormData', JSON.stringify(formObject));
+				form.submit();
+			} else {
+				showPopup('error', 'Veuillez corriger les erreurs avant de soumettre le formulaire.');
+			}
+		}
+
+		nextButton.addEventListener('click', function () {
+			if (validateStep(currentStep)) {
+				if (currentStep < steps.length - 1) {
+					currentStep++;
+					showStep(currentStep);
+					saveFormData();
+				} else {
+					submitForm();
+				}
+			} else {
+				//showPopup('error', 'Veuillez remplir tous les champs requis correctement.');
+			}
+		});
+
+		prevButton.addEventListener('click', function () {
+			if (currentStep > 0) {
+				currentStep--;
+				showStep(currentStep);
+			}
+		});
+
+		saveButton.addEventListener('click', saveFormData);
+
+		submitButton.addEventListener('click', function (e) {
+			e.preventDefault();
+			submitForm();
+		});
+
+		educationalSystemSelect.addEventListener('change', function () {
+			if (this.value === 'Oui' || this.value === "Yes") {
+				francophonesSystemFields.classList.remove('hidden');
+				anglophoneSystemFields.classList.remove('hidden');
+				francophonesSystemFields.style.display = 'block';
+				anglophoneSystemFields.style.display = 'block';
+				
+			} else if (this.value === 'Non' || this.value === "No") {
+				francophonesSystemFields.classList.add('hidden');
+				anglophoneSystemFields.classList.add('hidden');
+				francophonesSystemFields.style.display = 'none';
+				anglophoneSystemFields.style.display = 'none';
+				fillFieldsWithPlaceholder(anglophoneSystemFields, '-');
+				fillFieldsWithPlaceholder(francophonesSystemFields, '-');
+			}
+		});
+
+		educationSubsystemSelect.addEventListener('change', function () {
+			let headingText = '{{ 'candidate_form.step3_title.Étape 4' | trans }}';
+			if (this.value === 'FRANCOPHONE') {
+				headingText += ' -     {{ 'candidate_form.step3_title.Étape 5' | trans }}';
+				francophonesFields.classList.remove('hidden');
+				anglophoneFields.classList.add('hidden');
+				fillFieldsWithPlaceholder(anglophoneFields, '-');
+			} else if (this.value === 'ANGLOPHONE') {
+				headingText += ' -     {{ 'candidate_form.step3_title.Étape 5.1' | trans }}';
+				francophonesFields.classList.add('hidden');
+				anglophoneFields.classList.remove('hidden');
+				fillFieldsWithPlaceholder(francophonesFields, '-');
+			}
+			step5Heading.textContent = headingText;
+		});
+
+		transactionNumberInput.addEventListener('input', function () {
+			const isValid = validateTransactionNumber(this.value, paymentOperatorSelect.value);
+			if (isValid) {
+				clearError(this);
+			} else {
+				showError(this, 'Le format du numéro de transaction est invalide');
+			}
+		});
+
+		paymentOperatorSelect.addEventListener('change', function () {
+			if (transactionNumberInput.value) {
+				const isValid = validateTransactionNumber(transactionNumberInput.value, this.value);
+				if (isValid) {
+					clearError(transactionNumberInput);
+				} else {
+					showError(transactionNumberInput, 'Le format du numéro de transaction est invalide');
+				}
+			}
+		});
+
+		showStep(currentStep);
+
+	
+
+		function handleImageUpload(input, previewId) {
+			input.addEventListener('change', function () {
+				const file = this.files[0];
+				if (file) {
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						const preview = document.getElementById(previewId);
+						preview.src = e.target.result;
+						preview.style.display = 'block';
+					}
+					reader.readAsDataURL(file);
+				}
+			});
+		}
+
+		handleImageUpload(document.querySelector('input[name$="[photo]"]'), 'photo-preview');
+		handleImageUpload(document.querySelector('input[name$="[birthCertificate]"]'), 'birthCertificate-preview');
+		handleImageUpload(document.querySelector('input[name$="[transcript]"]'), 'transcript-preview');
+		handleImageUpload(document.querySelector('input[name$="[certificate]"]'), 'certificate-preview');
+		handleImageUpload(document.querySelector('input[name$="[medicalCertificate]"]'), 'medicalCertificate-preview');
+		handleImageUpload(document.querySelector('input[name$="[criminalRecordExtract]"]'), 'criminalRecordExtract-preview');
+
+		const helpButton = document.getElementById('help-button');
+		const helpModal = document.getElementById('help-modal');
+		const closeModal = document.getElementById('close-help');
+
+		function openModal() {
+			helpModal.classList.remove('hidden');
+			document.body.style.overflow = 'hidden';
+		}
+
+		function closeModalFunction() {
+			helpModal.classList.add('hidden');
+			document.body.style.overflow = '';
+		}
+
+		helpButton.addEventListener('click', openModal);
+		closeModal.addEventListener('click', closeModalFunction);
+
+		window.addEventListener('click', (event) => {
+			if (event.target === helpModal) {
+				closeModalFunction();
+			}
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && !helpModal.classList.contains('hidden')) {
+				closeModalFunction();
+			}
+		});
+
+		const startYearSelect = document.querySelector('[data-year-field="secondaryEducationStartYear"]');
+		const endYearSelect = document.querySelector('[data-year-field="secondaryEducationEndYear"]');
+		const errorMessage = document.getElementById('year-gap-error');
+
+		function updateYearOptions() {
+			const startYear = parseInt(startYearSelect.value);
+			const minEndYear = startYear + 5;
+
+			endYearSelect.innerHTML = '';
+
+			for (let year = minEndYear; year <= 2024; year++) {
+				const option = new Option(year, year);
+				endYearSelect.add(option);
+			}
+
+			if (endYearSelect.querySelector(`option[value="${endYearSelect.dataset.previousValue
+				}"]`)) {
+				endYearSelect.value = endYearSelect.dataset.previousValue;
+			}
+
+			validateYearGap();
+		}
+
+		function validateYearGap() {
+			const startYear = parseInt(startYearSelect.value);
+			const endYear = parseInt(endYearSelect.value);
+
+			if (endYear - startYear < 4) {
+				errorMessage.style.display = 'block';
+				endYearSelect.setCustomValidity('Invalid year gap');
+			} else {
+				errorMessage.style.display = 'none';
+				endYearSelect.setCustomValidity('');
+			}
+		}
+
+		startYearSelect.addEventListener('change', updateYearOptions);
+		endYearSelect.addEventListener('change', function () {
+			this.dataset.previousValue = this.value;
+			validateYearGap();
+		});
+
+		updateYearOptions();
+
+
+	});
+
+
+
+</script>
+
+
+{% endblock %}

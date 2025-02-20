@@ -1,0 +1,384 @@
+{# Login page #}
+{% extends 'base.html.twig' %}
+
+{% block head %}
+{% block title %}
+{{ 'login_page.title'|trans }}
+{% endblock %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    @keyframes fadeInOut {
+
+        0,
+        100% {
+            opacity: 0;
+        }
+
+        10%,
+        90% {
+            opacity: 1;
+        }
+    }
+
+    .popup {
+        animation: fadeInOut 3s ease-in-out;
+        top: 13%;
+        right: 44vw;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div id="popup"
+    class="fixed z-50 top-0 left-0 right-0 p-4 transform -translate-y-full transition-transform duration-300 ease-in-out">
+    <div class="max-w-md mx-auto bg-white border-l-4 rounded-lg shadow-lg overflow-hidden flex items-center">
+        <div id="popup-icon" class="flex-shrink-0 p-4">
+            <!-- Icons will be inserted dynamically via JavaScript -->
+        </div>
+        <div class="flex-grow p-4">
+            <p id="popup-message" class="text-sm font-medium"></p>
+        </div>
+        <button id="close-popup" class="p-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+</div>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br bg-white p-4">
+    <div class="max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row mt-16">
+        <!-- Left section with logo and text -->
+        <div
+            class="w-full md:w-1/2 bg-gradient-to-br from-green-100 to-green-200 flex flex-col justify-center items-center text-white p-8">
+            <div class="flex justify-center items-center h-48 w-full m-auto relative">
+                <!-- White circle background with shadow -->
+                <div class="absolute z-10 w-56 h-56 bg-white rounded-full shadow-lg"></div>
+
+                <!-- Logo images -->
+                <img class="relative z-20 h-3/4 w-auto light-mode-logo object-contain"
+                    src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'login_page.logo_alt'|trans }}">
+                <img class="relative z-20 h-full w-auto dark-mode-logo hidden object-contain"
+                    src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'login_page.logo_alt'|trans }}">
+            </div>
+            <h1 class="mt-8 text-3xl font-bold text-center text-gray-800">{{ 'login_page.welcome_message'|trans }}</h1>
+            <p class="mt-4 text-center text-lg text-gray-600">{{ 'login_page.slogan'|trans }}</p>
+        </div>
+
+        <!-- Right section with login form -->
+        <div class="w-full md:w-1/2 lg:p-24 xs:px-6 xs:py-16">
+            <h2 class="text-5xl font-bold text-center mb-2 text-gray-800">{{ 'login_page.heading'|trans }}</h2>
+            <p class="text-center text-sm text-green-600 mb-8">{{ 'login_page.description'|trans }}</p>
+
+            <form class="space-y-6" method="post" id="login-form">
+                {# {% if error %}
+                <div id="error-message" data-message="{{ error.messageKey|trans(error.messageData, 'security') }}"
+                    style="display: none;"></div>
+                {% endif %} #}
+                {% if error %}
+                <div id="error-message" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+                    <p>
+                        {{ error|trans({}, 'security') }} {{ error }}
+                    </p>
+                </div>
+                {% endif %}
+                {% if app.user %}
+                <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4">
+                    <p>
+                        {{ 'login_page.logged_in_as'|trans({'%username%': app.user.userIdentifier}) }}
+                        <a href="{{ path('app_logout') }}" class="font-semibold hover:underline">{{
+                            'login_page.logout'|trans }}</a>
+                    </p>
+                </div>
+                {% endif %}
+
+                <div>
+                    <label for="inputEmail" class="block text-sm font-medium text-gray-700">{{
+                        'login_page.email_label'|trans }}</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required
+                        class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-main-green focus:ring-1 focus:ring-main-green"
+                        placeholder="{{ 'login_page.email_placeholder'|trans }}">
+                    <div id="email-error" class="text-red-500 text-xs hidden"></div>
+                </div>
+
+                <div>
+                    <label for="inputPassword" class="block text-sm font-medium text-gray-700">{{
+                        'login_page.password_label'|trans }}</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <input id="inputPassword" name="password" type="password" autocomplete="current-password"
+                            required
+                            class="block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm placeholder-gray-400 focus:outline-none focus:border-main-green focus:ring-1 focus:ring-main-green"
+                            placeholder="{{ 'login_page.password_placeholder'|trans }}">
+                        <button type="button" id="toggle-password"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <svg class="h-5 w-5 text-gray-400" fill="none" id="eye-icon" viewbox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <svg class="h-5 w-5 text-gray-400 hidden" fill="none" id="eye-off-icon" viewbox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox"
+                            class="h-4 w-4 text-main-green focus:ring-main-green border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                            {{ 'login_page.remember_me'|trans }}
+                        </label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="{{ path('app_forgot_password_request') }}"
+                            class="font-medium text-main-green hover:text-secondary-green">
+                            {{ 'login_page.forgot_password'|trans }}
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div>
+                    <button type="submit"
+                        class="mt-12 group relative w-full flex justify-center py-4 px-6 border border-transparent text-md font-semibold rounded-md text-white bg-main-green hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition duration-150 ease-in-out">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <svg class="h-5 w-5 text-green-500 group-hover:text-white"
+                                xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        {{ 'login_page.sign_in_button'|trans }}
+                    </button>
+                </div>
+                <div class="text-sm text-center mt-5">
+                    <a href="{{ path("app_register") }}"
+                        class="font-semibold text-main-green hover:text-secondary-green">
+                        <span class="text-black">{{ 'login_page.have_account'|trans }}</span>
+                        {{ 'login_page.have_account_redirect'|trans }}
+                    </a>
+                </div>
+
+                <div id="password-error" class="text-red-500 text-sm hidden"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="popup"
+    class="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-md w-full bg-white  border-l-4 border-blue-500 p-6 rounded-lg shadow-lg hidden"
+    role="alert">
+    <div class="flex items-center">
+        <div id="popup-icon" class="flex-shrink-0 text-blue-500">
+            <!-- Example Icon: -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+            </svg>
+        </div>
+        <div class="ml-4">
+            <p id="popup-message" class="text-lg leading-5 font-semibold text-red-700"></p>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    // Password toggle functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('inputPassword');
+        const eyeIcon = document.getElementById('eye-icon');
+        const eyeOffIcon = document.getElementById('eye-off-icon');
+
+        if (togglePasswordBtn && passwordInput && eyeIcon && eyeOffIcon) {
+            togglePasswordBtn.addEventListener('click', function () {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.classList.add('hidden');
+                    eyeOffIcon.classList.remove('hidden');
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.classList.remove('hidden');
+                    eyeOffIcon.classList.add('hidden');
+                }
+            });
+        }
+
+        // Logo switching functionality
+        function updateLogo() {
+            const lightLogo = document.querySelector('.light-mode-logo');
+            const darkLogo = document.querySelector('.dark-mode-logo');
+
+            if (lightLogo && darkLogo) {
+                if (document.documentElement.classList.contains('dark')) {
+                    lightLogo.classList.add('hidden');
+                    darkLogo.classList.remove('hidden');
+                } else {
+                    lightLogo.classList.remove('hidden');
+                    darkLogo.classList.add('hidden');
+                }
+            }
+        }
+
+        // Initial logo update
+        updateLogo();
+
+        // Watch for theme changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    updateLogo();
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        function showPopup(message, success) {
+            const popup = document.getElementById('popup');
+            const popupMessage = document.getElementById('popup-message');
+            const popupIcon = document.getElementById('popup-icon');
+            const closeButton = document.getElementById('close-popup');
+
+            if (popup && popupMessage && popupIcon && closeButton) {
+                popupMessage.textContent = message;
+
+                if (success) {
+                    popup.classList.remove('border-red-500', 'bg-red-100');
+                    popup.classList.add('border-green-500', 'bg-green-100');
+                    popupIcon.innerHTML = '<svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+                    popupMessage.classList.remove('text-red-700');
+                    popupMessage.classList.add('text-green-700');
+                } else {
+                    popup.classList.remove('border-green-500', 'bg-green-100');
+                    popup.classList.add('border-red-500', 'bg-red-100');
+                    popupIcon.innerHTML = '<svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+                    popupMessage.classList.remove('text-green-700');
+                    popupMessage.classList.add('text-red-700');
+                }
+
+                popup.classList.remove('hidden');
+                popup.classList.remove('-translate-y-full');
+
+                // Hide popup after 5 seconds
+                const hideTimeout = setTimeout(() => {
+                    hidePopup();
+                }, 5000);
+
+                // Hide popup on click
+                closeButton.addEventListener('click', () => {
+                    clearTimeout(hideTimeout);
+                    hidePopup();
+                });
+            }
+        }
+
+        function hidePopup() {
+            const popup = document.getElementById('popup');
+            if (popup) {
+                popup.classList.add('-translate-y-full');
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Check for login status on page load
+        const errorElement = document.querySelector('.bg-red-100');
+        const successElement = document.querySelector('.bg-blue-100');
+
+        if (errorElement) {
+            showPopup(errorElement.textContent.trim(), false);
+        } else if (successElement) {
+            showPopup(successElement.textContent.trim(), true);
+        }
+
+        const form = document.getElementById('login-form');
+        const emailError = document.getElementById('email-error');
+        const passwordError = document.getElementById('password-error');
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Clear previous errors
+                if (emailError) {
+                    emailError.textContent = '';
+                    emailError.classList.add('hidden');
+                }
+                if (passwordError) {
+                    passwordError.textContent = '';
+                    passwordError.classList.add('hidden');
+                }
+
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        // If response is not OK, handle errors
+                        const data = await response.json();
+                        handleErrors(data);
+                    } else {
+                        const data = await response.json();
+                        if (data.success) {
+                            // Successful login, redirect
+                            window.location.href = '{{ path("app_candidate_register") }}';
+                        } else {
+                            showPopup('An unexpected error occurred. Please try again.', false);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showPopup('A server error occurred. Please try again later.', false);
+                }
+            });
+        }
+
+        function handleErrors(data) {
+            if (data.errors) {
+                if (data.errors.email) {
+                    emailError.textContent = data.errors.email;
+                    emailError.classList.remove('hidden');
+                }
+                if (data.errors.password) {
+                    passwordError.textContent = data.errors.password;
+                    passwordError.classList.remove('hidden');
+                }
+                if (data.errors.credentials) {
+                    showPopup(data.errors.credentials, false);
+                }
+            } else {
+                showPopup(data.error || 'An unknown error occurred.', false);
+            }
+        }
+    });
+
+</script>
+{% endblock %}

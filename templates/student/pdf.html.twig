@@ -1,0 +1,178 @@
+{# templates/student/pdf.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fiche d'inscription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+        .academic-year {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field-label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .field-value {
+            border-bottom: 1px solid #000;
+            padding: 2px 5px;
+            min-width: 200px;
+            display: inline-block;
+        }
+        .activities {
+            margin-top: 20px;
+            border: 1px solid #000;
+            padding: 10px;
+        }
+        .activities-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .activity-box {
+            display: inline-block;
+            border: 1px solid #000;
+            padding: 5px 15px;
+            margin-right: 10px;
+        }
+        .signature-section {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            border-top: 1px solid #000;
+            width: 200px;
+            text-align: center;
+            padding-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="text-align: left;">
+            UIECC/ESIGN/SVE/BPA
+            <br>
+            Tel: (+237) 676 26 221
+        </div>
+        <img src="path_to_logo" alt="UIECC Logo" class="logo">
+        <div style="text-align: right;">
+            B.P.Box 53 Sangmelima
+            <br>
+            Tel:(+237) 691 71 73 91
+        </div>
+    </div>
+
+    <div class="title">
+        FICHE DE PRÉINSCRIPTION À L'ÉCOLE SUPÉRIEURE INTERNATIONALE DE GÉNIE NUMÉRIQUE (ESIGN)
+    </div>
+
+    <div class="academic-year">
+        <strong>1- Année académique / Academic Year:</strong> {{ student.academicYear }}
+    </div>
+
+    <div class="field">
+        <span class="field-label">3- Noms et prénoms de l'étudiant:</span>
+        <span class="field-value">{{ student.fullName }}</span>
+    </div>
+
+    <div class="field">
+        <span class="field-label">4- Date et lieu de naissance:</span>
+        <span class="field-value">{{ student.birthDate|date('d/m/Y') }}</span>
+    </div>
+
+    <div class="field">
+        <span class="field-label">5- Genre:</span>
+        <span class="field-value">{{ student.gender }}</span>
+        <span class="field-label" style="margin-left: 50px;">Nationalité:</span>
+        <span class="field-value">{{ student.nationality }}</span>
+        <span class="field-label" style="margin-left: 50px;">Handicap:</span>
+        <span class="field-value">{{ student.handicap ? 'Oui' : 'Non' }}</span>
+    </div>
+
+    <div class="field">
+        <span class="field-label">6- Baccalauréat (série):</span>
+        <span class="field-value">{{ student.baccalaureat }}</span>
+    </div>
+
+    <div class="field">
+        <span class="field-label">7- Langue officielle:</span>
+        <div style="margin-left: 30px;">
+            {% if student.language == 'FRANCAIS' %}
+                ☒ FRANÇAIS    ☐ ANGLAIS
+            {% else %}
+                ☐ FRANÇAIS    ☒ ANGLAIS
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="field">
+        <span class="field-label">8- Noms du père ou du tuteur:</span>
+        <span class="field-value">{{ student.parentName }}</span>
+        <span class="field-label">Tél:</span>
+        <span class="field-value">{{ student.parentPhone }}</span>
+    </div>
+
+    <div class="field">
+        <span class="field-label">9- Noms de la mère ou de la tutrice:</span>
+        <span class="field-value">{{ student.motherName }}</span>
+        <span class="field-label">Tél:</span>
+        <span class="field-value">{{ student.motherPhone }}</span>
+    </div>
+
+    <div class="field">
+        <span class="field-label">10- Adresse de l'étudiant:</span>
+        <span class="field-value">{{ student.address }}</span>
+    </div>
+
+    <div class="field">
+        <span class="field-label">11- Tél:</span>
+        <span class="field-value">{{ student.phone }}</span>
+        <span class="field-label" style="margin-left: 50px;">Email:</span>
+        <span class="field-value">{{ student.email }}</span>
+    </div>
+
+    <div class="activities">
+        <div class="activities-title">13- Loisirs:</div>
+        {% for activity in student.activities %}
+            <span class="activity-box">{{ activity }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="signature-section">
+        <div class="signature-box">
+            Signature de l'étudiant
+        </div>
+        <div class="signature-box">
+            Le Chef Section de la VIE Étudiante
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px; font-size: 12px;">
+        SECTION DE LA VIE ÉTUDIANTE 1
+    </div>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="{{ asset('/images/uiecc_logo.png') }}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block script %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    <style>
+        :root {
+            --header-height: 4rem;
+        }
+        @media (min-width: 768px) {
+            :root {
+                --header-height: 5rem;
+            }
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            box-sizing: border-box;
+        }
+        @media (min-width: 640px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        header {
+            height: var(--header-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: white;
+        }
+        .logo img {
+            height: calc(var(--header-height) * 0.6);
+            width: auto;
+            max-width: 100%;
+        }
+        .nav-link {
+            font-size: 0.875rem;
+        }
+        @media (min-width: 768px) {
+            .nav-link {
+                font-size: 1rem;
+            }
+        }
+        .button {
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .button {
+                font-size: 1rem;
+                padding: 0.5rem 1.5rem;
+            }
+        }
+        .icon {
+            width: calc(var(--header-height) * 0.5);
+            height: calc(var(--header-height) * 0.5);
+            max-width: 100%;
+        }
+        main {
+            flex-grow: 1;
+           /* // margin-top: var(--header-height); */
+            padding: 1rem 0;
+        }
+        footer {
+            height: 4rem;
+        }
+        #mobile-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        .desktop-nav {
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+            }
+        }
+        .mobile-nav-button {
+            display: block;
+        }
+        @media (min-width: 768px) {
+            .mobile-nav-button {
+                display: none;
+            }
+        }
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 0.375rem;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-white text-text dark:text-text">
+
+    {# <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+      <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#106496] to-[#109646] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+    </div> #}
+
+    <header class="bg-white text-text ">
+        <nav class="container nav-container">
+            <a href="{{path('app_home')}}" class="logo flex items-center text-main-green">
+                <img src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+            </a>
+
+            <div class="desktop-nav space-x-4 lg:space-x-16">
+                <a href="{{ path('app_home') }}" class="nav-link text-main-green hover:text-hover-blue font-semibold">{{ 'home_header.nav.home'|trans }}</a>
+                <a href="{{ path('app_home') }}#about-section" class="nav-link text-main-green hover:text-hover-green font-semibold">{{ 'home_header.nav.about'|trans }}</a>
+                <a href="{{ path('app_home') }}#faq-section" class="nav-link text-main-green hover:text-hover-green font-semibold">{{ 'home_header.nav.faq'|trans }}</a>
+                <a href="{{ path('app_home') }}#requirements-section" class="nav-link text-main-green hover:text-hover-green font-semibold">{{ 'home_header.nav.requirements'|trans }}</a>
+            </div>
+
+            <div class="flex items-center space-x-2 md:space-x-4">
+                <div class="hidden md:flex space-x-2">
+                    <a href="{{path('app_login')}}" class="button text-main-green bg-white border border-main-green rounded-md font-semibold hover:border-main-green hover:bg-green-50">{{ 'home_header.nav.login'|trans }}</a>
+                    <a href="{{path('app_register')}}" class="button text-white bg-main-green rounded-md font-semibold hover:bg-green-600">{{ 'home_header.nav.register'|trans }}</a>
+                </div>
+
+                <a href="https://chat.whatsapp.com/LmeOTSdinhV2Qrsxbiuqmb" target="_blank" class="text-main-green hover:text-hover-green focus:outline-none">
+                    <img src="/icons/whatsapp.svg" alt="WhatsApp" class="icon">
+                </a>
+
+                <div class="relative">
+                    <button id="options-menu" class="text-main-green hover:text-hover-green focus:outline-none">
+                        <img src="/icons/translation.svg" alt="Translation image" class="icon">
+                    </button>
+                    <div id="dropdown-menu" class="hidden dropdown-menu">
+                        <div class="py-1">
+                            <ul>
+                                <li class="py-1 px-2">
+                                    <a href="{{ path('switch_language', {'locale': 'en'}) }}" class="block text-sm">{{ 'home_header.language.english'|trans }}</a>
+                                </li>
+                                <li class="py-1 px-2">
+                                    <a href="{{ path('switch_language', {'locale': 'fr'}) }}" class="block text-sm">{{ 'home_header.language.french'|trans }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="mobile-nav-button text-main-green" id="mobile-menu-button">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <div class="hidden md:hidden w-full" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 flex flex-col items-start">
+                <a href="{{ path('app_home') }}" class="nav-link block px-3 py-2 rounded-md font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.home'|trans }}</a>
+                <a href="{{ path('app_home') }}#about-section" class="nav-link block px-3 py-2 rounded-md font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.about'|trans }}</a>
+                <a href="{{ path('app_home') }}#faq-section" class="nav-link block px-3 py-2 rounded-md font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.faq'|trans }}</a>
+                <a href="{{ path('app_home') }}#requirements-section" class="nav-link block px-3 py-2 rounded-md font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.requirements'|trans }}</a>    
+                <a href="{{ path('app_login') }}" class="nav-link block px-3 py-2 rounded-md font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.login'|trans }}</a>
+                <a href="{{ path('app_register') }}" class="nav-link block px-3 py-2 rounded-md font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.register'|trans }}</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full">
+    
+        {% block body %}{% endblock %}
+    </main>
+
+ <footer class="bg-background dark:bg-background text-text dark:text-text py-8 border-t border-gray-200 ">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8">
+            <!-- Logo Section -->
+            <div class="flex justify-center md:justify-start">
+                <a href="#" class="logo transition-transform hover:scale-105 duration-300">
+                    <img id="footer-logo-light" class="h-12" src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                    <img id="footer-logo-dark" class="hidden h-12" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                </a>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="text-center md:text-right">
+                <h3 class="text-main-green font-bold mb-3 uppercase text-sm tracking-wider">{{ 'home_header.footer.contact_us'|trans }}</h3>
+                <div class="flex items-center justify-center md:justify-end space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-main-green" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <a href="mailto:contact@esign.cm" 
+                       class="text-main-green hover:text-green-700 transition-colors duration-200 font-semibold group">
+                        contact@esign.cm
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-green-700"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="pt-8 border-t border-gray-200 mb-4">
+            <p class="text-sm font-semibold text-main-green text-center">
+                {{ 'home_header.footer.copyright'|trans({'%year%': 'now'|date('Y')}) }}
+            </p>
+        </div>
+    </div>
+</footer>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const optionsMenu = document.getElementById('options-menu');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            optionsMenu.addEventListener('click', () => {
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!dropdownMenu.contains(event.target) && !optionsMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+<div id="language-popup" class="fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50" style="display: none;">
+  <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 max-w-sm sm:max-w-md w-full mx-4 sm:mx-0">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ 'language_popup.title'|trans }}</h2>
+      <button id="language-popup-close" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{{ 'language_popup.message'|trans }}</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+      {{ 'language_popup.change_later'|trans }}
+      <span class="inline-flex items-center">
+        <img src="/icons/translation.svg" alt="Translation image" class="w-4 h-4 lg:w-7 lg:h-7 text-[#106496]">
+        {{ 'language_popup.icon_description'|trans }}
+      </span>
+    </p>
+    <div class="flex justify-end space-x-4">
+      <button id="language-popup-english" class="bg-main-green text-white px-4 py-2 rounded-md hover:bg-green-600">
+        {{ 'home_header.language.english'|trans }}
+      </button>
+      <button id="language-popup-french" class="bg-main-green text-white px-4 py-2 rounded-md hover:bg-green-600">
+        {{ 'home_header.language.french'|trans }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="language-indicator"></div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const languagePopup = document.getElementById('language-popup');
+    const closeBtn = document.getElementById('language-popup-close');
+    const englishBtn = document.getElementById('language-popup-english');
+    const frenchBtn = document.getElementById('language-popup-french');
+    const languageIndicator = document.getElementById('language-indicator');
+    
+    // Function to show the popup
+    function showPopup() {
+        languagePopup.style.display = 'flex';
+        sessionStorage.setItem('hasSeenLanguagePopup', 'true');
+        console.log("Displaying popup and setting sessionStorage.");
+    }
+
+    // Function to hide the popup
+    function hidePopup() {
+        languagePopup.style.display = 'none';
+        console.log("Hiding popup.");
+    }
+
+    // Check if the popup has already been shown (use sessionStorage)
+    const hasSeenPopup = sessionStorage.getItem('hasSeenLanguagePopup');
+    console.log("Has seen popup:", hasSeenPopup);
+
+    // Show the popup if it's the first time visiting this session
+    if (hasSeenPopup !== 'true') {
+        showPopup();
+    } else {
+        console.log("Popup already seen this session.");
+        hidePopup();
+    }
+
+    // Close button event
+    closeBtn.addEventListener('click', hidePopup);
+
+    // English button event    
+    englishBtn.addEventListener('click', function () {
+        hidePopup();
+        window.location.href = "{{ path('switch_language', {'locale': 'en'}) }}";
+    });
+
+    // French button event
+    frenchBtn.addEventListener('click', function () {
+        hidePopup();
+        window.location.href = "{{ path('switch_language', {'locale': 'fr'}) }}";
+    });
+
+    // Display an indicator pointing to the language icon
+    languageIndicator.innerHTML = `
+      <div class="absolute right-0 mt-2 p-2 text-xs text-main-green">
+        <p>Click on this icon <img src="/icons/translation.svg" class="inline w-6 h-6" alt="translation icon"> to change the language at any time!</p>
+      </div>
+    `;
+
+    // Hide the indicator after a few seconds
+    setTimeout(() => {
+        languageIndicator.style.display = 'none';
+    }, 3000); // Hide after 3 seconds
+});
+
+</script>
+</body>
+</html>

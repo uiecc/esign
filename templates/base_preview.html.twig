@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="{{ asset('/images/uiecc_logo.png') }}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block script %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    <style>
+        :root {
+            --header-height: 4rem;
+        }
+        @media (min-width: 768px) {
+            :root {
+                --header-height: 5rem;
+            }
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            box-sizing: border-box;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            height: var(--header-height);
+        }
+        nav {
+            height: 100%;
+        }
+        .logo img {
+            height: calc(var(--header-height) * 0.8);
+            width: auto;
+            max-width: 100%;
+        }
+        .nav-link {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .nav-link {
+                font-size: 1rem;
+            }
+        }
+        .button {
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            text-align: center;
+            transition: transform 0.1s ease-in-out;
+        }
+        .button:hover {
+            transform: scale(1.05);
+        }
+        @media (min-width: 768px) {
+            .button {
+                font-size: 1rem;
+                padding: 0.5rem 1.5rem;
+            }
+        }
+        .icon {
+            width: calc(var(--header-height) * 0.5);
+            height: calc(var(--header-height) * 0.5);
+            max-width: 100%;
+        }
+        main {
+            flex-grow: 1;
+            margin-top: var(--header-height);
+            width: 100%;
+            overflow-x: hidden;
+        }
+        footer {
+            padding: 2rem 0;
+        }
+        #mobile-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 0.375rem;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-background dark:bg-background text-text dark:text-text">
+<header class="bg-bg-white dark:bg-background text-text dark:text-text">
+    <nav class="container flex items-center justify-between">
+        <a href="#" class="logo flex items-center text-main-green">
+            <img id="logo-light" src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+        </a>
+        
+        <!-- Desktop menu -->
+        <div class="hidden md:flex items-center space-x-4">
+            {% if allowUpdate %}
+                <a href="{{ updateUrl }}" class="button text-white bg-main-green rounded-md font-semibold hover:scale-105 transition-transform duration-75">
+                    {{ 'home_header.header.update'|trans }}
+                </a>
+            {% elseif allowUpdate is defined and not allowUpdate %}
+                <button disabled class="button text-white bg-gray-400 rounded-md font-semibold cursor-not-allowed">
+                    {{ 'home_header.header.closed'|trans }}
+                </button>
+            {% endif %}
+            <a href="{{path('app_logout')}}" class="button text-main-green bg-white border border-main-green rounded-md font-semibold hover:scale-105 transition-transform duration-75">{{ 'home_header.nav.logout'|trans }}</a>
+            <a id="download-pdf-btn" href="{{ path('app_candidate_generate_pdf', {'id': candidate.id,'examinationLanguage': examinationLanguage }) }}" class="button text-white bg-main-green rounded-md font-semibold hover:scale-105 transition-transform duration-75">{{ 'home_header.nav.download'|trans }}</a>      
+
+            <!-- Language dropdown -->
+            <div class="relative">
+                <button id="options-menu" class="text-main-green hover:text-hover-green focus:outline-none">
+                    <img src="/icons/translation.svg" alt="Translation image" class="icon">
+                </button>
+                <div id="dropdown-menu" class="hidden dropdown-menu">
+                    <div class="py-1">
+                        <ul>
+                            <li class="py-1 px-2">
+                                <a href="{{ path('switch_language', {'locale': 'en'}) }}" class="block text-sm">{{ 'home_header.language.english'|trans }}</a>
+                            </li>
+                            <li class="py-1 px-2">
+                                <a href="{{ path('switch_language', {'locale': 'fr'}) }}" class="block text-sm">{{ 'home_header.language.french'|trans }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile header section -->
+        <div class="flex items-center space-x-2 md:hidden">
+            {% if allowUpdate %}
+                <a href="{{ updateUrl }}" class="button text-white bg-main-green rounded-md font-semibold hover:scale-105 transition-transform duration-75 py-1 px-2 text-sm">
+                    {{ 'home_header.header.update'|trans }}
+                </a>
+            {% elseif allowUpdate is defined and not allowUpdate %}
+                <button disabled class="button text-white bg-gray-400 rounded-md font-semibold cursor-not-allowed py-1 px-2 text-sm">
+                    {{ 'home_header.header.closed'|trans }}
+                </button>
+            {% endif %}
+            <!-- Hamburger menu button for mobile -->
+            <button type="button" class="text-main-green" id="mobile-menu-button">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="hidden md:hidden w-full absolute bg-white shadow-md" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="{{path('app_logout')}}" class="block w-full text-main-green bg-white border border-main-green rounded-md font-semibold py-2 px-4 text-center mb-2">{{ 'home_header.nav.logout'|trans }}</a>
+            <a href="{{ path('app_candidate_generate_pdf', {'id': candidate.id,'examinationLanguage': examinationLanguage }) }}" class="block w-full text-white bg-main-green rounded-md font-semibold py-2 px-4 text-center mb-2">{{ 'home_header.nav.download'|trans }}</a>
+            
+            <!-- Language options for mobile -->
+            <div class="flex justify-center space-x-2">
+                <a href="{{ path('switch_language', {'locale': 'en'}) }}" class="text-main-green hover:text-hover-green">{{ 'home_header.language.english'|trans }}</a>
+                <a href="{{ path('switch_language', {'locale': 'fr'}) }}" class="text-main-green hover:text-hover-green">{{ 'home_header.language.french'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+	<main>
+        {% block body %}{% endblock %}	
+    </main>
+
+			<footer class="bg-background dark:bg-background text-text dark:text-text py-8 mt-6 border-t border-gray-200 ">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8">
+            <!-- Logo Section -->
+            <div class="flex justify-center md:justify-start">
+                <a href="#" class="logo transition-transform hover:scale-105 duration-300">
+                    <img id="footer-logo-light" class="h-12" src="{{ asset('/icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                    <img id="footer-logo-dark" class="hidden h-12" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                </a>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="text-center md:text-right">
+                <h3 class="text-main-green font-bold mb-3 uppercase text-sm tracking-wider">{{ 'home_header.footer.contact_us'|trans }}</h3>
+                <div class="flex items-center justify-center md:justify-end space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-main-green" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <a href="mailto:contact@esign.cm" 
+                       class="text-main-green hover:text-green-700 transition-colors duration-200 font-semibold group">
+                        contact@esign.cm
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-green-700"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="pt-8 border-t border-gray-200 mb-4">
+            <p class="text-sm font-semibold text-main-green text-center">
+                {{ 'home_header.footer.copyright'|trans({'%year%': 'now'|date('Y')}) }}
+            </p>
+        </div>
+    </div>
+</footer>
+
+			{% block javascripts %}
+				{{ encore_entry_script_tags('app') }}
+			{% endblock %}
+			<script>
+				// JavaScript for mobile menu toggle, theme toggle, and language toggle
+document.addEventListener('DOMContentLoaded', function () {
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const optionsMenu = document.getElementById('options-menu');
+const dropdownMenu = document.getElementById('dropdown-menu');
+const themeToggle = document.getElementById('theme-toggle');
+const languageToggle = document.getElementById('language-toggle');
+const themeText = document.getElementById('theme-text');
+const languageText = document.getElementById('language-text');
+
+ // Mobile menu toggle
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Dropdown menu toggle (for desktop)
+    optionsMenu.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside (for desktop)
+    document.addEventListener('click', (event) => {
+        if (!dropdownMenu.contains(event.target) && !optionsMenu.contains(event.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+        }
+    });
+
+
+
+// Language toggle
+languageToggle.addEventListener('click', () => {
+const currentLang = languageText.textContent;
+const newLang = currentLang === 'EN' ? 'FR' : 'EN';
+languageText.textContent = newLang;
+// Here you would typically redirect to change the language
+
+});
+
+});
+			</script>
+		</body>
+	</html>

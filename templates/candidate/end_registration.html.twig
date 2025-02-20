@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    {% block title %}{{ "final_section_title" | trans }}{% endblock %}
+{% endblock %}
+
+{% block body %}
+<section class="bg-white min-h-screen relative overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]" aria-hidden="true">
+      <defs>
+        <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+          <path d="M100 200V.5M.5 .5H200" fill="none" />
+        </pattern>
+      </defs>
+      <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+        <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z" stroke-width="0" />
+      </svg>
+      <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+    </svg>
+  </div>
+  
+  <div class="relative isolate px-4 sm:px-6 lg:px-8 py-12 sm:py-24 lg:py-32 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-4xl space-y-8 sm:space-y-12 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12">
+      <div class="text-center">
+        <div class="flex justify-center">
+          <div class="rounded-full bg-green-100 p-3 sm:p-4">
+            <svg class="h-12 w-12 sm:h-16 sm:w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+        <h1 class="mt-4 sm:mt-6 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900">
+          {{ "final_section_header" | trans }}
+        </h1>
+        <p class="mt-2 sm:mt-3 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto">
+          {{ "final_section_desc" | trans }}
+        </p>
+      </div>
+
+      <div class="bg-white shadow overflow-hidden sm:rounded-lg mt-8 sm:mt-12">
+        <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+          <h2 class="text-xl sm:text-2xl font-semibold text-gray-900">
+            {{ "final_section_next_steps" | trans }}
+          </h2>
+        </div>
+        <div class="divide-y divide-gray-200 ">
+          <div class="px-4 py-8  sm:p-10 flex items-start">
+            <svg class="h-6 w-6 text-green-500 mt-1 mr-3 sm:mr-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <div>
+              <h3 class="text-base sm:text-lg font-medium text-gray-900">{{ "final_section_desc_1" | trans }}</h3>
+              <p class="mt-1 text-sm text-gray-500">{{ "final_section_desc_5" | trans }}</p>
+            </div>
+          </div>
+          <div class="px-4 py-8 sm:p-10 flex items-start">
+            <svg class="h-6 w-6 text-green-500 mt-1 mr-3 sm:mr-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+            <div>
+              <h3 class="text-base sm:text-lg font-medium text-gray-900">{{ "final_section_desc_2" | trans }}</h3>
+              <p class="mt-1 text-sm text-gray-500">
+                <a href="https://www.jagora-uiecc.org" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-500 inline-flex items-center">
+                  www.jagora-uiecc.org
+                  <svg class="ml-1 h-4 w-4 mr-3 sm:mr-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="px-4 py-8 sm:p-10 flex items-start">
+            <svg class="h-6 w-6 text-green-500 mt-1 mr-3 sm:mr-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <div>
+              <h3 class="text-base sm:text-lg font-medium text-gray-900">{{ "final_section_desc_3" | trans }}</h3>
+              <p class="mt-1 text-sm text-gray-500">
+                <a href="mailto:concoursuiecc@esign.com" class="text-green-600 hover:text-green-500 break-all">
+                  {{ "final_section_desc_4" | trans }}
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
+        <a href="{{ path('app_home') }}" class="w-full sm:w-auto rounded-md bg-green-600 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-150 ease-in-out">
+          {{ "final_section_header.button_home" | trans }}
+        </a>
+        <a href="{{ path('app_home') }}" class="w-full sm:w-auto text-base sm:text-lg font-medium text-green-600 hover:text-green-500 flex items-center justify-center">
+          {{ "final_section_header.button_jagora" | trans }}
+          <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,316 @@
+{% extends 'base_empty.html.twig' %}
+
+{% block title %}Administration des Candidats{% endblock %}
+
+{% block body %}
+<div class="bg-gray-100 min-h-screen flex flex-col">
+  <nav class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-center">
+      <!-- Logo -->
+      <a href="#" class="flex items-center text-main-green mb-4 sm:mb-0">
+        <img id="logo-light" class="h-8 sm:h-10 md:h-12 w-auto" src="{{ asset('icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt' | trans }}" />
+        <img id="logo-dark" class="h-8 sm:h-10 md:h-12 w-auto hidden" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt' | trans }}" />
+      </a>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-0">Tableau de bord Admin</h1>
+      <div class="flex items-center space-x-4">
+        <a href="{{ path('app_admin_logout') }}" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center text-sm sm:text-base">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
+          </svg>
+          Déconnexion
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
+    {# PDF Actions Section #}
+    <section class="mb-8">
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-4 px-6">
+          <h2 class="text-xl font-semibold">Actions PDF</h2>
+          <div class="-mt-4 flex justify-end">
+      <a href="{{ path('app_admin_export_to_excel') }}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center text-sm sm:text-base">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd" />
+        </svg>
+        Exporter vers Excel
+      </a>
+    </div>
+        </div>
+        <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {% for action in [
+            {title: 'Tous les candidats', description: 'Générer un PDF contenant la liste de tous les candidats.', path: 'app_generate_all_candidates_excel', color: 'blue'},
+            {title: 'Par centre d\'examen', description: 'Générer un PDF contenant la liste des candidats par centre d\'examen.', path: 'app_generate_candidates_per_center_pdf', color: 'green'},
+            {title: 'Par filière', description: 'Générer un PDF contenant la liste des candidats par filière.', path: 'app_generate_candidates_per_field_excel', color: 'yellow'},
+            {title: 'Par Type d\'admission', description: 'Générer un PDF contenant la liste des candidats par type d\'admission.', path: 'app_generate_candidates_per_admissionType_excel', color: 'red'}
+          ] %}
+          <div class="group bg-gray-50 p-4 rounded-lg hover:shadow-md transition duration-300">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ action.title }}</h3>
+            <p class="text-gray-600 mb-4 text-sm">{{ action.description }}</p>
+            <a href="{{ path(action.path) }}" class="inline-flex items-center bg-{{ action.color }}-500 hover:bg-{{ action.color }}-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform group-hover:translate-x-2">
+              Générer PDF
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+{# Nouvelle section : Répartition par genre #}
+<section class="mb-8">
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-4 px-6 flex justify-between items-center">
+      <h2 class="text-xl font-semibold">Répartition par Genre</h2>
+    </div>
+    <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for center in centers %}
+      <div class="bg-gray-50 p-4 rounded-lg hover:shadow-md transition duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ center.examinationCenter }}</h3>
+        <div class="flex items-center justify-between text-sm text-gray-600">
+          <span>Hommes</span>
+          <span class="bg-blue-500 text-white px-2 py-1 rounded-full">
+            {{ center.maleCount }} candidat{% if center.maleCount > 1 %}s{% endif %}
+          </span>
+        </div>
+        <div class="flex items-center justify-between text-sm text-gray-600 mt-2">
+          <span>Femmes</span>
+          <span class="bg-pink-500 text-white px-2 py-1 rounded-full">
+            {{ center.femaleCount }} candidat{% if center.femaleCount > 1 %}s{% endif %}
+          </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="mb-8">
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-4 px-6">
+      <h2 class="text-xl font-semibold">Répartition par Pays, Région et Département</h2>
+    </div>
+    
+   {# Nationality Regions Summary #}
+<div class="p-6">
+    <div class="space-y-8">
+        <h2 class="text-xl font-bold text-gray-800 mb-6">Répartition par Nationalité, Région et Département</h2>
+        
+        {% for nationality in nationalityRegionStats %}
+            <div class="bg-white shadow rounded-lg p-6 mb-6">
+                <div class="border-b pb-4 mb-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">{{ nationality.nationality }}</h3>
+                        <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
+                            {{ nationality.totalCandidates }} candidat{% if nationality.totalCandidates > 1 %}s{% endif %}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    {% for region in nationality.regions|sort((a, b) => b.candidateCount <=> a.candidateCount) %}
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium text-gray-700">{{ region.name }}</h4>
+                                <span class="bg-blue-500 text-white px-2 py-1 rounded-full text-sm">
+                                    {{ region.candidateCount }} candidat{% if region.candidateCount > 1 %}s{% endif %}
+                                </span>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                {% for dept in region.departments|sort((a, b) => b.candidateCount <=> a.candidateCount) %}
+                                    <div class="flex items-center justify-between bg-white rounded p-2">
+                                        <span class="text-gray-600">{{ dept.name }}</span>
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-sm text-gray-500">{{ dept.percentage|number_format(1) }}%</span>
+                                            <span class="bg-green-500 text-white text-sm px-2 py-1 rounded-full">
+                                                {{ dept.candidateCount }} candidat{% if dept.candidateCount > 1 %}s{% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</section>
+
+{# Nouvelle section : Répartition linguistique #}
+<section class="mb-8">
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-4 px-6 flex justify-between items-center">
+      <h2 class="text-xl font-semibold">Répartition Linguistique</h2>
+    </div>
+    <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for center in centers %}
+      <div class="bg-gray-50 p-4 rounded-lg hover:shadow-md transition duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ center.examinationCenter }}</h3>
+        <div class="flex items-center justify-between text-sm text-gray-600">
+          <span>Anglophones</span>
+          <span class="bg-green-500 text-white px-2 py-1 rounded-full">
+            {{ center.anglophones }} candidat{% if center.anglophones > 1 %}s{% endif %}
+          </span>
+        </div>
+        <div class="flex items-center justify-between text-sm text-gray-600 mt-2">
+          <span>Francophones</span>
+          <span class="bg-orange-500 text-white px-2 py-1 rounded-full">
+            {{ center.francophones }} candidat{% if center.francophones > 1 %}s{% endif %}
+          </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>    {# Statistics Grid #}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {# Centers with Language Distribution #}
+      <div class="space-y-6">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="bg-gradient-to-r from-green-600 to-green-400 text-white py-4 px-6 flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Centres d'examen</h2>
+            <span class="bg-white text-green-600 text-sm font-semibold px-3 py-1 rounded-full">
+              {{ centers | length }} centre(s)
+            </span>
+          </div>
+          <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+            {% for center in centers %}
+            <div class="p-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-gray-800 font-medium">{{ center.examinationCenter }}</span>
+                <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                  {{ center.candidateCount }} candidat{% if center.candidateCount > 1 %}s{% endif %}
+                </span>
+              </div>
+              <div class="mt-2 pl-4 space-y-1">
+                {% for langStat in studentLanguagePerCenters %}
+                {% if langStat.examinationCenter == center.examinationCenter %}
+                <div class="flex justify-between items-center text-sm">
+                  <span class="text-gray-600">{{ langStat.language }}</span>
+                  <span class="text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                    {{ langStat.candidateCount }} candidat{% if langStat.candidateCount > 1 %}s{% endif %}
+                  </span>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {# Candidats par Pays et Centre #}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="bg-gradient-to-r from-green-600 to-green-400 text-white py-4 px-6 flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Candidats par Pays et Centre</h2>
+            <span class="bg-white text-green-600 text-sm font-semibold px-3 py-1 rounded-full">
+              {{ nationality | length }} pays
+            </span>
+          </div>
+          <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+            {% for country in nationality %}
+            <div class="p-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-gray-800 font-medium">{{ country.nationality }}</span>
+                <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                  {{ country.totalCandidates }} candidat{% if country.totalCandidates > 1 %}s{% endif %}
+                </span>
+              </div>
+              <div class="mt-2 pl-4 space-y-1">
+                <div class="font-medium text-gray-700">Centres:</div>
+                <div class="space-y-1">
+                  {% for center in country.centers %}
+                  <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-600">{{ center.examinationCenter }}</span>
+                    <span class="text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                      {{ center.candidateCount }} candidat{% if center.candidateCount > 1 %}s{% endif %}
+                    </span>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      {# Right Column #}
+      <div class="space-y-6">
+        {# Fields with Country Distribution #}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="bg-gradient-to-r from-green-600 to-green-400 text-white py-4 px-6 flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Filières</h2>
+            <span class="bg-white text-green-600 text-sm font-semibold px-3 py-1 rounded-full">
+              {{ fields | length }} filière(s)
+            </span>
+          </div>
+          <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+            {% for field in fields %}
+            <div class="p-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-gray-800 font-medium">{{ field.field }}</span>
+                <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                  {{ field.candidateCount }} candidat{% if field.candidateCount > 1 %}s{% endif %}
+                </span>
+              </div>
+              <div class="mt-2 pl-4 space-y-1">
+                {% set normalizedCountries = {} %}
+                {% for countryStat in candidatePerFieldPerCountryCount %}
+                {% if countryStat.field == field.field %}
+                {% set normalizedNationality = countryStat.nationality %}
+                {% if countryStat.nationality == 'Cameroon' %}
+                {% set normalizedNationality = 'Cameroun' %}
+                {% endif %}
+                {% if normalizedCountries[normalizedNationality] is not defined %}
+                {% set normalizedCountries = normalizedCountries|merge({ (normalizedNationality): countryStat.candidateCount }) %}
+                {% else %}
+                {% set normalizedCountries = normalizedCountries|merge({ (normalizedNationality): normalizedCountries[normalizedNationality] + countryStat.candidateCount }) %}
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                {% for nationality, count in normalizedCountries %}
+                <div class="flex justify-between items-center text-sm">
+                  <span class="text-gray-600">{{ nationality }}</span>
+                  <span class="text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                    {{ count }} candidat{% if count > 1 %}s{% endif %}
+                  </span>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {# Admission Types #}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="bg-gradient-to-r from-green-600 to-green-400 text-white py-4 px-6 flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Types d'Admission</h2>
+            <span class="bg-white text-green-600 text-sm font-semibold px-3 py-1 rounded-full">
+              {{ studentAdmissionTypeCount | length }} type(s)
+            </span>
+          </div>
+          <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+            {% for type in studentAdmissionTypeCount %}
+            <div class="flex items-center justify-between py-4 px-6 hover:bg-gray-50 transition duration-150">
+              <span class="text-gray-800 font-medium">{{ type.admissionType }}</span>
+              <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                {{ type.candidateCount }} candidat{% if type.candidateCount > 1 %}s{% endif %}
+              </span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+     
+  </main>
+</div>
+{% endblock %}

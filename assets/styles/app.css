@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    background-color: white;
+    font-family: "Montserrat", "Lexend", "Arial";
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+:root {
+  --primary-color: #109646;
+  --primary-color-hover: #8AC774;
+  --secondary-color: rgb(52, 128, 251);
+  --secondary-color-hover: rgb(65, 135, 248);
+  --background-color: #f5f5f5;
+  --text-color: #2b2a2a;
+  --hover-color: #0e1f6d;
+}
+
+.dark {
+  --background-color: #1f2937;  /* Dark gray instead of pure black */
+  --text-color: #e5e7eb;  /* Light gray for better readability */
+  --hover-color: #9ca3af; /* Lighter gray for hover effect */
+}
+
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: var(--primary-color);
+  transition: width 0.4s ease;
+  -webkit-transition: width 0.4s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+  left: 0;
+  background: var(--primary-color-hover);
+}
+
+.form-input {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main-green focus:border-main-green transition duration-150 ease-in-out;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.btn-primary {
+  @apply w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-main-green hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition duration-150 ease-in-out;
+}
+
+.form-step {
+  @apply bg-white rounded-lg shadow-md p-8 mb-8;
+}
+
+.step-indicator {
+  @apply w-10 h-10 flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 ease-in-out;
+}
+
+.step-indicator.active {
+  @apply bg-main-green text-white;
+}
+
+.step-indicator.completed {
+  @apply bg-green-200 text-main-green;
+}
+
+.help-tooltip {
+  @apply absolute top-0 right-0 mt-1 mr-1 text-gray-400 hover:text-gray-600 cursor-pointer transition duration-150 ease-in-out;
+}
+
+.btn-primary, .btn-secondary, .btn-success {
+  @apply px-6 py-3 border border-transparent text-base font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out;
+}
+.btn-primary {
+  @apply text-white bg-main-green hover:bg-green-700 focus:ring-main-green;
+}
+.btn-secondary {
+  @apply text-main-green bg-white border-main-green hover:bg-green-50 focus:ring-main-green;
+}
+.btn-success {
+  @apply text-white bg-green-600 hover:bg-green-700 focus:ring-green-500;
+}

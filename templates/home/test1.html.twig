@@ -1,0 +1,179 @@
+// Function to toggle education fields based on selected system
+function toggleEducationFields(selectedSystem) {
+    const francophonesFields = document.getElementById('francophone-intermediate-fields');
+    const anglophonesFields = document.getElementById('anglophone-intermediate-fields');
+
+    if (selectedSystem === 'FRANCOPHONE') {
+        francophonesFields.style.display = 'block';
+        anglophonesFields.style.display = 'none';
+        resetFields('ANGLOPHONE');
+        fillFieldsWithPlaceholder(anglophonesFields, '-');
+    } else if (selectedSystem === 'ANGLOPHONE') {
+        francophonesFields.style.display = 'none';
+        anglophonesFields.style.display = 'block';
+        resetFields('FRANCOPHONE');
+        fillFieldsWithPlaceholder(francophonesFields, '-');
+    } else {
+        francophonesFields.style.display = 'none';
+        anglophonesFields.style.display = 'none';
+        resetFields('ALL');
+    }
+}
+
+// Function to reset fields when switching between systems
+function resetFields(system) {
+    if (system === 'FRANCOPHONE' || system === 'ALL') {
+        document.querySelectorAll('#bac-subjects select, #bac-subjects input').forEach(el => el.value = '-');
+        document.getElementById('probatoire-section').style.display = 'none';
+        document.querySelectorAll('#probatoire-subjects select, #probatoire-subjects input').forEach(el => el.value = '-');
+    }
+    if (system === 'ANGLOPHONE' || system === 'ALL') {
+        document.querySelectorAll('#gce-a-level-subjects select, #gce-a-level-subjects input').forEach(el => el.value = '-');
+        document.getElementById('gce-o-level-section').style.display = 'none';
+        document.querySelectorAll('#gce-o-level-subjects select, #gce-o-level-subjects input').forEach(el => el.value = '-');
+    }
+}
+
+// Function to evaluate Baccalauréat
+function evaluateBaccalaureat() {
+    const subject = document.querySelector('[name="candidate_form[bacSubject]"]').value;
+    const mark = document.querySelector('[name="candidate_form[bacSubjectMark]"]').value;
+
+    if (subject === '-' || mark === '-') {
+        alert('Both Baccalauréat subject and mark must be filled. The registration process will be stopped.');
+        return false;
+    }
+
+    const numericMark = parseFloat(mark);
+    if (isNaN(numericMark)) {
+        alert('Invalid Baccalauréat mark. The registration process will be stopped.');
+        return false;
+    }
+
+    if (numericMark < 10) {
+        document.getElementById('probatoire-section').style.display = 'block';
+    } else {    
+        document.getElementById('probatoire-section').style.display = 'none';
+        document.querySelectorAll('#probatoire-subjects select, #probatoire-subjects input').forEach(el => el.value = '-');
+    }
+    return true;
+}
+
+// Function to evaluate Probatoire
+function evaluateProbatoire() {
+    const subject = document.querySelector('[name="candidate_form[probatoireSubject]"]').value;
+    const mark = document.querySelector('[name="candidate_form[probatoireSubjectMark]"]').value;
+
+    if (document.getElementById('probatoire-section').style.display === 'block') {
+        if (subject === '-' || mark === '-') {
+            alert('Both Probatoire subject and mark must be filled. The registration process will be stopped.');
+            return false;
+        }
+
+        const numericMark = parseFloat(mark);
+        if (isNaN(numericMark)) {
+            alert('Invalid Probatoire mark. The registration process will be stopped.');
+            return false;
+        }
+
+        if (numericMark < 10) {
+            alert('Your Probatoire mark is below 10. The registration process will be stopped.');
+            return false;
+        }
+    }
+    return true;
+}
+
+// Function to evaluate GCE A Level
+function evaluateGCEALevel() {
+    const subject = document.querySelector('[name="candidate_form[gceAlevelSubject]"]').value;
+    const grade = document.querySelector('[name="candidate_form[gceAlevelSubjectGrade]"]').value;
+
+    if (subject === '-' || grade === '-') {
+        alert('Both GCE A Level subject and grade must be filled. The registration process will be stopped.');
+        return false;
+    }
+
+    if (grade === 'E' || grade === 'F') {
+        document.getElementById('gce-o-level-section').style.display = 'block';
+    } else {
+        document.getElementById('gce-o-level-section').style.display = 'none';
+        document.querySelectorAll('#gce-o-level-subjects select, #gce-o-level-subjects input').forEach(el => el.value = '-');
+    }
+    return true;
+}
+
+// Function to evaluate GCE O Level
+function evaluateGCEOLevel() {
+    const subject = document.querySelector('[name="candidate_form[gceOlevelSubject]"]').value;
+    const grade = document.querySelector('[name="candidate_form[gceOlevelSubjectGrade]"]').value;
+
+    if (document.getElementById('gce-o-level-section').style.display === 'block') {
+        if (subject === '-' || grade === '-') {
+            alert('Both GCE O Level subject and grade must be filled. The registration process will be stopped.');
+            return false;
+        }
+
+        if (grade === 'D' || grade === 'E' || grade === 'F') {
+            alert('Your GCE O Level grade is below C. The registration process will be stopped.');
+            return false;
+        }
+    }
+    return true;
+}
+
+function fillFieldsWithPlaceholder(container, placeholder) {
+    const inputs = container.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        if (input.tagName === 'SELECT') {
+            const placeholderOption = document.createElement('option');
+            placeholderOption.value = placeholder;
+            placeholderOption.text = placeholder;
+            placeholderOption.selected = true;
+            input.appendChild(placeholderOption);
+        } else {
+            input.value = placeholder;
+        }
+    });
+}
+
+// Function to validate the entire form
+function validateForm() {
+    const educationalSystem = document.querySelector('[name="candidate_form[educationalSystemCheck]"]').value;
+    
+    if (educationalSystem === 'FRANCOPHONE') {
+        if (!evaluateBaccalaureat() || !evaluateProbatoire()) {
+            return false;
+        }
+    } else if (educationalSystem === 'ANGLOPHONE') {
+        if (!evaluateGCEALevel() || !evaluateGCEOLevel()) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Initialize the form
+document.addEventListener('DOMContentLoaded', function () {
+    const educationalSystemSelect = document.querySelector('[name="candidate_form[educationalSystemCheck]"]');
+    educationalSystemSelect.addEventListener('change', function () {
+        toggleEducationFields(this.value);
+    });
+
+    // Initialize with the current value
+    toggleEducationFields(educationalSystemSelect.value);
+
+    // Add event listeners for grade/mark inputs
+    document.querySelector('[name="candidate_form[bacSubjectMark]"]').addEventListener('change', evaluateBaccalaureat);
+    document.querySelector('[name="candidate_form[probatoireSubjectMark]"]').addEventListener('change', evaluateProbatoire);
+    document.querySelector('[name="candidate_form[gceAlevelSubjectGrade]"]').addEventListener('change', evaluateGCEALevel);
+    document.querySelector('[name="candidate_form[gceOlevelSubjectGrade]"]').addEventListener('change', evaluateGCEOLevel);
+
+    // Add form submission event listener
+    document.querySelector('form').addEventListener('submit', function(event) {
+        if (!validateForm()) {
+            event.preventDefault();
+        }
+    });
+});

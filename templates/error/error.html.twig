@@ -1,0 +1,16 @@
+{% extends 'base_empty.html.twig' %}
+
+{% block title %}An Error Occurred{% endblock %}
+
+{% block body %}
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-sm sm:max-w-md bg-white rounded-lg shadow-md p-6 sm:p-8 text-center">
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">Oops! An Error Occurred</h1>
+        <h2 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-3 sm:mb-4">The server returned a "{{ status_code }} {{ status_text }}".</h2>
+        <p class="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8">Something is broken. We will fix it as soon as possible. Sorry for any inconvenience caused.</p>
+        <a href="{{ path('app_candidate_register') }}" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
+            Go to Homepage
+        </a>
+    </div>
+</div>
+{% endblock %}

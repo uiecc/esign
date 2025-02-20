@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" class="h-full">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}Welcome!{% endblock %}
+        </title>
+        <link rel="icon" href="{{ asset('/images/uiecc_logo.png') }}" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        {% block script %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+        <style>
+            /* xs: 375px */
+            @media (max-width: 374px) {
+                .container {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+            }
+            /* sm: 576px */
+            @media (min-width: 375px) and (max-width: 575px) {
+                .container {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+            }
+            /* md: 768px */
+            @media (min-width: 576px) and (max-width: 767px) {
+                .container {
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                }
+            }
+            /* lg: 992px */
+            @media (min-width: 768px) and (max-width: 991px) {
+                .container {
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                }
+            }
+            /* xl: 1200px */
+            @media (min-width: 992px) and (max-width: 1199px) {
+                .container {
+                    padding-left: 4rem;
+                    padding-right: 4rem;
+                }
+            }
+            /* 1200px and above */
+            @media (min-width: 1200px) {
+                .container {
+                    padding-left: 4rem;
+                    padding-right: 4rem;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-background dark:bg-background text-text dark:text-text flex flex-col min-h-screen">
+        {# <header class="bg-bg-white dark:bg-background text-text dark:text-text sticky top-0 left-0 right-0 z-50">
+            <nav class="container mx-auto py-4 flex items-center justify-between flex-wrap">
+                <!-- Logo -->
+                <a href="{{path('app_home')}}" class="flex items-center text-main-green">
+                    <img id="logo-light" class="h-8 sm:h-10 md:h-12 lg:h-14 w-auto" src="{{ asset('icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                    <img id="logo-dark" class="h-8 sm:h-10 md:h-12 lg:h-14 w-auto hidden" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                </a>
+
+                <!-- Navigation Links - Hidden on mobile -->
+                <div class="hidden md:flex space-x-6 lg:space-x-16">
+                    <a href="{{path('app_home')}}" class="nav-link text-main-green hover:text-hover-green font-semibold text-sm lg:text-base">{{ 'home_header.nav.home'|trans }}</a>
+                    <a href="{{ path('app_home') }}#about-section" class="nav-link text-main-green hover:text-hover-green font-semibold text-sm lg:text-base">{{ 'home_header.nav.about'|trans }}</a>
+                    <a href="{{ path('app_home') }}#faq-section" class="nav-link text-main-green hover:text-hover-green font-semibold text-sm lg:text-base">{{ 'home_header.nav.faq'|trans }}</a>
+                </div>
+
+                <!-- Right side elements -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <!-- Login and Register buttons - Hidden on mobile -->
+                    <div class="hidden md:flex space-x-2 lg:space-x-4">
+                        <a href="{{path('app_login')}}" class="text-main-green bg-white border border-main-green rounded-md px-3 py-1 lg:px-5 lg:py-2 text-sm lg:text-base font-semibold hover:scale-105 transition-transform duration-75">{{ 'home_header.nav.login'|trans }}</a>
+                        <a href="{{path('app_register')}}" class="text-white bg-main-green rounded-md px-3 py-1 lg:px-5 lg:py-2 text-sm lg:text-base font-semibold hover:scale-105 transition-transform duration-75">{{ 'home_header.nav.register'|trans }}</a>
+                    </div>
+
+                    <!-- Dropdown menu -->
+                    <div class="relative">
+                        <button id="options-menu" class="text-main-green hover:text-hover-green focus:outline-none">
+                            <img src="icons/translation.svg" alt="Translation image" class="w-8 h-8 lg:w-10 lg:h-10">
+                        </button>
+                        <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                            <div class="py-1">
+                                <ul>
+                                    <li class="ml-2 py-1 px-1">
+                                        <a href="{{ path('switch_language', {'locale': 'en'}) }}" class="text-sm lg:text-base">{{ 'home_header.language.english'|trans }}</a>
+                                    </li>
+                                    <li class="ml-2 py-1 px-1">
+                                        <a href="{{ path('switch_language', {'locale': 'fr'}) }}" class="text-sm lg:text-base">{{ 'home_header.language.french'|trans }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <button type="button" class="md:hidden text-main-green" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Mobile menu -->
+            <div class="hidden md:hidden w-full" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 flex flex-col items-start">
+                    <a href="{{ path('app_home') }}" class="nav-link block px-3 py-2 rounded-md text-base font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.home'|trans }}</a>
+                    <a href="{{ path('app_home') }}#about-section" class="nav-link block px-3 py-2 rounded-md text-base font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.about'|trans }}</a>
+                    <a href="{{ path('app_home') }}#faq-section" class="nav-link block px-3 py-2 rounded-md text-base font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.faq'|trans }}</a>
+                    <a href="{{ path('app_login') }}" class="nav-link block px-3 py-2 rounded-md text-base font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.login'|trans }}</a>
+                    <a href="{{ path('app_register') }}" class="nav-link block px-3 py-2 rounded-md text-base font-semibold text-main-green hover:text-hover-green">{{ 'home_header.nav.register'|trans }}</a>
+                </div>
+            </div>
+        </header> #}
+
+       <main class=" w-screen "> {% block body %}{% endblock %}
+			</main>
+
+        {# <footer class="bg-background dark:bg-background text-text dark:text-text py-8">
+            <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between">
+                <a href="#" class="mb-4 sm:mb-0">
+                    <img id="footer-logo-light" class="h-8 sm:h-10 md:h-12 lg:h-14 w-auto" src="{{ asset('icons/uiecc_logo.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                    <img id="footer-logo-dark" class="h-8 sm:h-10 md:h-12 lg:h-14 w-auto hidden" src="{{ asset('/images/uiecc_logo_dark.svg') }}" alt="{{ 'home_header.app.logo_alt'|trans }}">
+                </a>
+                <ul class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 mb-4 sm:mb-0 text-main-green font-semibold">
+                    <li>
+                        <a href="{{ path('app_home') }}#hero-section" class="text-sm lg:text-base">{{ 'home_header.nav.home'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_home') }}#about-section" class="hover:text-secondary text-sm lg:text-base">{{ 'home_header.nav.about'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_home') }}#faq-section" class="hover:text-secondary text-sm lg:text-base">{{ 'home_header.nav.faq'|trans }}</a>
+                    </li>
+                </ul>
+                <p class="text-sm lg:text-base font-semibold text-main-green mt-4 sm:mt-0">{{ 'home_header.footer.copyright'|trans({'%year%': 'now'|date('Y')}) }}</p>
+            </div>
+        </footer> #}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const optionsMenu = document.getElementById('options-menu');
+                const dropdownMenu = document.getElementById('dropdown-menu');
+                const themeToggle = document.getElementById('theme-toggle');
+                const languageToggle = document.getElementById('language-toggle');
+                const themeText = document.getElementById('theme-text');
+                const languageText = document.getElementById('language-text');
+
+                // Mobile menu toggle
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+
+                // Dropdown menu toggle
+                if (optionsMenu && dropdownMenu) {
+                    optionsMenu.addEventListener('click', () => {
+                        dropdownMenu.classList.toggle('hidden');
+                    });
+
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', (event) => {
+                        if (!dropdownMenu.contains(event.target) && !optionsMenu.contains(event.target)) {
+                            dropdownMenu.classList.add('hidden');
+                        }
+                    });
+                }
+
+             
+
+                // Language toggle
+                if (languageToggle && languageText) {
+                    languageToggle.addEventListener('click', () => {
+                        const currentLang = languageText.textContent;
+                        const newLang = currentLang === 'EN' ? 'FR' : 'EN';
+                        languageText.textContent = newLang;
+                        // Here you would typically redirect to change the language
+                    });
+                }
+
+              
+
+            });
+        </script>
+    </body>
+</html>

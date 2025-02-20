@@ -1,0 +1,45 @@
+{% extends 'base_empty.html.twig' %}
+
+{% block title %}{{'reset_page.request.title'|trans}}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .bg-main-green { background-color: #2ecc71; }
+        .text-main-green { color: #2ecc71; }
+        .border-main-green { border-color: #2ecc71; }
+        .hover\:bg-main-green-dark:hover { background-color: #27ae60; }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="mt-6 text-center text-2xl sm:text-3xl font-extrabold text-gray-900">
+            {{'reset_page.request.heading'|trans}}
+        </h2>
+        <p class="mt-2 text-center text-sm sm:text-base text-gray-600 max-w">
+            {{'reset_page.request.desc'|trans}}
+        </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto w-full max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            {{ form_start(requestForm, {'attr': {'class': 'space-y-6'}}) }}
+                <div>
+                    {{ form_label(requestForm.email, 'reset_page.request.email'|trans, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    <div class="mt-1">
+                        {{ form_widget(requestForm.email, {'attr': {'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-main-green focus:border-main-green text-sm sm:text-base'}}) }}
+                    </div>
+                    {{ form_errors(requestForm.email) }}
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm sm:text-base font-medium text-white bg-main-green hover:bg-main-green-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition duration-150 ease-in-out">
+                        {{'reset_page.request.send_button'|trans}}
+                    </button>
+                </div>
+            {{ form_end(requestForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

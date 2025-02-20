@@ -1,0 +1,43 @@
+{% extends 'base_empty.html.twig' %}
+{% block body %}
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div class="relative py-3 w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+            <div class="px-4 py-8 sm:px-10">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-center">{{ 'candidate_form.confirm_submission'|trans }}</h2>
+                <p class="mb-6 text-base sm:text-lg text-center">{{ 'candidate_form.confirm_submission_message'|trans }}</p>
+                <div class="flex flex-col sm:flex-row justify-center sm:justify-between space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="{{ path('app_candidate_register') }}" id="noButton" class="bg-red-500 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-md hover:bg-red-600 font-semibold text-center">
+                        {{ 'candidate_form.no'|trans }}
+                    </a>
+                    <a id="confirmSubmit" href="{{ path('app_candidate_preview', { 'id': candidateId, 'examinationLanguage': examinationLanguage }) }}" class="bg-green-500 text-white px-6 sm:px-10 py-3 sm:py-4 font-semibold rounded-md hover:bg-green-600 text-center">
+                        {{ 'candidate_form.yes'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const confirmSubmitButton = document.getElementById('confirmSubmit');
+        const noButton = document.getElementById('noButton');
+        let formSubmitted = false;
+
+        confirmSubmitButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            formSubmitted = true;
+            window.location.href = this.href;
+        });
+
+        noButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (formSubmitted) {
+                window.location.href = "{{ path('app_candidate_preview', { 'id': candidateId, 'examinationLanguage': examinationLanguage }) }}";
+            } else {
+                window.location.href = "{{ path('app_candidate_register') }}";
+            }
+        });
+    });
+</script>
+{% endblock %}

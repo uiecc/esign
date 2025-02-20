@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Language - ESIGN</title>
+    {% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {{ encore_entry_script_tags('app') }}
+    <style>
+        .clicked-button {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-background dark:bg-background text-text dark:text-text overflow-hidden">
+    <main class="flex-grow flex items-center justify-center px-4 py-8 sm:py-12">
+        <div class="text-center w-full max-w-4xl">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold ">{{ 'language_choice_page.language-message'|trans }}</h1>
+            <p class="mb-6 font-normal  sm:mb-10 mt-1" >{{ 'language_choice_page.language-desc'|trans }} </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-10">
+                <div class="relative inline-block transition-transform duration-300 hover:scale-105 group">
+                    <a href="{{ path('change_language', {'locale': 'en'}) }}" class="language-button relative z-10 inline-block bg-primary text-background rounded-md px-5 py-4 text-md font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary transition-transform duration-300 w-full">
+                        <span class="mr-2">🇬🇧</span> {{ 'language_choice_page.english-language'|trans }}
+                    </a>
+                    <div class="absolute top-0 left-0 w-full h-full bg-black rounded-md transition-all duration-300 transform translate-x-[5px] translate-y-[5px] group-hover:translate-x-[7px] group-hover:translate-y-[7px]"></div>
+                </div>
+                <div class="relative inline-block transition-transform duration-300 hover:scale-105 group">
+                    <a href="{{ path('change_language', {'locale': 'fr'}) }}" class="language-button relative z-10 inline-block bg-primary text-background rounded-md px-5 py-4 text-md font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary transition-transform duration-300 w-full">
+                        <span class="mr-2">🇫🇷</span> {{ 'language_choice_page.french-language'|trans }}
+                    </a>
+                    <div class="absolute top-0 left-0 w-full h-full bg-black rounded-md transition-all duration-300 transform translate-x-[5px] translate-y-[5px] group-hover:translate-x-[7px] group-hover:translate-y-[7px]"></div>
+                </div>
+                <div class="relative inline-block transition-transform duration-300 hover:scale-105 group">
+                    <a href="{{ path('change_language', {'locale': 'ln'}) }}" class="language-button relative z-10 inline-block bg-primary text-background rounded-md px-5 py-4 text-md font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary transition-transform duration-300 w-full">
+                        <span class="mr-2">🇨🇬</span> {{ 'language_choice_page.lingala-language'|trans }}
+                    </a>
+                    <div class="absolute top-0 left-0 w-full h-full bg-black rounded-md transition-all duration-300 transform translate-x-[5px] translate-y-[5px] group-hover:translate-x-[7px] group-hover:translate-y-[7px]"></div>
+                </div>
+            </div>
+            <div class="relative inline-block transition-transform duration-300 hover:scale-105 group">
+                <a href="{{ path('school_new') }}" class="relative z-10 inline-block bg-primary text-background rounded-md px-5 py-4 text-md font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary transition-transform duration-300">
+                    {{ 'language_choice_page.next-language-btn'|trans }}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 inline" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <div class="absolute top-0 left-0 w-full h-full bg-black rounded-md transition-all duration-300 transform translate-x-[5px] translate-y-[5px] group-hover:translate-x-[7px] group-hover:translate-y-[7px]"></div>
+            </div>
+        </div>
+    </main>
+    {# <footer class="p-4 sm:p-6 text-center text-text">
+        <p class="text-xs sm:text-sm">&copy;{{ 'language_choice_page.copyright'|trans }}.</p>
+    </footer> #}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.language-button');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    buttons.forEach(btn => btn.classList.remove('clicked-button'));
+                    button.classList.add('clicked-button');
+                });
+            });
+        });
+        nextButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                if (selectedLanguage) {
+                    window.location.href = selectedLanguage;
+                } else {
+                    alert('Please select a language before proceeding.');
+                }
+            });
+    </script>
+</body>
+</html>
+
+
+{# <footer class="p-4 sm:p-6 text-center text-text">
+        <p class="text-xs sm:text-sm">&copy;{{ 'language_choice_page.copyright'|trans }}.</p>
+        
+    </footer> #}

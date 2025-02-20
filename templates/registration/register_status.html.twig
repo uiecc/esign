@@ -1,0 +1,44 @@
+{% extends 'base_empty.html.twig' %}
+
+{% block head %}
+ {{ parent() }}
+ <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+ <meta http-equiv="Pragma" content="no-cache">
+ <meta http-equiv="Expires" content="0">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+ {% if success %}
+ {{ 'registration_status.success_title'|trans }}
+ {% else %}
+ {{ 'registration_status.failure_title'|trans }}
+ {% endif %}
+{% endblock %}
+
+{% block body %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
+ <div class="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-white rounded-lg shadow-md p-6 sm:p-8 text-center">
+   {% if success %}
+   <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-green-600 mb-4">{{ 'registration_status.success_message'|trans }}</h2>
+   {% else %}
+   <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-red-600 mb-4">{{ 'registration_status.failure_message'|trans }}</h2>
+   {% endif %}
+   <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-4">{{ 'registration_status.redirect_message'|trans }}</p>
+ </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+setTimeout(function() {
+ window.location.href = "{{ redirect_url }}";
+}, 1000); // Redirects after 3 seconds
+
+// Disable back button
+history.pushState(null, null, document.URL);
+window.addEventListener('popstate', function () {
+ history.pushState(null, null, document.URL);
+});
+</script>
+{% endblock %}

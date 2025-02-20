@@ -1,0 +1,68 @@
+{% extends 'base_empty.html.twig' %}
+
+{% block title %}{{'reset_page.reset.title'|trans}}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .bg-main-green { background-color: #2ecc71; }
+        .text-main-green { color: #2ecc71; }
+        .border-main-green { border-color: #2ecc71; }
+        .ring-main-green { --tw-ring-color: #2ecc71; }
+        .hover\:bg-main-green-dark:hover { background-color: #27ae60; }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="mt-6 text-center text-2xl sm:text-3xl font-extrabold text-gray-900">
+            {{'reset_page.reset.title'|trans}}
+        </h2>
+        <p class="mt-2 text-center text-xs sm:text-sm text-gray-600">
+            {{'reset_page.reset.desc'|trans}}
+        </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto w-full sm:max-w-md">
+        <div class="bg-white py-6 sm:py-8 px-4 sm:px-10 shadow sm:rounded-lg">
+            {{ form_start(changePasswordForm, {'attr': {'class': 'space-y-4 sm:space-y-6'}}) }}
+                <div>
+                    {{ form_label(changePasswordForm.plainPassword.first, 'reset_page.reset.new_password'|trans, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    <div>
+                        {{ form_widget(changePasswordForm.plainPassword.first, {
+                            'attr': {
+                                'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-main-green focus:border-main-green text-sm',
+                                'placeholder': 'reset_page.reset.new_password_placeholder'|trans
+                            }
+                        }) }}
+                    </div>
+                    {{ form_errors(changePasswordForm.plainPassword.first) }}
+                </div>
+                <div>
+                    {{ form_label(changePasswordForm.plainPassword.second, 'reset_page.reset.new_password_confirm'|trans, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    <div>
+                        {{ form_widget(changePasswordForm.plainPassword.second, {
+                            'attr': {
+                                'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-main-green focus:border-main-green text-sm',
+                                'placeholder': 'reset_page.reset.new_password_confirm_placeholder'|trans
+                            }
+                        }) }}
+                    </div>
+                    {{ form_errors(changePasswordForm.plainPassword.second) }}
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-main-green hover:bg-main-green-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition duration-150 ease-in-out">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <svg class="h-5 w-5 text-main-green-dark group-hover:text-white transition duration-150 ease-in-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        {{'reset_page.reset.send_button'|trans}}
+                    </button>
+                </div>
+            {{ form_end(changePasswordForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

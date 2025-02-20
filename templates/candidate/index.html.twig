@@ -1,0 +1,742 @@
+
+{# Later Code #}
+{# <!-- {% extends 'base_login.html.twig' %}
+
+{% block title %}
+{{ candidate.id ? 'Mettre à jour' : 'Inscription' }} du candidat
+{% endblock %}
+
+{% block body %}
+<style>
+    .form-input {
+        @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main-green focus:border-main-green transition duration-150 ease-in-out;
+    }
+
+    .form-label {
+        @apply block text-sm font-medium text-gray-700 mb-2;
+    }
+
+    .btn-primary {
+        @apply w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-main-green hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition duration-150 ease-in-out;
+    }
+
+    .form-step {
+        @apply bg-white rounded-lg shadow-md p-8 mb-8;
+    }
+
+    .step-indicator {
+        @apply w-10 h-10 flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 ease-in-out;
+    }
+
+    .step-indicator.active {
+        @apply bg-main-green text-white;
+    }
+
+    .step-indicator.completed {
+        @apply bg-green-200 text-main-green;
+    }
+
+    .help-tooltip {
+        @apply absolute top-0 right-0 mt-1 mr-1 text-gray-400 hover:text-gray-600 cursor-pointer transition duration-150 ease-in-out;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-success {
+        @apply px-6 py-3 border border-transparent text-base font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out;
+    }
+
+    .btn-primary {
+        @apply text-white bg-main-green hover:bg-green-700 focus:ring-main-green;
+    }
+
+    .btn-secondary {
+        @apply text-main-green bg-white border-main-green hover:bg-green-50 focus:ring-main-green;
+    }
+
+    .btn-success {
+        @apply text-white bg-green-600 hover:bg-green-700 focus:ring-green-500;
+    }
+
+    #popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #popup.show {
+        transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 mt-20">
+            <h1 class="text-5xl font-extrabold text-gray-900 mb-4 animate-fade-in">
+                {{ candidate.id ? 'Mettre à jour' : 'Inscription' }} du candidat
+            </h1>
+            <p class="text-xl text-gray-600">{{ 'candidate_form.description' | trans }}</p>
+        </div>
+
+        <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="flex space-x-4">
+                        <div id="step-indicator-1" class="step-indicator active">1</div>
+                        <div id="step-indicator-2" class="step-indicator">2</div>
+                        <div id="step-indicator-3" class="step-indicator">3</div>
+                    </div>
+                    <button id="help-button" class="text-main-green hover:text-green-700 font-medium flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ 'candidate_form.Need help?' | trans }}
+                    </button>
+                </div>
+
+                {{ form_start(form, {'attr': {'class': 'space-y-8', 'id': 'multi-step-form'}}) }}
+
+                {# Étape 1: Informations de paiement #}
+                {# <div id="step1" class="form-step">
+                    <h3 class="text-2xl font-semibold mb-6 text-main-green">{{ 'candidate_form.step1_title.Étape 1' | trans }}</h3>
+                    <div class="space-y-6">
+                        <div class="form-group relative">
+                            {{ form_label(form.transactionNumber, 'candidate_form.transaction_number' | trans, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.transactionNumber, {'attr': {'class': 'form-input', 'placeholder': 'candidate_form.transaction_number_placeholder' | trans, 'required': 'required'}}) }}
+                            <i class="fas fa-info-circle help-tooltip" title="{{ 'candidate_form.transaction_number_help' | trans }}"></i>
+                            {{ form_errors(form.transactionNumber, {'attr': {'class': 'text-red-500 text-xs mt-1'}}) }}
+                        </div>
+                        <div class="form-group relative">
+                            {{ form_label(form.paymentOperator, 'candidate_form.payment_receipt' | trans, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.paymentOperator, {'attr': {'class': 'form-input', 'placeholder': 'candidate_form.transaction_photo_placeholder' | trans, 'required': 'required'}}) }}
+                            <i class="fas fa-info-circle help-tooltip" title="{{ 'candidate_form.paymentOperator_help' | trans }}"></i>
+                            {{ form_errors(form.paymentOperator, {'attr': {'class': 'text-red-500 text-xs mt-1'}}) }}
+                        </div>
+                    </div>
+                </div> #}
+
+                {# Étape 2: Informations personnelles #}
+                {# <div id="step2" class="form-step hidden">
+                    <h3 class="text-2xl font-semibold mb-6 text-main-green">{{ 'candidate_form.step2_title.Étape 2' | trans }}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for field in ['name', 'sexe', 'dateOfBirth', 'placeOfBirth', 'birthCertificate', 'nationality', 'region', 'depertement', 'cni', 'cniIssueDate', 'phoneNumber', 'email', 'photo'] %}
+                            <div class="form-group relative">
+                                {{ form_label(form[field], ('candidate_form.'~field) | trans, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form[field], {'attr': {'class': 'form-input', 'required': 'required', 'placeholder': ('candidate_form.'~field~'_placeholder') | trans}}) }}
+                                <i class="fas fa-info-circle help-tooltip" title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+                                {{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs mt-1'}}) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div> #}
+
+                {# Étape 3: Autres informations #}
+                {# <div id="step3" class="form-step hidden">
+                    <h3 class="text-2xl font-semibold mb-6 text-main-green">{{ 'candidate_form.step3_title.Étape 3' | trans }}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for field in ['field', 'secondaryEducationStartYear', 'secondaryEducationEndYear', 'educationSubsystem', 'secondCycleStudyType', 'certificate', 'baccalaureateCountry', 'baccalaureateSeries', 'baccalaureateMention', 'probatoireYear', 'gceALevelCountry', 'gceALevelPapersCount', 'gceALevelGradeACount', 'gceOLevelYear', 'gceOLevelPapersCount', 'examinationCenter', 'certificateYear', 'language'] %}
+                            <div class="form-group relative">
+                                {{ form_label(form[field], ('candidate_form.'~field) | trans, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form[field], {'attr': {'class': 'form-input', 'required': 'required', 'placeholder': ('candidate_form.'~field~'_placeholder') | trans}}) }}
+                                <i class="fas fa-info-circle help-tooltip" title="{{ ('candidate_form.'~field~'_help') | trans }}"></i>
+                                {{ form_errors(form[field], {'attr': {'class': 'text-red-500 text-xs mt-1'}}) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8 space-x-4">
+                    <button type="button" id="prev-button" class="btn-secondary hidden">
+                        <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        {{ 'candidate_form.previous' | trans }}
+                    </button>
+                    <button type="button" id="next-button" class="btn-primary">
+                        {{ 'candidate_form.next' | trans }}
+                        <svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                    <button type="submit" id="submit-button" class="btn-success hidden">
+                        {{ 'candidate_form.register' | trans }}
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="help-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-2xl w-full">
+        <h3 class="text-2xl font-bold mb-4">{{ 'candidate_form.Help Guide' | trans }}</h3>
+        <div class="space-y-4">
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 1 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 1' | trans }}</p>
+            </div>
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 2 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 2' | trans }}</p>
+            </div>
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 3 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 3' | trans }}</p>
+            </div>
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 4 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 4' | trans }}</p>
+            </div>
+        </div>
+        <button id="close-help" class="mt-6 btn-primary">{{ 'candidate_form.Close' | trans }}</button>
+    </div>
+</div>
+
+<div id="popup" class="fixed z-50 top-0 left-0 right-0 p-4 transform -translate-y-full transition-transform duration-300 ease-in-out">
+    <div class="max-w-md mx-auto bg-white border-l-4 rounded-lg shadow-lg overflow-hidden flex items-center">
+        <div id="popup-icon" class="flex-shrink-0 p-4">
+            <!-- Icons will be inserted dynamically via JavaScript -->
+        </div>
+        <div class="flex-grow p-4">
+            <p id="popup-message" class="text-sm font-medium"></p>
+        </div>
+        <button id="close-popup" class="p-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('multi-step-form');
+        const steps = Array.from(document.getElementsByClassName('form-step'));
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+        const submitButton = document.getElementById('submit-button');
+        const helpButton = document.getElementById('help-button');
+        const helpModal = document.getElementById('help-modal');
+        const closeHelpButton = document.getElementById('close-help');
+        let currentStep = 0;
+
+
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                step.classList.toggle('hidden', index !== stepIndex);
+                document.getElementById(`step-indicator-${index + 1
+                    }`).classList.toggle('active', index === stepIndex);
+                document.getElementById(`step-indicator-${index + 1
+                    }`).classList.toggle('completed', index < stepIndex);
+            });
+
+            prevButton.classList.toggle('hidden', stepIndex === 0);
+            nextButton.classList.toggle('hidden', stepIndex === steps.length - 1);
+            submitButton.classList.toggle('hidden', stepIndex !== steps.length - 1);
+
+            currentStep = stepIndex;
+        }
+
+        function validateStep(stepIndex) {
+            const currentStepElement = steps[stepIndex];
+            const requiredFields = currentStepElement.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('border-red-500');
+                    showPopup(`${field.getAttribute('placeholder')
+                        } is required.`, false);
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+
+            return isValid;
+        }
+
+        nextButton.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                showStep(currentStep + 1);
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            showStep(currentStep - 1);
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (validateStep(currentStep)) { // Submit the form
+                showPopup('Form submitted successfully!', true);
+            }
+        });
+
+        helpButton.addEventListener('click', () => {
+            helpModal.classList.remove('hidden');
+        });
+
+        closeHelpButton.addEventListener('click', () => {
+            helpModal.classList.add('hidden');
+        });
+
+        function showPopup(message, success) {
+            const popup = document.getElementById('popup');
+            const popupMessage = document.getElementById('popup-message');
+
+            popupMessage.textContent = message;
+            popup.classList.toggle('bg-green-100', success);
+            popup.classList.toggle('bg-red-100', !success);
+            popup.classList.remove('hidden');
+
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Initialize the form
+        showStep(0);
+    });
+
+    function showPopup(message, success) {
+        const popup = document.getElementById('popup');
+        const popupMessage = document.getElementById('popup-message');
+        const popupIcon = document.getElementById('popup-icon');
+
+        popupMessage.textContent = message;
+
+        if (success) {
+            popup.classList.remove('border-red-500', 'bg-red-100');
+            popup.classList.add('border-green-500', 'bg-green-100');
+            popupIcon.innerHTML = '<svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+            popupMessage.classList.remove('text-red-700');
+            popupMessage.classList.add('text-green-700');
+        } else {
+            popup.classList.remove('border-green-500', 'bg-green-100');
+            popup.classList.add('border-red-500', 'bg-red-100');
+            popupIcon.innerHTML = '<svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+            popupMessage.classList.remove('text-green-700');
+            popupMessage.classList.add('text-red-700');
+        } popup.classList.add('show');
+
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 5000);
+    }
+
+    function hidePopup() {
+        const popup = document.getElementById('popup');
+        popup.classList.remove('show');
+    }
+
+    function getTranslatedMessage(key, step) {
+        return translations[key].replace('__STEP__', step);
+    }
+</script>
+{% endblock %} #}
+
+
+
+
+{% extends 'base_login.html.twig' %}
+
+{% block title %}
+{# {{ candidate.id ? 'Mettre à jour' : 'Inscription' }} du candidat #}
+{% endblock %}
+
+{% block body %}
+<style>
+    .form-input {
+        @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main-green focus:border-main-green transition duration-150 ease-in-out;
+    }
+
+    .form-label {
+        @apply block text-sm font-medium text-gray-700 mb-2;
+    }
+
+    .btn-primary {
+        @apply w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-main-green hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition duration-150 ease-in-out;
+    }
+
+    .form-step {
+        @apply bg-white rounded-lg shadow-md p-8 mb-8;
+    }
+
+    .step-indicator {
+        @apply w-10 h-10 flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 ease-in-out;
+    }
+
+    .step-indicator.active {
+        @apply bg-main-green text-white;
+    }
+
+    .step-indicator.completed {
+        @apply bg-green-200 text-main-green;
+    }
+
+    .help-tooltip {
+        @apply absolute top-0 right-0 mt-1 mr-1 text-gray-400 hover:text-gray-600 cursor-pointer transition duration-150 ease-in-out;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-success {
+        @apply px-6 py-3 border border-transparent text-base font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out;
+    }
+
+    .btn-primary {
+        @apply text-white bg-main-green hover:bg-green-700 focus:ring-main-green;
+    }
+
+    .btn-secondary {
+        @apply text-main-green bg-white border-main-green hover:bg-green-50 focus:ring-main-green;
+    }
+
+    .btn-success {
+        @apply text-white bg-green-600 hover:bg-green-700 focus:ring-green-500;
+    }
+
+    #popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #popup.show {
+        transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 mt-20">
+            <h1 class="text-5xl font-extrabold text-gray-900 mb-4 animate-fade-in">
+                {# {{ candidate.id ? 'candidate_form.Maj'| trans : 'candidate_form.Inscription'| trans }} #}
+            </h1>
+            <p class="text-xl text-gray-600">{{ 'candidate_form.description' | trans }}</p>
+        </div>
+
+        <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="flex space-x-4">
+                        <div id="step-indicator-1" class="step-indicator active">1</div>
+                        <div id="step-indicator-2" class="step-indicator">2</div>
+                        <div id="step-indicator-3" class="step-indicator">3</div>
+                        <div id="step-indicator-4" class="step-indicator">4</div>
+                    </div>
+                    <button id="help-button" class="text-main-green hover:text-green-700 font-medium flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                        {{ 'candidate_form.Need help?' | trans }}
+                    </button>
+                </div>
+
+                {{ form_start(form, {'attr': {'class': 'space-y-8', 'id': 'multi-step-form'}}) }}
+
+                {# Étape 1: Informations de paiement #}
+                <div id="step1" class="form-step">
+                    <h3 class="text-2xl font-semibold mb-6 text-main-green">{{ 'candidate_form.step1_title.Étape 1' | trans }}</h3>
+                    <div class="space-y-6">
+                        {{ form_row(form.transactionNumber, {'attr': {'class': 'form-input'}}) }}
+                        {{ form_row(form.paymentOperator, {'attr': {'class': 'form-input'}}) }}
+                    </div>
+                </div>
+
+                {# Étape 2: Informations personnelles #}
+                <div id="step2" class="form-step hidden">
+                    <h3 class="text-2xl font-semibold mb-6 text-main-green">{{ 'candidate_form.step2_title.Étape 2' | trans }}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for field in ['name', 'sexe', 'dateOfBirth', 'placeOfBirth', 'birthCertificate', 'email', 'nationality', 'region', 'depertement', 'cni', 'cniIssueDate', 'phoneNumber'] %}
+                            {{ form_row(form[field], {'attr': {'class': 'form-input'}}) }}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {# Étape 3: Informations éducatives #}
+                <div id="step3" class="form-step hidden">
+                    <h3 class="text-2xl font-semibold mb-6 text-main-green">{{ 'candidate_form.step3_title.Étape 3' | trans }}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for field in ['photo', 'secondaryEducationStartYear', 'secondaryEducationEndYear', 'secondCycleStudyType', 'educationSubsystem', 'certificate', 'certificateYear'] %}
+                            {{ form_row(form[field], {'attr': {'class': 'form-input'}}) }}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {# Étape 4: Informations spécifiques au sous-système #}
+                <div id="step4" class="form-step hidden">
+                    <h3 class="text-2xl font-semibold mb-6 text-main-green">{{ 'candidate_form.step4_title.Étape 4' | trans }}</h3>
+                    <div id="francophone-fields" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for field in ['baccalaureateCountry', 'baccalaureateSeries', 'baccalaureateMention', 'probatoireYear'] %}
+                            {{ form_row(form[field], {'attr': {'class': 'form-input'}}) }}
+                        {% endfor %}
+                    </div>
+                    <div id="anglophone-fields" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+                        {% for field in ['gceALevelCountry', 'gceALevelPapersCount', 'gceALevelGradeACount', 'gceOLevelYear', 'gceOLevelPapersCount'] %}
+                            {{ form_row(form[field], {'attr': {'class': 'form-input'}}) }}
+                        {% endfor %}
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        {% for field in ['field', 'examinationCenter', 'language'] %}
+                            {{ form_row(form[field], {'attr': {'class': 'form-input'}}) }}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8 space-x-4">
+                    <button type="button" id="prev-button" class="btn-secondary hidden flex-grow">
+                        <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                            </path>
+                        </svg>
+                        {{ 'candidate_form.previous' | trans }}
+                    </button>
+                    <button type="button" id="next-button" class="btn-primary flex-grow">
+                        {{ 'candidate_form.next' | trans }}
+                        <svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </button>
+                    <button type="submit" id="submit-button" class="btn-success hidden flex-grow">
+                        {{ 'candidate_form.register' | trans }}
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="help-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-2xl w-full">
+        <h3 class="text-2xl font-bold mb-4">{{ 'candidate_form.Help Guide' | trans }}</h3>
+        <div class="space-y-4">
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 1 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 1' | trans }}</p>
+            </div>
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 2 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 2' | trans }}</p>
+            </div>
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 3 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 3' | trans }}</p>
+            </div>
+            <div>
+                <h4 class="font-semibold">{{ 'candidate_form.Help 4 Title' | trans }}</h4>
+                <p>{{ 'candidate_form.Help 4' | trans }}</p>
+            </div>
+        </div>
+        <button id="close-help" class="mt-6 btn-primary">{{ 'candidate_form.Close' | trans }}</button>
+    </div>
+</div>
+
+<div id="popup" class="fixed z-50 top-0 left-0 right-0 p-4 transform -translate-y-full transition-transform duration-300 ease-in-out">
+    <div class="max-w-md mx-auto bg-white border-l-4 rounded-lg shadow-lg overflow-hidden flex items-center">
+        <div id="popup-icon" class="flex-shrink-0 p-4">
+            <!-- Icons will be inserted dynamically via JavaScript -->
+        </div>
+        <div class="flex-grow p-4">
+            <p id="popup-message" class="text-sm font-medium"></p>
+        </div>
+        <button id="close-popup" class="p-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+</div>
+<script>
+    var translations = {
+        stepMovedSuccess: "{{ 'candidate_form.step_moved_success'|trans({'%step%': '__STEP__'})|e('js') }}",
+        stepReturned: "{{ 'candidate_form.step_returned'|trans({'%step%': '__STEP__'})|e('js') }}"
+    };
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('multi-step-form');
+    const steps = ['step1', 'step2', 'step3', 'step4'];
+    const nextButton = document.getElementById('next-button');
+    const prevButton = document.getElementById('prev-button');
+    const submitButton = document.getElementById('submit-button');
+    const stepIndicators = steps.map(step => document.getElementById(`step-indicator-${step.slice(-1)}`));
+    let currentStep = 0;
+
+    const helpButton = document.getElementById('help-button');
+    const helpModal = document.getElementById('help-modal');
+    const closeHelpButton = document.getElementById('close-help');
+
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popup-message');
+    const popupIcon = document.getElementById('popup-icon');
+    const closePopupButton = document.getElementById('close-popup');
+
+      function showStep(stepIndex) {
+        steps.forEach((step, index) => {
+            const stepElement = document.getElementById(step);
+            if (index === stepIndex) {
+                stepElement.classList.remove('hidden');
+                stepIndicators[index].classList.add('active');
+            } else {
+                stepElement.classList.add('hidden');
+                stepIndicators[index].classList.remove('active');
+            }
+            if (index < stepIndex) {
+                stepIndicators[index].classList.add('completed');
+            } else {
+                stepIndicators[index].classList.remove('completed');
+            }
+        });
+
+        prevButton.classList.toggle('hidden', stepIndex === 0);
+        nextButton.classList.toggle('hidden', stepIndex === steps.length - 1);
+        submitButton.classList.toggle('hidden', stepIndex !== steps.length - 1);
+    }
+
+    function validateStep(stepIndex) {
+        const stepElement = document.getElementById(steps[stepIndex]);
+        const inputs = stepElement.querySelectorAll('input, select');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (input.hasAttribute('required') && !input.value.trim()) {
+                isValid = false;
+                input.classList.add('border-red-500');
+            } else {
+                input.classList.remove('border-red-500');
+            }
+        });
+
+        return isValid;
+    }
+
+    nextButton.addEventListener('click', function() {
+        if (validateStep(currentStep)) {
+            currentStep++;
+            showStep(currentStep);
+        } else {
+            showPopup('error', 'Please fill in all required fields.');
+        }
+    });
+
+    prevButton.addEventListener('click', function() {
+        currentStep--;
+        showStep(currentStep);
+    });
+
+     // Handle subsystem selection
+    const educationSubsystemSelect = document.querySelector('select[name$="[educationSubsystem]"]');
+    const francophonesFields = document.getElementById('francophone-fields');
+    const anglophoneFields = document.getElementById('anglophone-fields');
+
+    educationSubsystemSelect.addEventListener('change', function() {
+        if (this.value === 'FRANCOPHONE') {
+            francophonesFields.classList.remove('hidden');
+            anglophoneFields.classList.add('hidden');
+            fillFieldsWithPlaceholder(anglophoneFields, '-');
+        } else if (this.value === 'ANGLOPHONE') {
+            francophonesFields.classList.add('hidden');
+            anglophoneFields.classList.remove('hidden');
+            fillFieldsWithPlaceholder(francophonesFields, '-');
+        }
+    });
+
+    function fillFieldsWithPlaceholder(container, placeholder) {
+        const inputs = container.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            if (input.tagName === 'SELECT') {
+                const placeholderOption = document.createElement('option');
+                placeholderOption.value = placeholder;
+                placeholderOption.text = placeholder;
+                placeholderOption.selected = true;
+                input.appendChild(placeholderOption);
+            } else {
+                input.value = placeholder;
+            }
+        });
+    }
+
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (validateStep(currentStep)) {
+            // Here you would typically send the form data to the server
+            showPopup('success', 'Form submitted successfully!');
+        } else {
+            showPopup('error', 'Please fill in all required fields.');
+        }
+    });
+
+    helpButton.addEventListener('click', function() {
+        helpModal.classList.remove('hidden');
+    });
+
+    closeHelpButton.addEventListener('click', function() {
+        helpModal.classList.add('hidden');
+    });
+
+    function showPopup(type, message) {
+        popupMessage.textContent = message;
+        popup.classList.add('show');
+        
+        if (type === 'error') {
+            popupIcon.innerHTML = '<svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>';
+            popup.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
+        } else {
+            popupIcon.innerHTML = '<svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+            popup.classList.add('bg-green-100', 'border-green-400', 'text-green-700'); #}
+        }
+
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 3000);
+    }
+
+    closePopupButton.addEventListener('click', function() {
+        popup.classList.remove('show');
+    });
+
+    // Initialize the form
+    showStep(currentStep);
+
+function trans(key, placeholders = {}) {
+    let translation = Translator.trans(key);
+    Object.keys(placeholders).forEach(placeholder => {
+        translation = translation.replace(`%${placeholder}%`, placeholders[placeholder]);
+    });
+    return translation;
+}
+
+</script>
+
+{% endblock %}

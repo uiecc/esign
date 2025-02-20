@@ -1,0 +1,717 @@
+
+home_header:
+  header:
+      update: "Update Registration Form"
+      closed: "Closed"
+  app:
+    name: UIECC
+    logo_alt: UIECC Logo
+
+  nav:
+    open_menu: Open main menu
+    close_menu: Close menu
+    home: Home
+    about: About
+    faq: FAQ
+    requirements: Prerequisites
+    login: Login
+    register: Register
+    
+    toggle_dark_mode: Dark Mode
+    toggle_light_mode: Light Mode
+    logout: Logout
+    save: Save
+    download: Download
+
+  language:
+    change: Change Language
+    english: English
+    french: Français
+
+  footer:
+    copyright: © %year% UIECC. All rights reserved.
+    contact_us: Contact Us
+
+home_body:
+  hero_section:
+    requirements: "Requirements for registration"
+    welcome: "Registration Platform for the"
+    welcome_sub-text1: "Competitive Entrance Examination"
+    welcome_sub-text2 : "into the International Advanced School of Digital Engineering 2024"
+    sub-text1: "The Congo-Cameroon Inter-state University(UIECC) , a pole of"
+    sub-text2: "Scientific and Technological Excellence"
+    sub-text3: "in the heart of Central Africa."
+    sub-text4: ""
+    register: Register now
+    login: "Login "
+    slogan1: "Welcome to the"
+    slogan: "Online Registration Platform"
+    slogan2: "for the ESIGN 2024 entrance examination. Click below to get started"
+    avant: "Before registration..."
+    consult: "You should consult first the prospectus and document which presents the school."
+    prerequis: "Read the requirements to get started. "
+    read_more: "Read more"
+    get_started: "Read the document"
+    get_started_1: "Read the prospectus "
+    apres: "You can now register below"
+    consult_2: "Make sure to fill in all the fields in the form and submit the required documents before the deadline."
+    savoir_plus: "Find out more"
+
+
+
+about_section:
+    title: "Presentation of UIECC"
+    description: "This school awards the"
+    description1: "Engineering degree" 
+    description2: ", recruits secondary school graduates aged 24 and under through" 
+    description3: " the means of a competitive entrance examination " 
+    description4: " and a selective direct entry system."
+    show_more: "Show more"
+    show_less: "Show less"
+    prospectus_title: "University Prospectus"
+    prospectus_description: "The International Advanced School of Digital Engineering of Sangmélima is at the forefront of technological education. We train tomorrow's leaders with an innovative program combining theory and practice, preparing our students to excel in an ever-evolving digital industry. Discover our full range of programs by downloading our prospectus below."
+    prospectus_description2: "The International Advanced  School of Digital Engineering of Sangmélima is at the forefront of technological education. We train tomorrow's leaders with an innovative program combining theory and practice, preparing our students to excel in an ever-evolving digital industry. Discover our full range of programs by downloading our prospectus below."
+    download_prospectus: "Download the prospectus"
+    arrete_title: "Entrance Examination Decision"
+    arrete_description: "The entrance examination to the International Advanced  School of Digital Engineering of Sangmélima is a unique opportunity for future digital talents. This official document has details the procedures for the examination, important dates, required subject area and the criteria for selection. In order to be well prepared, download the official document below."
+    arrete_description2: "The entrance examination to the International Advanced  School of Digital Engineering of Sangmélima is a unique opportunity for future digital talents. This official document has details the procedures for the examination, important dates, required subject area and the criteria for selection. In order to be well prepared, download the official document below."
+    download_arrete: "Download the entrance examination decision"
+    about_new_title: "About Us"
+    new_subtext_1: "The International Advanced School of Digital Engineering (ESIGN) of the Congo-Cameroon Inter-State University trains"
+    new_subtext_2: "Engineers in Digital Engineering,"
+    new_subtext_3: "in the fields of Digital Creation and Design, Socio-Technical Digital Engineering, and Digital Systems Engineering."
+    about_new_subtext_4: "A digital engineer from ESIGN is an expert in the creation of digital enterprises, products, and services. A digital engineer is an"
+    about_new_subtext_5: "Engineer-Entrepreneur"
+    about_new_subtext_6: "in the digital economy."
+    about_new_arrete_sup: "Entrance Examination"
+    about_new_arrete: "Examination Decision"
+    about_new_arrete_desc: "This official document has the details of the procedures for the examination, important dates, required subject area, and the criteria for selection. In order to be well-prepared, download the official document below."
+    about_new_arrete_download: "Download the French Examination Decision"
+    about_new_arrete_download1: "Download the English Examination Decision"
+
+
+    about_new_prospectus_sup: "Information Guide"
+    about_new_prospectus: "ESIGN Prospectus"
+    about_new_prospectus_desc_1: "The International Advanced School of Digital Engineering in Sangmélima is at the forefront of technological education. With a"
+    about_new_prospectus_desc_2: "project-based pedagogical approach,"
+    about_new_prospectus_desc_3: "we train the leaders of tomorrow's digital industry, equipped with a high-level technical and scientific profile integrating decision-making and team management skills, and trained to take charge of the creation and operation of a digital enterprise, product, or service."
+    about_new_prospectus_download_en: "Download the English Prospectus"
+    about_new_prospectus_download_fr: "Download the French Prospectus"
+    about_presentation: "Download the presentation document"
+
+
+    requirements:
+      subtitle: "Prerequisite for Registration"
+      title: "Get Ready for Online Registration"
+      description: "Before starting your online registration process, make sure you have met the following conditions:"
+      step1: "Have paid the entrance examination fee at Express Union and begin the online registration process after 24 hours."
+      step2: "Have an email account."
+      step3: "Have your scanned birth certificate."
+      step4: "Have your scanned Baccalaureate or GCE A-level Certificate."
+      step5: "Have your scanned half-color 4x4 sized photo."
+      step6: "Have at most 22 years or less on the date of the examination"
+      step7: "Have A legible photocopy certified as true to the original transcript attesting that the candidate has obtained a score of at least 10/20 or C grade in a mathematics or computer science exam."
+      click_here: "Click here"
+      start_registration: "Begin the registration"
+
+    general_info:
+      subtitle: "General Informations"
+      title: "Announcements"
+      description: "In this section are the details regarding the competitive entrance exam. Please review the information carefully to ensure you are well-prepared for the process."
+      description_2: "Candidates must photocopy their stamped registration form and bring it with them when submitting their application."
+      more_info: "More Informations"
+      info2: " "
+      info3: " "
+      info4: " "
+      info5: " "
+      next: "Previous"
+      back: "Next"
+      audio_not_supported: "Audio not supported"
+      new: New
+
+    audio_section:
+      subtitle: "Audio Announcements"
+      title: "Listen to Important Information"
+      description: "Below you will find an audio message containing crucial details about the competitive entrance exam and other important announcements. Please listen carefully to ensure you don't miss any vital information."
+      listen: "Play Audio Announcement"
+      browser_not_supported: "Your browser does not support the audio element. Please update your browser or download the audio file to listen."
+
+
+    payment:
+      title: "Tuition Fees"
+      subtitle: "Modalities"
+      description: "Tuition fee per year of training is 100,000 CFA francs for Cameroonian Students and 1,500,000 CFA francs for foreign students who are not on scholarship."
+
+
+
+faq:
+    title: "Frequently Asked Questions (FAQ)"
+    description: "Below you will find the frequently asked questions. Please feel free to consult it if you have any doubt."
+    question1: "I completed the registration without downloading the deposit receipt?"
+    answer1: 
+      section1: "Don't worry, since you already have an account,"
+      section2: " Log in to your account "
+      section3: "and it will redirect you to the receipt download page. You will see the button "
+      section4: "'Download the receipt"
+      section5: " right on the navigation bar. Click on it, and you can download your receipt."
+    question2: "I don't know how to navigate the registration site?"
+    answer2: 
+      section1: "You must first: "
+      section2: " 1) Create an account on the site, by providing your email and password."
+      section3: " 2) Initiate your bank transaction for the entrance examination. "
+      section4: " 3) Fill out the forms with the requested information."
+      section5: " 4) When you have finished filling out and are sure you have not made any mistakes, complete the registration and download the receipt."
+      section6: " 5) If you have not downloaded the receipt, see FAQ 1."
+    question3: "I forgot my account password?"
+    answer3: 
+      section1: "Stay calm and try to remember your password."
+      section2: "If you don't remember it at all, on the login page, click on forgotten password. You will get a link in your email to reset your password"
+
+login_page:
+  heading: Login
+  email_label: Email
+  password_label: Password
+  sign_in_button: Sign in
+  welcome_message: " "
+  slogan: " "
+  title: "Login"
+  description: "Enter your credentials here to continue the registration"
+  logged_in_as: "You are logged in as %email%"
+  logout: "logout?"
+  forgot_password: "Forgot your password?"
+  email_placeholder: "Enter your email"
+  password_placeholder: "Enter your password"
+  invalid_credentials': 'Invalid credentials'
+  email_required: 'Email is required'
+  password_required': 'Password is required'
+  
+  remember_me: Remember me
+  have_account: "Don't have an account?"
+  have_account_redirect: "Register"
+  login_successful: 'Login successful!'
+  username_help: "Enter your username below"
+  password_help:  "Enter your password"
+
+login_status: 
+  success_message: "Login Successful"
+  failure_message: "An Error Occurred"
+  redirect_message: "Redirecting in a bit"
+
+# translations/messages.en.yaml
+login:
+  error:
+    invalid_email: "Invalid email format."
+    email_not_exist: "Email does not exist."
+    invalid_credentials: "Invalid credentials."
+
+registration_page:
+  heading: Create an Account
+  username_label: Username
+  password_label: Password
+  sign_up_button: Sign up
+  welcome_message: " "
+  slogan: " "
+  title: "Registration"
+  description: "Enter your informations here to create an account"
+  confirm_password: "Confirm password"
+  password: "Password"
+  password_invalid: "Invalid password"
+  #passwords_not_matching: "Passwords are not matching"
+  Got it: "Got it"
+  password_length: 'At least 8 characters'
+  password_uppercase: 'At least one uppercase letter'
+  password_lowercase: 'At least one lowercase letter'
+  password_number: 'At least one number'
+  password_special: 'At least one special character'
+  passwords_not_matching: 'Passwords do not match'
+  password_requirements: "The password must be 8 characters long, with an uppercase letter, a number and a special character"
+  username_placeholder: "Enter your username"
+  password_placeholder: "Enter your password "
+  confirm_password_placeholder: "Confirm your password"
+  have_account: "Already have an account?"
+  have_account_redirect: "Login"
+  username_help: Enter your username
+  password_help: Enter your password
+  confirm_password_help: Confirm your password
+  email_placeholder: "Enter your email address"
+  email_label: "Email"
+  help_title: "Registration Help"
+  help1: "Email must be a valid email address."
+  help2: "Password must be at least 8 characters long. "
+  help3: "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character."
+  help4: "Confirm password must match the password. "
+registration.email.not_blank: 'Please enter an email address.'
+registration.email.invalid: 'The email address "{{ value }}" is not valid.'
+registration.password.not_blank: 'Please enter a password.'
+registration.password.min_length: 'Your password must be at least {{ limit }} characters long.'
+registration.password.invalid: 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.'
+  
+
+registration_status:
+  success_message: "Account created Successfully"
+  failure_message: "An error occured"
+  redirect_message: "Redirecting in a bit"
+
+candidate_form:
+  
+  year_gap_error: "Sorry year gap is incorrect"
+  Inscription: "Candidate's Registration Form"
+  Maj: "Candidate's Registration Form"
+  description: Fill the form below to register.
+  step1_title: 
+    Étape 1: Payment Information
+  
+  transaction_number: "Transaction number"
+  transaction_number_placeholder: "Enter your transaction number"
+  transaction_number_help: "Enter below the transaction number given by the financial operator chosen."
+
+  payment_receipt: "Payment Operator"
+  paymentOperator_help: "Choose a payment operator"
+  transaction_photo_placeholder: "Scan the payment receipt photo"
+  
+  step2_title: 
+    Étape 2: Personal Information
+    Étape Int: Eligibility for the Competitive Entrance Exam
+   
+    desc: "Here we are going to check if you are eligible for the competitive entrance examination."
+    desc_2: You need to have from C grade and above in one of the subjects below
+    desc_2_bac: You need to have from 10 and above in one of the subjects below
+    desc_2_gce: You need to have from C grade and above in one of the subjects below
+    desc_en_gce: "Select a subject from the list below in your GCE Alevel Certificate where you have from C grade and above and enter the grade"
+    desc_en_gce_olevel: "Select a subject from the list below in your GCE Olevel Certificate where you have from C grade and above and enter the grade"
+
+    desc_bac: "Select a subject from the list below in your Baccaleaureate Certificate where you have 10 and above and enter the mark"
+    desc_prob: "Select a subject from the list below in your Probatoire Certificate where you have 10 and above and enter the mark"
+    yes: Yes
+    no: No
+    question_fr: "Do you have a GCE Alevel in Arts or a Literary Baccalaureate?"
+    next_step_desc: "Note: If you have a GCE, enter your grade and fill in the BAC fields with hyphens '-'. If you have a BAC, enter your mark and fill in the GCE fields with a hyphen '-'"
+    # question_fr: "Avez-vous un Baccalauréat Littéraire ou GCE Advanced Level Arts?"
+
+    
+    Educational_System: "Educational System"
+  step2_fields:
+    matieres: Subject
+    baccalaureat: Baccalauréat
+    bacSubjectMark: Note au Baccalauréat
+    probatoire: Probatoire
+    probatoireSubjectMark: Note au Probatoire
+  
+
+    gceAlevel: GCE Advanced Level
+    gceAlevelGrade: GCE Advanced Level Grade
+    gceOlevel: GCE Ordinary Level
+    gceOlevelGrade: GCE Ordinary Level Grade
+  conditions:
+    failed: "Sorry, you do not meet the requirements for the exam"
+  admissionType: "Admission Type"
+  admissionType1:
+    onTitle: "ADMISSION BY TITLE"
+    byExam:  "ADMISSION BY EXAM"
+
+  
+  name: "Full Name"
+  name_placeholder: "Enter your full name"
+  name_help: "Your legal name as it appears on your official documents. (In capital letters)"
+
+  sexe: 'Gender'
+  sexe.male: 'Male'
+  sexe.female: 'Female'
+  sexe_placeholder: "Select your gender"
+  sexe_help: "Please choose your gender from the list."
+
+  dateOfBirth: "Date of Birth"
+  dateOfBirth_placeholder: "Select your date of birth"
+  dateOfBirth_help: "Your birthdate as mentioned on official documents. (Format Month/Day/Year)"
+
+  placeOfBirth: "Place of Birth"
+  placeOfBirth_placeholder: "Enter your place of birth"
+  placeOfBirth_help: "The city/town where you were borna as on your Birth Certificate."
+
+  birthCertificate: "Scanned Birth Certificate (JPEG/PNG/PDF)"
+  birthCertificate_placeholder: "Select a scanned copy of your birth certificate"
+  birthCertificate_help: "Select a Scanned copy of your Birth Certificate"
+
+  nationality: "Nationality"
+  nationality.africa: 'Africa'
+  nationality.cameroon: 'Cameroon'
+  nationality.congo: 'Congo'
+  nationality.gabon: 'Gabon'
+  nationality.ghana: 'Ghana'
+  nationality.mali: 'Mali'
+  nationality.mauritania: 'Mauritania'
+  nationality.niger: 'Niger'
+  nationality.nigeria: 'Nigeria'
+  nationality.senegal: 'Senegal'
+  nationality.algeria: 'Algeria'
+  nationality.togo: 'Togo'
+  nationality.tunisia: 'Tunisia'
+  nationality.egypt: 'Egypt'
+  nationality.morocco: 'Morocco'
+  nationality.sudan: 'Sudan'
+  nationality.south_africa: 'South Africa'
+  nationality.angola: 'Angola'
+  nationality.burkina_faso: 'Burkina Faso'
+  nationality.burundi: 'Burundi'
+  nationality.central_african_republic: 'Central African Republic'
+  nationality.chad: 'Chad'
+  nationality.comoros: 'Comoros'
+  nationality.dr_congo: 'Democratic Republic of Congo'
+  nationality.djibouti: 'Djibouti'
+  nationality.eritrea: 'Eritrea'
+  nationality.ethiopia: 'Ethiopia'
+  nationality.gambia: 'Gambia'
+  nationality.guinea: 'Guinea'
+  nationality.guinea_bissau: 'Guinea Bissau'
+  nationality.kenya: 'Kenya'
+  nationality.lesotho: 'Lesotho'
+  nationality.liberia: 'Liberia'
+  nationality.libya: 'Libya'
+  nationality.madagascar: 'Madagascar'
+  nationality.malawi: 'Malawi'
+  nationality.mauritius: 'Mauritius'
+  nationality.mozambique: 'Mozambique'
+  nationality.rwanda: 'Rwanda'
+  nationality.sao_tome_and_principe: 'Sao Tome and Principe'
+  nationality.seychelles: 'Seychelles'
+  nationality.somalia: 'Somalia'
+  nationality.benin: 'Benin'
+  nationality.botswana: 'Botswana'
+  nationality.cabo_verde: 'Cape Verde'
+  nationality.eq_guinea: 'Equatorial Guinea'
+  nationality.eswatini: 'Eswatini'
+  nationality.ivory_coast: 'Ivory Coast'
+  nationality.namibia: 'Namibia'
+  nationality.sierra_leone: 'Sierra Leone'
+  nationality.tanzania: 'Tanzania'
+  nationality.uganda: 'Uganda'
+  nationality.zambia: 'Zambia'
+  nationality.zimbabwe: 'Zimbabwe'
+  nationality.other_countries: "Other Countries"
+  nationality.canada: 'Canada'
+  nationality.us: 'United States of America'
+  nationality.uk: 'United Kingdom'
+  nationality.france: 'France'
+  nationality.india: 'India'
+  nationality.germany: 'Germany'
+  nationality.china: 'China'
+  nationality.russia: 'Russia'
+
+
+
+  nationality_placeholder: "Enter your nationality"
+  nationality_help: "Your country of citizenship."
+
+  region: 'Region of Origin'
+  region.adamaoua: 'Adamawa'
+  region.centre: 'Centre'
+  region.est: 'East'
+  region.extreme_nord: 'Extreme North'
+  region.littoral: 'Littoral'
+  region.nord: 'North'
+  region.nord_ouest: 'North West'
+  region.sud: 'South'
+  region.sud_ouest: 'South West'
+  region.ouest: "West"
+
+  region.bouenza: "Bouenza"
+  region.cuvette: "Cuvette"
+  region.cuvette_ouest: "Cuvette-Ouest"
+  region.likouala: "Likouala"
+  region.lékoumou: "Lékoumou"
+  region.niari: "Niari"
+  region.pointe_noire: "Pointe-Noire"
+  region.pool: "Pool"
+  region.sangha: "Sangha"
+  region.brazzaville: "Brazzaville"
+  region.kouilou: "Kouilou"
+  region.plateaux: "Plateaux"
+
+  region_placeholder: "Select your region"
+  region_help: "Select your region of origin"
+
+  depertement: "Division of Origin"
+  depertement_placeholder: "Select your Division"
+  depertement_help: "Select your Division of Origin."
+
+  cni: "National ID Card Number or Passport Number"
+  cni_placeholder: "Enter your national ID Card number or Passport Number"
+  cni_help: "Your official national identification number or Passport Number"
+
+  cniIssueDate: "National ID/Passport Issue Date"
+  cniIssueDate_placeholder: "Select the date your National ID was issued"
+  cniIssueDate_help: "The date when your ID was issued. (format Day/Month/Year)"
+
+  phoneNumber: "Whatsapp Phone Number"
+  phoneNumber_placeholder: "Enter your phone number ex: +237656123456"
+  phoneNumber_help: "Enter your phone number with the country code "
+
+  email: "Email Address"
+  email_placeholder: "Enter your email address"
+  email_help: "Enter your email address"
+
+  photo: "Scanned 4x4 Photo (JPEG/PNG)"
+  photo_placeholder: "Select a 4x4 Scanned photo of yourself in 4x4 format"
+  photo_help: "4x4 Scanned photo of yourself"
+
+
+  certificateType: Certificate Type
+  step3_title: 
+    Étape 3: Other Information
+    Étape 4: "Secondary Studies"
+    Étape 5: "Baccalaureate"
+    Étape 5.1: "General Certificate of Education Advanced Level"
+    Étape 6: "Information on the Competitive Entrance Examination"
+
+  transcript: "Photocopy of your transcript(JPEG/PNG/PDF): "
+  medicalCertificate: "Photocopy of your Medical Certificate(JPEG/PNG/PDF): "
+  criminalRecordExtract: "Photocopy of your Criminal Record Extract(JPEG/PNG/PDF): "
+
+
+  field: "Field of Study"
+  field.digital_creation: 'Digital Creation and Design'
+  field.digital_systems: 'Digital Systems Engineering'
+  field.sociotechnical: 'Sociotechnical Digital Engineering'
+  field_placeholder: "Enter your field of study"
+  field_help: "Select your desired field of study"
+
+  secondaryEducationStartYear: "Secondary Education Start Year"
+  secondaryEducationStartYear_placeholder: "Enter the start year of your secondary education"
+  secondaryEducationStartYear_help: "The year you began secondary education."
+
+  secondaryEducationEndYear: "Secondary Education End Year"
+  secondaryEducationEndYear_placeholder: "Enter the end year of your secondary education"
+  secondaryEducationEndYear_help: "The year you completed secondary education."
+
+  educationSubsystem: "Educational Subsystem"
+  educationSubsystem_placeholder: "Select your educational subsystem"
+  educationSubsystem_help: "The educational subsystem you were enrolled in."
+
+  secondCycleStudyType: "Second Cycle Specialty:"
+  secondCycleStudyType.Littéraire: 'Arts'
+  secondCycleStudyType.Scientifique: 'Science'
+  secondCycleStudyType.Technique_industriel: 'Technical'
+  secondCycleStudyType.Technique_tertiaire: 'Commercial'
+  secondCycleStudyType_placeholder: "Select your second cycle specialty"
+  secondCycleStudyType_help: "The type of studies you did in your second cycle."
+
+  certificate: "Scanned Certificate Photo (PNG/JPEG/PDF) :"
+  certificate_placeholder: "Enter your certificate"
+  certificate_help: "Photo of the certificate you obtained after completing your studies."
+
+  baccalaureateCountry: "Country where it was obtained"
+  baccalaureateCountry_placeholder: "Enter the country where you obtained your baccalaureate"
+  baccalaureateCountry_help: "The country in which you earned your baccalaureate."
+
+  baccalaureateSeries: "Series"
+  baccalaureateSeries_placeholder: "Enter your baccalaureate series"
+  baccalaureateSeries_help: "The series of your baccalaureate."
+
+  baccalaureateMention: "Mention"
+  baccalaureateMention_placeholder: "Enter your baccalaureate mention"
+  baccalaureateMention_help: "The mention you received for your baccalaureate."
+
+  probatoireYear: "Probatoire Year"
+  probatoireYear_placeholder: "Enter your probatoire year"
+  probatoireYear_help: "The year you completed your probatoire."
+
+  gceALevelCountry: "Country where GCE A-Level was obtained"
+  gceALevelCountry_placeholder: "Enter the country where you obtained your GCE A-Level"
+  gceALevelCountry_help: "The country where you obtained your GCE A-Level."
+
+  gceALevelPapersCount: "Number of papers"
+  gceALevelPapersCount_placeholder: "Enter the number of papers you passed in GCE A-Level"
+  gceALevelPapersCount_help: "The total number of papers you passed in GCE A-Level."
+
+  gceALevelGradeACount: "Number of A grades"
+  gceALevelGradeACount_placeholder: "Enter the number of 'A' grades in GCE A-Level"
+  gceALevelGradeACount_help: "The number of 'A' grades you achieved in GCE A-Level."
+
+  gceOLevelYear: "GCE O-Level Year"
+  gceOLevelYear_placeholder: "Enter your GCE O-Level year"
+  gceOLevelYear_help: "The year you completed your GCE O-Level."
+
+  gceOLevelPapersCount: "Number of papers at GCE O-Level"
+  gceOLevelPapersCount_placeholder: "Enter the number of papers you passed in GCE O-Level"
+  gceOLevelPapersCount_help: "The total number of papers you passed in GCE O-Level."
+
+  examinationCenter: "Examination Center Location (Document Deposit Location)"
+  examinationCenter_placeholder: "Select your examination location"
+  examinationCenter_help: "The location where you deposit your documents and write the examination "
+
+  certificateYearGCE: "Year the certificate was obtained"
+  certificateYearGCE_placeholder: "Enter the year you obtained your certificate"
+  certificateYearGCE_help: "The year you received your certificate."
+
+  certificateYearBAC: "Year the certificate was obtained"
+  certificateYearBAC_placeholder: "Enter the year you obtained your certificate"
+  certificateYearBAC_help: "The year you received your certificate."
+
+  language: "Examination Language:"
+  language.french: "French"
+  language.english: "English"
+  language_placeholder: "Select your preferred language for the examination"
+  language_help: "Your preferred language for the examination."
+
+  instructions:
+    NB: "If you have a baccalaureate, do not fill in the GCE section. Just put 'nil'"
+    NB1: "If you have a GCE, do not fill in the Baccalaureat section. Just put 'nil'"
+    NB2: "Fill in all the fields here otherwise you won't be able to register"
+  
+  step_moved_success: "Moved Forward to Step %step% successfully"
+  step_returned: "Moved Backward to Step %step% successfully"
+
+  confirm_submission: "Form Submission"
+  confirm_submission_message: "Are you sure you want to submit your form? You will have a maximum of 7 days and from there you wont be able to modify the data again"
+  no: "NO"
+  yes: "YES"
+
+  previous: Previous
+  next: Next
+  save: Save
+  update: Register
+  register: Register
+  save_progress: Save Progress
+  progress_saved: Progress saved successfully!
+  Need help?: Need help?
+  Help 1: "To save your progress click on the save button in the header"
+  Help 2: "Make sure you crosscheck every field before submitting. Once submitted and page printed there will be no change. "
+  Help 3: "If you reach the end and forget downloading the receipt, just log back into your account."
+  Help 4: "The back and next buttons are used to navigate, not the navigator's buttons"
+  Help 5: "If your form doesn't submit at the end and starts back, then cross check your form. There is an error in it or condition not respected"
+  preview_download: Download the receipt  
+
+
+  required_fields_missing: "Please fill the empty fields"
+
+
+  #Help guide
+  Help Guide: "Help Guide"
+  Help 1 Title: "Page Progress"
+  Help 2 Title: "Cross Checking"
+  Help 3 Title: "Receipt forgotten?"
+  Help 4 Title: "Navigation"
+  Help 5 Title: "Looping"
+  Close: "Close Help"
+
+  
+
+error:
+    title: "Error Occurred - We're Sorry!"
+    alt_text: "Error occurred"
+    404: "404"
+    page_not_found: "Page Not Found"
+    message: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+    go_back: "Go Back"
+    faq_link: "Need help? Read the FAQ"
+    
+
+
+preview.title.header: "ENROLLMENT FORM"
+preview.title.subheader: "Entrance Examination for the 1"
+preview.title.subheader0: "st"
+preview.title.subheader1: "year"
+preview.title.subheader2: "of Engineering Studies in"
+preview.title.subheader3: "the International Advanced School of Digital Engineering in Sangmélima"
+preview.title.subheader4: "2024-2029 Promotion"
+preview.title.candidateIdentifier: "Candidate’s identification number : xxxxxxxxxxxxxxxxx"
+preview.field: "Specialty :"
+preview.examinationCenter: "Examination Center :"
+preview.examinationLanguage: "Prefered/Examination language : "
+preview.personalInformations: PERSONAL INFORMATION
+preview.fullname: "Name :"
+preview.dob: "Date of birth:  "
+preview.pob: "Place of birth:"
+preview.nationality: "Nationality : "
+preview.regionOrigin: "Region of origin: "
+preview.Department: "Division :"
+preview.cni: "N° CNI/Passeport : "
+preview.cniIssued: "Date issued : "
+preview.telephone: "Telephone : "
+preview.email: "Email : "
+preview.secondaryStudies: SECONDARY EDUCATION
+preview.startYear: "FIRST YEAR: "
+preview.endYear: "FINAL YEAR : "
+preview.subsystem: "SUB-SYSTEM: "
+preview.secondCycleType: "Domain of studies: "
+preview.bac: "Baccalauréat :"
+preview.bacCountry: "Country where it was obtained : "
+preview.certificateYear: "Year:  "
+preview.series: "Series :"
+preview.bacMention: "Average : "
+preview.probYear: "The Year canditate obtained probatoire :"
+preview.gceal: "General Certificate of Education Advanced Level"
+preview.gcealCountry: "Country where it was obtained : "
+preview.gcealYear: "Year : "
+preview.gcealPapers: "Number of papers :"
+preview.gcealAGrade: "Number of papers with grade A :"
+preview.gceolYear: "The Year canditate obtained GCE-OL : "
+preview.gceolPapers: "Number of papers :"
+preview.paymentTitle: "PAYMENT OF EXAMINATION FEES"
+preview.operator: "Operator : "
+preview.transactionNumber: "Transaction N°:"
+preview.signature : "Signature of the candidate"
+preview.final_text: "The candidate must print and present this form during the examination."
+
+
+
+form.error.transaction_number_required: "Transaction number is required"
+form.error.payment_operator_required: "Choose a payment operator"
+form.validation.required_fields: "Please fill in all required fields."
+form.validation.required_fields_1: "This field is required"
+form.error.cni_required: "National Identical Card/Passport Number is required"
+
+candidate.form.saved: "Progress saved Sucessfully"
+
+password_reset.status_title: "Reset"
+
+
+language_popup:
+  title: "Change Language"
+  message: "Would you like to switch the language?"
+  close: "Close"
+
+errorMessages.required: "This field is required"
+errorMessages.expiration: "The 3-day edit window has expired. You can no longer modify your information."
+
+language_popup.change_later: "To change the language later on, you can click on this translation icon found on your navigation bar"
+language_popup.icon_description: "This will bring up a dropdown and you can choose"
+
+
+reset_page.request.title: "Reset your password"
+reset_page.request.heading: "Reset your password"
+reset_page.request.desc: "Enter your email address and we will send you a link to reset your password."
+reset_page.request.email: "Email"
+reset_page.request.send_button: "Send password reset email"
+
+reset_page.reset.title: "Reset your password"
+reset_page.reset.heading: "Reset your password"
+reset_page.reset.desc: "Please enter your new password below"
+reset_page.reset.new_password: "New Password"
+reset_page.reset.new_password_placeholder: "Enter your new password"
+reset_page.reset.new_password_confirm: "Confirm new password"
+reset_page.reset.new_password_confirm_placeholder: "Confirm your new password"
+reset_page.reset.send_button: "Reset password"
+
+
+loading.message: "Please wait a moment, we will be done in a bit"
+
+final_section_title: "Final Section"
+final_section_header.button_home: "Return to home"
+final_section_header.button_jagora: "Go to Jagora Website"
+final_section_header: "Submission Complete"
+final_section_desc: "Thank you for completing the form. Your submission has been successfully received."
+final_section_next_steps: "Other Information"
+final_section_desc_1: "Your registration receipt has also been sent to your email address."
+final_section_desc_2: " You can also consult the programs of the Indian university KL University which are delocalized at UIECC in the following link"
+final_section_desc_3: " Have any inquiries, do not hesitate to contact us at the link below"
+final_section_desc_4: "Contact Us" 
+final_section_desc_5: "Check your email for the registration receipt" 
+
+
+results_section:
+  subtitle: "The Competitive Entrance Exam Results"
+  title: "The Results"
+  description: "Below are the official results of the competitive entrance examination."
+  more_info: "Results by List"
+  description_2: "Please scroll through the images to view all result lists."

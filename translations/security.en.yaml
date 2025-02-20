@@ -1,0 +1,16 @@
+# translations/security.en.yaml
+login:
+  error:
+    missing_email: "Please provide an email address."
+    missing_password: "Please provide a password."
+    invalid_credentials: "The credentials provided are incorrect."
+    user_not_found: "No user found with the provided email."
+    unknown: "An unknown error occurred. Please try again."
+    server: "A server error occurred. Please contact support."
+
+        
+registration:
+  success: 'Your account has been created successfully.'
+  error:
+    unknown: 'An unknown error occurred. Please try again.'
+    server: 'A server error occurred. Please try again later.'
