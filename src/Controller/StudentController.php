@@ -32,10 +32,15 @@ final class StudentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($student);
-            $entityManager->flush();
+            try {
+                $entityManager->persist($student);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'L\'étudiant a été créé avec succès.');
+                return $this->redirectToRoute('app_student_preview', ['id' => $student->getId()]);
+            } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+                $this->addFlash('error', 'Cet email est déjà utilisé par un autre étudiant.');
+            }
         }
 
         return $this->render('student/new.html.twig', [
@@ -43,6 +48,18 @@ final class StudentController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+    #[Route('/preview/{id}', name: 'app_student_preview', methods: ['GET'])]
+    public function preview(Student $student): Response
+    {
+        // Debug pour vérifier l'ID reçu
+
+        return $this->render('student/preview.html.twig', [
+            'student' => $student,
+        ]);
+    }
+
 
     #[Route('/{id}', name: 'app_student_show', methods: ['GET'])]
     public function show(Student $student): Response
@@ -59,9 +76,14 @@ final class StudentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            try {
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'L\'étudiant a été modifié avec succès.');
+                return $this->redirectToRoute('app_student_preview', ['id' => $student->getId()]);
+            } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+                $this->addFlash('error', 'Cet email est déjà utilisé par un autre étudiant.');
+            }
         }
 
         return $this->render('student/edit.html.twig', [
@@ -73,7 +95,7 @@ final class StudentController extends AbstractController
     #[Route('/{id}', name: 'app_student_delete', methods: ['POST'])]
     public function delete(Request $request, Student $student, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($student);
             $entityManager->flush();
         }
@@ -82,29 +104,41 @@ final class StudentController extends AbstractController
     }
 
     #[Route('/{id}/pdf', name: 'app_student_registration_pdf', methods: ['GET'])]
-public function generatePdf(Student $registration): Response
-{
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
-    $options->set('isPhpEnabled', true);
+    public function generatePdf(Request $request, Student $student): Response
+    {
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
 
-    $dompdf = new Dompdf($options);
-    
-    $html = $this->renderView('student/pdf.html.twig', [
-        'registration' => $registration,
-    ]);
+        $dompdf = new Dompdf($options);
 
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
+        $html = $this->renderView('student/pdf.html.twig', [
+            'student' => $student,
+        ]);
 
-    return new Response(
-        $dompdf->output(),
-        Response::HTTP_OK,
-        [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="registration.pdf"'
-        ]
-    );
-}
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Si un paramètre download est présent, force le téléchargement
+        if ($request->query->has('download')) {
+            return new Response(
+                $dompdf->output(),
+                Response::HTTP_OK,
+                [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'attachment; filename="registration.pdf"'
+                ]
+            );
+        }
+
+        // Sinon, affiche le PDF dans l'iframe
+        return new Response(
+            $dompdf->output(),
+            Response::HTTP_OK,
+            [
+                'Content-Type' => 'application/pdf'
+            ]
+        );
+    }
 }

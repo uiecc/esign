@@ -5,8 +5,14 @@ namespace App\Entity;
 use App\Repository\StudentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
+#[UniqueEntity(
+    fields: ['email'],
+    message: 'Cet email est déjà utilisé par un autre étudiant.'
+)]
 class Student
 {
     #[ORM\Id]
@@ -53,7 +59,10 @@ class Student
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $phone = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\Email(
+        message: 'L\'adresse email {{ value }} n\'est pas une adresse email valide.',
+    )]
     private ?string $email = null;
 
     #[ORM\Column(nullable: true)]

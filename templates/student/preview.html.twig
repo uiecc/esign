@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prévisualisation de l'Étudiant{% endblock %}
+
+{% block body %}
+<div class="max-w-4xl mx-auto py-12">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-2xl font-bold">Prévisualisation des informations de l'étudiant</h1>
+        <div class="flex gap-4">
+            <a href="{{ path('app_student_registration_pdf', {'id': student.id}) }}" 
+               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                <span>Générer le PDF</span>
+            </a>
+            <a href="{{ path('app_student_edit', {'id': student.id}) }}" 
+               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                <span>Modifier</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="grid grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div>
+                    <h2 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Informations personnelles</h2>
+                    <div class="space-y-2">
+                        <p><span class="font-medium text-gray-600">ID:</span> {{ student.id }}</p>
+                        <p><span class="font-medium text-gray-600">Nom complet:</span> {{ student.fullName }}</p>
+                        <p><span class="font-medium text-gray-600">Date de naissance:</span> {{ student.birthDate ? student.birthDate|date('d/m/Y') : '' }}</p>
+                        <p><span class="font-medium text-gray-600">Genre:</span> {{ student.gender }}</p>
+                        <p><span class="font-medium text-gray-600">Nationalité:</span> {{ student.nationality }}</p>
+                        <p><span class="font-medium text-gray-600">Situation de handicap:</span> {{ student.handicap ? 'Oui' : 'Non' }}</p>
+                        <p><span class="font-medium text-gray-600">Baccalauréat:</span> {{ student.baccalaureat }}</p>
+                        <p><span class="font-medium text-gray-600">Langue:</span> {{ student.language }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Coordonnées</h2>
+                    <div class="space-y-2">
+                        <p><span class="font-medium text-gray-600">Adresse:</span> {{ student.address }}</p>
+                        <p><span class="font-medium text-gray-600">Téléphone:</span> {{ student.phone }}</p>
+                        <p><span class="font-medium text-gray-600">Email:</span> {{ student.email }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <h2 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Informations parents</h2>
+                    <div class="space-y-2">
+                        <p><span class="font-medium text-gray-600">Nom du père:</span> {{ student.parentName }}</p>
+                        <p><span class="font-medium text-gray-600">Téléphone du père:</span> {{ student.parentPhone }}</p>
+                        <p><span class="font-medium text-gray-600">Nom de la mère:</span> {{ student.motherName }}</p>
+                        <p><span class="font-medium text-gray-600">Téléphone de la mère:</span> {{ student.motherPhone }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Informations académiques</h2>
+                    <div class="space-y-2">
+                        <p><span class="font-medium text-gray-600">Année académique:</span> {{ student.academicYear }}</p>
+                        <p><span class="font-medium text-gray-600">Activités:</span> {{ student.activities ? student.activities|json_encode : 'Aucune activité' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
