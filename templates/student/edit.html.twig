@@ -1,13 +1,17 @@
+{# edit.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Student{% endblock %}
+{% block title %}Edit Student
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Student</h1>
+	<h1>{{'student.modify'|trans}}</h1>
 
-    {{ include('student/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('student/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_student_index') }}">back to list</a>
+	<a href="{{ path('app_student_index') }}" class="text-main-green hover:text-main-green/80 font-semibold">
+		{{'registration.form.back'|trans}}
+	</a>
 
-    {{ include('student/_delete_form.html.twig') }}
+	{{ include('student/_delete_form.html.twig') }}
 {% endblock %}

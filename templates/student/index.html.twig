@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des étudiants{% endblock %}
-{% block title %}Student Index{% endblock %}
+{# {% block title %}Student Index{% endblock %} #}
 
 {% block body %}
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8 mt-20">
    <div class="flex justify-between items-center mb-6">
        <h1 class="text-2xl font-bold text-gray-900">Liste des étudiants</h1>
        <a href="{{ path('app_student_new') }}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
@@ -96,7 +96,7 @@
     </a>
 </div>
 </div>
-<div class="container mx-auto px-4 py-8">
+{# <div class="container mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold text-main-green mb-6">Student Index</h1>
     
     <div class="overflow-x-auto bg-white rounded-lg shadow">
@@ -165,5 +165,5 @@
             Create New Student
         </a>
     </div>
-</div>
-{% endblock %}
+</div> #}
+{% endblock %} 

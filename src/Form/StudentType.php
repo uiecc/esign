@@ -18,112 +18,112 @@ class StudentType extends AbstractType
     {
         $builder
             ->add('academicYear', TextType::class, [
-                'label' => 'Année académique / Academic Year',
+                'label' => 'registration.form.administrative_info.academic_year',
                 'data' => '2024-2025', // Valeur par défaut
                 'required' => true,
             ])
             ->add('matricule', TextType::class, [
-                'label' => 'N° Matricule',
+                'label' => 'registration.form.administrative_info.matricule',
                 'required' => false,
             ])
             ->add('fullName', TextType::class, [
-                'label' => 'Noms et prénoms de l\'étudiant',
+                'label' => 'registration.form.personal_info.fullname',
                 'required' => true,
             ])
             ->add('birthDate', DateType::class, [
-                'label' => 'Date de naissance',
+                'label' => 'registration.form.personal_info.birthdate',
                 'widget' => 'single_text',
                 'required' => true,
             ])
             ->add('birthPlace', TextType::class, [
-                'label' => 'Lieu de naissance',
+                'label' => 'registration.form.personal_info.birthplace',
                 'required' => true,
             ])
             ->add('gender', ChoiceType::class, [
-                'label' => 'Genre',
+                'label' => 'registration.form.personal_info.gender',
                 'choices' => [
-                    'Masculin' => 'M',
-                    'Féminin' => 'F',
+                    'registration.form.personal_info.gender_choices.m' => 'M',
+                    'registration.form.personal_info.gender_choices.f' => 'F',
                 ],
                 'required' => true,
             ])
             ->add('nationality', ChoiceType::class, [
-                'label' => 'Nationalité',
+                'label' => 'registration.form.personal_info.nationality',
                 'choices' => [
-                    'Cameroun' => 'Cameroun',
-                    'Congo' => 'Congo',
+                    'registration.form.personal_info.nationality_choices.ca' => 'Cameroun',
+                    'registration.form.personal_info.nationality_choices.co' => 'Congo',
                 ],
                 'required' => true,
             ])
             ->add('handicap', ChoiceType::class, [
-                'label' => 'Handicap',
+                'label' => 'registration.form.personal_info.handicap',
                 'choices' => [
-                    'Oui' => true,
-                    'Non' => false,
+                    'registration.form.personal_info.handicap_choices.yes' => true,
+                    'registration.form.personal_info.handicap_choices.no' => false,
                 ],
                 'required' => true,
             ])
             ->add('baccalaureat', TextType::class, [
-                'label' => 'Baccalauréat (série) / GCE Advanced Level (option)',
+                'label' => 'registration.form.academic_info.certificate',
                 'required' => true,
             ])
             ->add('filiere', ChoiceType::class, [
-                'label' => 'Filière',
+                'label' => 'registration.form.academic_info.faculty',
                 'choices' => [
-                    'Ingénierie des Systèmes Numériques' => 'ISN',
-                    'Ingénierie Numérique Sociotechnique' => 'INS',
-                    'Création et Design Numérique' => 'CDN',
+                    'registration.form.academic_info.faculty_choices.isn' => 'ISN',
+                    'registration.form.academic_info.faculty_choices.ins' => 'INS',
+                    'registration.form.academic_info.faculty_choices.cdn' => 'CDN',
                 ],
                 'required' => true,
             ])
             ->add('language', ChoiceType::class, [
-                'label' => 'Langue officielle',
+                'label' => 'registration.form.academic_info.language',
                 'choices' => [
-                    'Français' => 'FRANCAIS',
-                    'Anglais' => 'ANGLAIS',
+                    'registration.form.academic_info.language_choices.fr' => 'FRANCAIS',
+                    'registration.form.academic_info.language_choices.en' => 'ANGLAIS',
                 ],
                 'expanded' => true, // Pour afficher comme radio buttons
                 'required' => true,
             ])
             ->add('parentName', TextType::class, [
-                'label' => 'Noms du père ou du tuteur',
+                'label' => 'registration.form.contact_info.parentname',
                 'required' => true,
             ])
             ->add('parentPhone', TelType::class, [
-                'label' => 'Téléphone du père/tuteur',
+                'label' => 'registration.form.contact_info.parentphone',
                 'required' => true,
             ])
             ->add('motherName', TextType::class, [
-                'label' => 'Noms de la mère ou de la tutrice',
+                'label' => 'registration.form.contact_info.mothername',
                 'required' => true,
             ])
             ->add('motherPhone', TelType::class, [
-                'label' => 'Téléphone de la mère/tutrice',
+                'label' => 'registration.form.contact_info.motherphone',
                 'required' => true,
             ])
             ->add('address', TextType::class, [
-                'label' => 'Adresse (quartier et cité de résidence)',
+                'label' => 'registration.form.contact_info.address',
                 'required' => true,
             ])
             ->add('phone', TelType::class, [
-                'label' => 'Téléphone',
+                'label' => 'registration.form.contact_info.phone',
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'registration.form.contact_info.email',
                 'required' => true,
             ])
             ->add('activities', ChoiceType::class, [
-                'label' => 'Loisirs',
+                'label' => 'registration.form.hobbies_title.parentname',
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => [
-                    'Sport' => 'sport',
-                    'Musique' => 'musique',
-                    'Danse' => 'danse',
-                    'Comédie' => 'comedie',
-                    'Chant' => 'chant',
-                    'Autre' => 'autre',
+                    'registration.form.hobbies_choices.sport' => 'sport',
+                    'registration.form.hobbies_choices.music' => 'musique',
+                    'registration.form.hobbies_choices.dance' => 'danse',
+                    'registration.form.hobbies_choices.comedy' => 'comedie',
+                    'registration.form.hobbies_choices.sing' => 'chant',
+                    'registration.form.hobbies_choices.other' => 'autre',
                 ],
                 'required' => false,
             ])

@@ -718,6 +718,100 @@ results_section:
 
 
 registration:
-  title: "Registration "
+  title: "Administrative Registration"
   subtitle: "Registration Form"
   description: "Fill out the form below to register."
+
+  form:
+    title: "PRE-REGISTRATION FORM FOR THE INTERNATIONAL SCHOOL OF DIGITAL ENGINEERING (ESIGN)"
+    administrative_info_title: "Administrative Information"
+
+    administrative_info:
+      academic_year: "Academic Year"
+      matricule: "Matricule"
+    
+    personal_info_title: "Personal Information"
+
+    personal_info:
+      fullname: "Student's Full Name"
+      birthdate: "Date of Birth"
+      birthplace: "Place of Birth"
+      gender: "Gender"
+      gender_choices: 
+        m: "Male"
+        f: "Female"
+      nationality: "Nationality"
+      nationality_choices:
+        ca: "Cameroon"
+        co: "Congo"
+      handicap: "Disability"
+      handicap_choices: 
+        yes: "Yes"
+        no: "No"
+
+    academic_info_title: "Academic Information"
+    
+    academic_info:
+      certificate: "Baccalaureate (series) / GCE Advanced Level (option)"
+      faculty: "Faculty"
+      faculty_choices:
+        isn: "Digital Systems Engineering"
+        ins: "Sociotechnical Digital Engineering"
+        cdn: "Digital Creation and Design"
+      language: "Official Language"
+      language_choices:
+        fr: "French"
+        en: "English"
+
+    contact_info_title: "Contact Information"
+
+    contact_info:
+      parentname: "Father or Guardian’s Name"
+      parentphone: "Father/Guardian’s Phone"
+      mothername: "Mother or Guardian’s Name"
+      motherphone: "Mother/Guardian’s Phone"
+      address: "Address (neighborhood and residence area)"
+      phone: "Phone"
+      email: "Email"
+    
+    hobbies_title: "Hobbies"
+
+    hobbies_choices:
+      sport: "Sports"
+      music: "Music"
+      dance: "Dance"
+      comedy: "Comedy"
+      sing: "Singing"
+      other: "Other"
+
+    save: "Register"
+    back: "Back to list"
+
+student:
+  modify: "Edit Student"
+  preview:
+    title: "Student Preview"
+    heading: "Student Information Preview"
+    generate_pdf: "Generate PDF"
+    edit: "Edit"
+    personal_info: "Personal Information"
+    contact_info: "Contact Information"
+    parent_info: "Parent Information"
+    academic_info: "Academic Information"
+  id: "ID"
+  fullname: "Full Name"
+  birthdate: "Date of Birth"
+  gender: "Gender"
+  nationality: "Nationality"
+  handicap: "Disability Status"
+  baccalaureat: "Baccalaureate"
+  language: "Language"
+  address: "Address"
+  phone: "Phone"
+  email: "Email"
+  father_name: "Father's Name"
+  father_phone: "Father's Phone"
+  mother_name: "Mother's Name"
+  mother_phone: "Mother's Phone"
+  academic_year: "Academic Year"
+  activities: "Activities"

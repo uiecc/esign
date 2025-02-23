@@ -685,6 +685,99 @@ results_section:
 
 
 registration:
-  title: "Inscription"
+  title: "Inscription administrative"
   subtitle: "Formulaire d'inscription"
   description: "Remplissez le formulaire ci-dessous pour vous inscrire."
+
+  form:
+    title: "FICHE DE PRÉINSCRIPTION À L'ÉCOLE SUPÉRIEURE INTERNATIONALE DE GÉNIE NUMÉRIQUE (ESIGN)"
+    administrative_info_title: "Informations Administratives"
+
+    administrative_info:
+      academic_year: "Année académique"
+      matricule: "N° Matricule"
+    
+    personal_info_title: "Informations personnelles"
+
+    personal_info:
+      fullname: "Noms et prénoms de l'étudiant"
+      birthdate: "Date de naissance"
+      birthplace: "Lieu de naissance"
+      gender: "Genre"
+      gender_choices: 
+        m: "Masculin"
+        f: "Féminin"
+      nationality: "Nationalité"
+      nationality_choices:
+        ca: "Cameroun"
+        co: "Congo"
+      handicap: "Handicap"
+      handicap_choices: 
+        yes: "Oui"
+        no: "Non"
+
+    academic_info_title: "Informations Académiques"
+    
+    academic_info:
+      certificate: "Baccalauréat (série) / GCE Advanced Level (option)"
+      faculty: "Filière"
+      faculty_choices:
+        isn: "Ingénierie des Systèmes Numériques"
+        ins: "Ingénierie Numérique Sociotechnique"
+        cdn: "Création et Design Numérique"
+      language: "Langue officielle"
+      language_choices:
+        fr: "Français"
+        en: "Anglais"
+
+    contact_info_title: "Informations de Contact"
+
+    contact_info:
+      parentname: "Noms du père ou du tuteur"
+      parentphone: "Téléphone du père/tuteur"
+      mothername: "Noms de la mère ou de la tutrice"
+      motherphone: "Téléphone de la mère/tutrice"
+      address: "Adresse (quartier et cité de résidence)"
+      phone: "Téléphone"
+      email: "Email"
+    
+    hobbies_title: "Loisirs"
+
+    hobbies_choices:
+      sport: "Sport"
+      music: "Musique"
+      dance: "Danse"
+      comedy: "Comédie"
+      sing: "Chant"
+      other: "Autre"
+
+    save: "Enregistrer"
+
+student:
+  modify: "Modifier L'etudiant"
+  preview:
+    title: "Prévisualisation de l'Étudiant"
+    heading: "Prévisualisation des informations de l'étudiant"
+    generate_pdf: "Générer le PDF"
+    edit: "Modifier"
+    personal_info: "Informations personnelles"
+    contact_info: "Coordonnées"
+    parent_info: "Informations parents"
+    academic_info: "Informations académiques"
+  id: "ID"
+  fullname: "Nom complet"
+  birthdate: "Date de naissance"
+  gender: "Genre"
+  nationality: "Nationalité"
+  handicap: "Situation de handicap"
+  baccalaureat: "Baccalauréat"
+  language: "Langue"
+  address: "Adresse"
+  phone: "Téléphone"
+  email: "Email"
+  father_name: "Nom du père"
+  father_phone: "Téléphone du père"
+  mother_name: "Nom de la mère"
+  mother_phone: "Téléphone de la mère"
+  academic_year: "Année académique"
+  activities: "Activités"
