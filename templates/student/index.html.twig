@@ -1,8 +1,101 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Liste des étudiants{% endblock %}
 {% block title %}Student Index{% endblock %}
 
 {% block body %}
+<div class="container mx-auto px-4 py-8">
+   <div class="flex justify-between items-center mb-6">
+       <h1 class="text-2xl font-bold text-gray-900">Liste des étudiants</h1>
+       <a href="{{ path('app_student_new') }}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+           Ajouter un étudiant
+       </a>
+   </div>
+
+   <div class="overflow-x-auto bg-white rounded-lg shadow">
+       <table class="min-w-full divide-y divide-gray-200">
+           <thead class="bg-gray-50">
+               <tr>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom complet</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de naissance</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Genre</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nationalité</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Handicap</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Baccalauréat</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Langue</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parent</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact parent</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mère</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact mère</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adresse</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Téléphone</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activités</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Année académique</th>
+                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+               </tr>
+           </thead>
+           <tbody class="bg-white divide-y divide-gray-200">
+           {% for student in students %}
+               <tr class="hover:bg-gray-50">
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.id }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.fullName }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.birthDate ? student.birthDate|date('Y-m-d') : '' }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.gender }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.nationality }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                       <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ student.handicap ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                           {{ student.handicap ? 'Oui' : 'Non' }}
+                       </span>
+                   </td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.baccalaureat }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.language }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.parentName }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.parentPhone }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.motherName }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.motherPhone }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.address }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.phone }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.email }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.activities ? student.activities|json_encode : '' }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.academicYear }}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                       <a href="{{ path('app_student_show', {'id': student.id}) }}" class="text-blue-600 hover:text-blue-900 mr-3">Voir</a>
+                       <a href="{{ path('app_student_edit', {'id': student.id}) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                   </td>
+               </tr>
+           {% else %}
+               <tr>
+                   <td colspan="18" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Aucun enregistrement trouvé</td>
+               </tr>
+           {% endfor %}
+           </tbody>
+       </table>
+   </div>
+
+   <div class="flex gap-4 mt-4">
+    <a href="{{ path('app_student_export_excel', {'type': 'alphabetic'}) }}" 
+       class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
+        Exporter liste alphabétique
+    </a>
+    
+    <a href="{{ path('app_student_export_excel', {'type': 'country'}) }}" 
+       class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+        Exporter par pays
+    </a>
+    
+    <a href="{{ path('app_student_export_excel', {'type': 'filiere'}) }}" 
+       class="bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded">
+        Exporter par filière
+    </a>
+    
+    <a href="{{ path('app_student_export_excel', {'type': 'handicap'}) }}" 
+       class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">
+        Exporter liste handicap
+    </a>
+</div>
+</div>
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold text-main-green mb-6">Student Index</h1>
     

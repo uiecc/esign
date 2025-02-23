@@ -47,8 +47,12 @@ class StudentType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('nationality', TextType::class, [
+            ->add('nationality', ChoiceType::class, [
                 'label' => 'Nationalité',
+                'choices' => [
+                    'Cameroun' => 'Cameroun',
+                    'Congo' => 'Congo',
+                ],
                 'required' => true,
             ])
             ->add('handicap', ChoiceType::class, [
@@ -63,8 +67,13 @@ class StudentType extends AbstractType
                 'label' => 'Baccalauréat (série) / GCE Advanced Level (option)',
                 'required' => true,
             ])
-            ->add('filiere', TextType::class, [
+            ->add('filiere', ChoiceType::class, [
                 'label' => 'Filière',
+                'choices' => [
+                    'Ingénierie des Systèmes Numériques' => 'ISN',
+                    'Ingénierie Numérique Sociotechnique' => 'INS',
+                    'Création et Design Numérique' => 'CDN',
+                ],
                 'required' => true,
             ])
             ->add('language', ChoiceType::class, [

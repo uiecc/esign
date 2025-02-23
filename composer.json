@@ -15,7 +15,7 @@
         "endroid/qr-code": "^5.0",
         "guzzlehttp/guzzle": "^7.9",
         "patricpoba/mtn-momo-api-php": "^0.2.3",
-        "phpoffice/phpspreadsheet": "^3.3",
+        "phpoffice/phpspreadsheet": "^4.0",
         "symfony/asset": "7.1.*",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
