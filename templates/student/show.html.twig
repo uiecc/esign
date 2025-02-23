@@ -1,86 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Student{% endblock %}
+{% block title %}Student Details{% endblock %}
 
 {% block body %}
-    <h1>Student</h1>
+<div class="container mx-auto px-4 py-8">
+   <h1 class="text-2xl font-bold text-main-green mb-6">Student Details</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ student.id }}</td>
-            </tr>
-            <tr>
-                <th>FullName</th>
-                <td>{{ student.fullName }}</td>
-            </tr>
-            <tr>
-                <th>BirthDate</th>
-                <td>{{ student.birthDate ? student.birthDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Gender</th>
-                <td>{{ student.gender }}</td>
-            </tr>
-            <tr>
-                <th>Nationality</th>
-                <td>{{ student.nationality }}</td>
-            </tr>
-            <tr>
-                <th>Handicap</th>
-                <td>{{ student.handicap ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Baccalaureat</th>
-                <td>{{ student.baccalaureat }}</td>
-            </tr>
-            <tr>
-                <th>Langue</th>
-                <td>{{ student.langue }}</td>
-            </tr>
-            <tr>
-                <th>ParentName</th>
-                <td>{{ student.parentName }}</td>
-            </tr>
-            <tr>
-                <th>ParentPhone</th>
-                <td>{{ student.parentPhone }}</td>
-            </tr>
-            <tr>
-                <th>MotherName</th>
-                <td>{{ student.motherName }}</td>
-            </tr>
-            <tr>
-                <th>MotherPhone</th>
-                <td>{{ student.motherPhone }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ student.address }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ student.phone }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ student.email }}</td>
-            </tr>
-            <tr>
-                <th>Activities</th>
-                <td>{{ student.activities ? student.activities|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>AcademicYear</th>
-                <td>{{ student.academicYear }}</td>
-            </tr>
-        </tbody>
-    </table>
+   <div class="bg-white rounded-lg shadow overflow-hidden">
+       <table class="min-w-full divide-y divide-gray-200">
+           <tbody class="divide-y divide-gray-200">
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700 w-1/4">Id</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.id }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Full Name</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.fullName }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Birth Date</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.birthDate ? student.birthDate|date('Y-m-d') : '' }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Gender</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.gender }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Nationality</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.nationality }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Handicap</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.handicap ? 'Yes' : 'No' }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Baccalaureat</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.baccalaureat }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Language</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.language }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Parent Name</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.parentName }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Parent Phone</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.parentPhone }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Mother Name</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.motherName }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Mother Phone</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.motherPhone }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Address</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.address }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Phone</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.phone }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Email</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.email }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Activities</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.activities ? student.activities|json_encode : '' }}</td>
+               </tr>
+               <tr>
+                   <th class="px-6 py-3 bg-gray-50 text-left text-sm font-semibold text-gray-700">Academic Year</th>
+                   <td class="px-6 py-3 text-sm text-gray-900">{{ student.academicYear }}</td>
+               </tr>
+           </tbody>
+       </table>
+   </div>
 
-    <a href="{{ path('app_student_index') }}">back to list</a>
-
-    <a href="{{ path('app_student_edit', {'id': student.id}) }}">edit</a>
-
-    {{ include('student/_delete_form.html.twig') }}
+   <div class="mt-6 flex gap-4">
+       <a href="{{ path('app_student_index') }}" 
+          class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-all text-sm">
+           Back to list
+       </a>
+       <a href="{{ path('app_student_edit', {'id': student.id}) }}" 
+          class="inline-block px-4 py-2 bg-main-green text-white rounded hover:bg-opacity-90 transition-all text-sm">
+           Edit
+       </a>
+       {{ include('student/_delete_form.html.twig') }}
+   </div>
+</div>
 {% endblock %}

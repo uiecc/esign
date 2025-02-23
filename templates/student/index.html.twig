@@ -1,65 +1,76 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Student index{% endblock %}
+{% block title %}Student Index{% endblock %}
 
 {% block body %}
-    <h1>Student index</h1>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold text-main-green mb-6">Student Index</h1>
+    
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full table-auto">
+            <thead>
+                <tr class="bg-main-green text-white">
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Id</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Full Name</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Birth Date</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Gender</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Nationality</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Handicap</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Baccalaureat</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Language</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Parent Name</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Parent Phone</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Mother Name</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Mother Phone</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Address</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Phone</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Email</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Activities</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Academic Year</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for student in students %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 text-sm">{{ student.id }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.fullName }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.birthDate ? student.birthDate|date('Y-m-d') : '' }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.gender }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.nationality }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.handicap ? 'Yes' : 'No' }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.baccalaureat }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.language }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.parentName }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.parentPhone }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.motherName }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.motherPhone }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.address }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.phone }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.email }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.activities ? student.activities|json_encode : '' }}</td>
+                    <td class="px-4 py-3 text-sm">{{ student.academicYear }}</td>
+                    <td class="px-4 py-3 text-sm space-x-2">
+                        <a href="{{ path('app_student_show', {'id': student.id}) }}" 
+                           class="text-blue-600 hover:text-blue-800">Show</a>
+                        <a href="{{ path('app_student_edit', {'id': student.id}) }}" 
+                           class="text-main-green hover:text-green-700">Edit</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="18" class="px-4 py-3 text-sm text-center text-gray-500">No records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>FullName</th>
-                <th>BirthDate</th>
-                <th>Gender</th>
-                <th>Nationality</th>
-                <th>Handicap</th>
-                <th>Baccalaureat</th>
-                <th>Langue</th>
-                <th>ParentName</th>
-                <th>ParentPhone</th>
-                <th>MotherName</th>
-                <th>MotherPhone</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Activities</th>
-                <th>AcademicYear</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for student in students %}
-            <tr>
-                <td>{{ student.id }}</td>
-                <td>{{ student.fullName }}</td>
-                <td>{{ student.birthDate ? student.birthDate|date('Y-m-d') : '' }}</td>
-                <td>{{ student.gender }}</td>
-                <td>{{ student.nationality }}</td>
-                <td>{{ student.handicap ? 'Yes' : 'No' }}</td>
-                <td>{{ student.baccalaureat }}</td>
-                <td>{{ student.langue }}</td>
-                <td>{{ student.parentName }}</td>
-                <td>{{ student.parentPhone }}</td>
-                <td>{{ student.motherName }}</td>
-                <td>{{ student.motherPhone }}</td>
-                <td>{{ student.address }}</td>
-                <td>{{ student.phone }}</td>
-                <td>{{ student.email }}</td>
-                <td>{{ student.activities ? student.activities|json_encode : '' }}</td>
-                <td>{{ student.academicYear }}</td>
-                <td>
-                    <a href="{{ path('app_student_show', {'id': student.id}) }}">show</a>
-                    <a href="{{ path('app_student_edit', {'id': student.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="18">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_student_new') }}">Create new</a>
+    <div class="mt-6">
+        <a href="{{ path('app_student_new') }}" 
+           class="inline-block px-4 py-2 bg-main-green text-white rounded hover:bg-opacity-90 transition-all text-sm">
+            Create New Student
+        </a>
+    </div>
+</div>
 {% endblock %}

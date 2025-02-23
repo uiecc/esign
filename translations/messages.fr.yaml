@@ -682,3 +682,9 @@ results_section:
   description: "Ci-dessous les résultats officiels du concours d'entrée."
   more_info: "Résultats par Liste"
   description_2: "Veuillez faire défiler les images pour consulter toutes les listes de résultats."
+
+
+registration:
+  title: "Inscription"
+  subtitle: "Formulaire d'inscription"
+  description: "Remplissez le formulaire ci-dessous pour vous inscrire."

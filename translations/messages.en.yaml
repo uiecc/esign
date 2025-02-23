@@ -715,3 +715,9 @@ results_section:
   description: "Below are the official results of the competitive entrance examination."
   more_info: "Results by List"
   description_2: "Please scroll through the images to view all result lists."
+
+
+registration:
+  title: "Registration "
+  subtitle: "Registration Form"
+  description: "Fill out the form below to register."
