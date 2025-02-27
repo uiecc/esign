@@ -67,4 +67,23 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const pdfButton = document.querySelector('a[href*="app_student_registration_pdf"]');
+  
+  if (pdfButton) {
+    pdfButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // First, trigger the PDF download by opening in a new window/tab
+      const pdfUrl = this.getAttribute('href');
+      window.open(pdfUrl, '_blank');
+      
+      // Then redirect to home page
+      window.location.href = "{{ path('app_home') }}";
+    });
+  }
+});
+</script>
 {% endblock %}
